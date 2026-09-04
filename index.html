@@ -1,536 +1,2345 @@
 <!DOCTYPE html>
 <html lang="ta">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Anamigam Journal</title>
-  <meta name="description" content="Anamigam Journal — எண்ணங்களின் தடம்… எழுத்துகளின் பயணம்.">
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-  <style>
-    * {
-      box-sizing: border-box;
-      margin: 0;
-      padding: 0;
+<title>Anamigam Journal | எண்ணங்களின் தடம்… எழுத்துகளின் பயணம்.</title>
+
+<meta name="description"
+content="Anamigam Journal — V. Matheswaran அவர்களின் தமிழ் எழுத்துலகப் பயணம். கவிதைகள், கதைகள், மின் நூல்கள் மற்றும் இலக்கியப் படைப்புகள்.">
+
+<meta name="author" content="V. Matheswaran">
+
+<style>
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+}
+
+html{
+    scroll-behavior:smooth;
+}
+
+body{
+    font-family:Georgia,"Noto Serif Tamil",serif;
+    background:#f8f4ec;
+    color:#29251f;
+    line-height:1.8;
+    transition:0.4s ease;
+}
+
+body.dark{
+    background:#171614;
+    color:#eee8dc;
+}
+
+a{
+    text-decoration:none;
+    color:inherit;
+}
+
+button{
+    font-family:inherit;
+}
+
+.container{
+    width:min(1180px,92%);
+    margin:auto;
+}
+
+/* NAVIGATION */
+
+header{
+    position:sticky;
+    top:0;
+    z-index:1000;
+    background:rgba(248,244,236,.94);
+    backdrop-filter:blur(15px);
+    border-bottom:1px solid #ddd5c7;
+}
+
+.dark header{
+    background:rgba(23,22,20,.94);
+    border-color:#39352f;
+}
+
+.nav{
+    min-height:76px;
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    gap:25px;
+}
+
+.logo{
+    font-size:24px;
+    font-weight:bold;
+    letter-spacing:1px;
+}
+
+.logo span{
+    display:block;
+    font-size:11px;
+    font-weight:normal;
+    letter-spacing:3px;
+    opacity:.65;
+}
+
+.nav-links{
+    display:flex;
+    align-items:center;
+    gap:28px;
+    list-style:none;
+}
+
+.nav-links a{
+    font-size:14px;
+    position:relative;
+}
+
+.nav-links a::after{
+    content:"";
+    position:absolute;
+    left:0;
+    bottom:-7px;
+    width:0;
+    height:1px;
+    background:currentColor;
+    transition:.3s;
+}
+
+.nav-links a:hover::after{
+    width:100%;
+}
+
+.nav-actions{
+    display:flex;
+    align-items:center;
+    gap:10px;
+}
+
+.icon-btn{
+    width:40px;
+    height:40px;
+    border:1px solid #d5ccbd;
+    background:transparent;
+    border-radius:50%;
+    cursor:pointer;
+    color:inherit;
+    font-size:17px;
+}
+
+.dark .icon-btn{
+    border-color:#454038;
+}
+
+.menu-btn{
+    display:none;
+}
+
+/* HERO */
+
+.hero{
+    min-height:calc(100vh - 76px);
+    display:grid;
+    place-items:center;
+    text-align:center;
+    padding:80px 20px;
+}
+
+.hero-inner{
+    max-width:850px;
+}
+
+.eyebrow{
+    text-transform:uppercase;
+    letter-spacing:5px;
+    font-size:11px;
+    opacity:.6;
+    margin-bottom:22px;
+}
+
+.hero h1{
+    font-size:clamp(42px,7vw,82px);
+    line-height:1.15;
+    font-weight:500;
+    margin-bottom:25px;
+}
+
+.hero h1 span{
+    display:block;
+    font-size:.42em;
+    letter-spacing:4px;
+    margin-top:18px;
+    opacity:.65;
+}
+
+.hero-line{
+    width:70px;
+    height:1px;
+    background:currentColor;
+    margin:35px auto;
+}
+
+.hero p{
+    font-size:18px;
+    opacity:.75;
+    max-width:650px;
+    margin:auto;
+}
+
+/* SECTIONS */
+
+section{
+    padding:100px 0;
+}
+
+.section-heading{
+    margin-bottom:45px;
+}
+
+.section-heading small{
+    letter-spacing:4px;
+    text-transform:uppercase;
+    font-size:10px;
+    opacity:.55;
+}
+
+.section-heading h2{
+    font-size:38px;
+    font-weight:500;
+    margin-top:8px;
+}
+
+.section-heading p{
+    opacity:.65;
+    margin-top:8px;
+}
+
+/* FEATURED */
+
+.featured{
+    display:grid;
+    grid-template-columns:1.3fr .7fr;
+    gap:25px;
+}
+
+.feature-card{
+    border:1px solid #ddd4c5;
+    padding:45px;
+    min-height:330px;
+    position:relative;
+    overflow:hidden;
+    transition:.35s;
+}
+
+.dark .feature-card{
+    border-color:#3b3730;
+}
+
+.feature-card:hover{
+    transform:translateY(-5px);
+    box-shadow:0 15px 40px rgba(0,0,0,.08);
+}
+
+.feature-card .number{
+    font-size:12px;
+    opacity:.45;
+    letter-spacing:3px;
+}
+
+.feature-card h3{
+    font-size:30px;
+    font-weight:500;
+    margin:35px 0 15px;
+}
+
+.feature-card p{
+    opacity:.7;
+}
+
+.read-more{
+    display:inline-block;
+    margin-top:25px;
+    font-size:13px;
+    border-bottom:1px solid currentColor;
+    padding-bottom:3px;
+}
+
+/* CARDS */
+
+.cards{
+    display:grid;
+    grid-template-columns:repeat(3,1fr);
+    gap:22px;
+}
+
+.card{
+    border:1px solid #ddd4c5;
+    padding:30px;
+    transition:.35s;
+}
+
+.dark .card{
+    border-color:#3b3730;
+}
+
+.card:hover{
+    transform:translateY(-5px);
+}
+
+.card .tag{
+    font-size:10px;
+    letter-spacing:2px;
+    text-transform:uppercase;
+    opacity:.5;
+}
+
+.card h3{
+    font-size:23px;
+    font-weight:500;
+    margin:15px 0 10px;
+}
+
+.card p{
+    font-size:14px;
+    opacity:.7;
+}
+
+/* CATEGORIES */
+
+.categories{
+    display:flex;
+    flex-wrap:wrap;
+    gap:12px;
+}
+
+.category{
+    border:1px solid #cfc5b5;
+    padding:10px 18px;
+    border-radius:30px;
+    font-size:13px;
+    transition:.3s;
+}
+
+.dark .category{
+    border-color:#4b463d;
+}
+
+.category:hover{
+    transform:translateY(-2px);
+}
+
+/* EBOOK */
+
+.ebook{
+    display:grid;
+    grid-template-columns:.7fr 1.3fr;
+    gap:45px;
+    align-items:center;
+}
+
+.book-placeholder{
+    aspect-ratio:3/4;
+    border:1px solid #cfc5b5;
+    display:grid;
+    place-items:center;
+    text-align:center;
+    padding:30px;
+}
+
+.dark .book-placeholder{
+    border-color:#49443c;
+}
+
+.book-placeholder strong{
+    font-size:28px;
+    font-weight:500;
+}
+
+.ebook-info h3{
+    font-size:36px;
+    font-weight:500;
+    margin:12px 0;
+}
+
+.ebook-info p{
+    opacity:.7;
+    max-width:650px;
+}
+
+.btn{
+    display:inline-block;
+    margin-top:25px;
+    padding:12px 24px;
+    border:1px solid currentColor;
+    font-size:13px;
+    transition:.3s;
+}
+
+.btn:hover{
+    background:#29251f;
+    color:#fff;
+}
+
+.dark .btn:hover{
+    background:#eee8dc;
+    color:#171614;
+}
+
+/* FOOTER */
+
+footer{
+    border-top:1px solid #ddd4c5;
+    padding:55px 0;
+    text-align:center;
+}
+
+.dark footer{
+    border-color:#3b3730;
+}
+
+footer h3{
+    font-size:25px;
+    font-weight:500;
+}
+
+footer p{
+    font-size:13px;
+    opacity:.6;
+    margin-top:8px;
+}
+
+.socials{
+    display:flex;
+    justify-content:center;
+    gap:18px;
+    margin:25px 0;
+}
+
+.socials a{
+    font-size:13px;
+    opacity:.7;
+}
+
+.copyright{
+    font-size:11px;
+    opacity:.45;
+}
+
+/* MOBILE */
+
+@media(max-width:800px){
+
+    .nav-links{
+        display:none;
+        position:absolute;
+        top:76px;
+        left:0;
+        right:0;
+        background:#f8f4ec;
+        border-bottom:1px solid #ddd5c7;
+        flex-direction:column;
+        padding:25px;
+        gap:20px;
     }
 
-    body {
-      background: #f7f2e8;
-      color: #25231f;
-      font-family: Georgia, "Noto Serif Tamil", serif;
-      line-height: 1.8;
+    .dark .nav-links{
+        background:#171614;
+        border-color:#39352f;
     }
 
-    a {
-      color: inherit;
-      text-decoration: none;
+    .nav-links.active{
+        display:flex;
     }
 
-    .container {
-      width: min(1100px, 90%);
-      margin: auto;
+    .menu-btn{
+        display:block;
     }
 
-    /* NAVIGATION */
-    nav {
-      padding: 24px 0;
-      border-bottom: 1px solid #d9cfbd;
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
+    .featured,
+    .ebook{
+        grid-template-columns:1fr;
     }
 
-    .logo {
-      font-size: 24px;
-      font-weight: bold;
-      letter-spacing: 4px;
+    .cards{
+        grid-template-columns:1fr;
     }
 
-    .logo span {
-      display: block;
-      font-size: 10px;
-      letter-spacing: 7px;
-      color: #706a60;
-      text-align: center;
+    section{
+        padding:70px 0;
     }
 
-    .menu {
-      display: flex;
-      gap: 25px;
-      color: #706a60;
-      font-size: 14px;
+    .hero{
+        min-height:80vh;
     }
 
-    /* HERO */
-    .hero {
-      min-height: 80vh;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      text-align: center;
+    .hero h1{
+        font-size:48px;
     }
 
-    .symbol {
-      width: 75px;
-      height: 75px;
-      border: 1px solid #687052;
-      border-radius: 50%;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      margin: 0 auto 30px;
-      color: #687052;
-      font-size: 30px;
+    .feature-card{
+        padding:30px;
     }
+}
 
-    h1 {
-      font-size: clamp(45px, 9vw, 90px);
-      letter-spacing: 8px;
-      line-height: 1;
-    }
+/* REVEAL ANIMATION */
 
-    .journal {
-      margin-top: 18px;
-      color: #706a60;
-      letter-spacing: 9px;
-      font-size: 14px;
-    }
+.reveal{
+    opacity:0;
+    transform:translateY(25px);
+    transition:opacity .8s ease,transform .8s ease;
+}
 
-    .tagline {
-      margin-top: 30px;
-      font-size: clamp(19px, 3vw, 28px);
-    }
-
-    .founder {
-      margin-top: 28px;
-      color: #706a60;
-      font-size: 15px;
-    }
-
-    .founder strong {
-      color: #25231f;
-    }
-
-    .button {
-      display: inline-block;
-      margin-top: 30px;
-      padding: 10px 25px;
-      border: 1px solid #25231f;
-      font-size: 14px;
-    }
-
-    .button:hover {
-      background: #25231f;
-      color: #fffdf8;
-    }
-
-    /* SECTIONS */
-    section {
-      padding: 85px 0;
-    }
-
-    .heading {
-      margin-bottom: 35px;
-    }
-
-    .heading small {
-      color: #687052;
-      letter-spacing: 3px;
-      text-transform: uppercase;
-    }
-
-    .heading h2 {
-      font-size: 34px;
-      margin-top: 5px;
-    }
-
-    .heading p {
-      color: #706a60;
-      margin-top: 10px;
-    }
-
-    /* CARDS */
-    .grid {
-      display: grid;
-      grid-template-columns: repeat(3, 1fr);
-      gap: 20px;
-    }
-
-    .card {
-      background: #fffdf8;
-      border: 1px solid #d9cfbd;
-      padding: 32px;
-      min-height: 210px;
-    }
-
-    .card-number {
-      color: #687052;
-      font-size: 13px;
-    }
-
-    .card h3 {
-      margin: 18px 0 8px;
-      font-size: 22px;
-    }
-
-    .card p {
-      color: #706a60;
-      font-size: 14px;
-    }
-
-    /* FEATURE */
-    .feature {
-      background: #fffdf8;
-      border: 1px solid #d9cfbd;
-      padding: 45px;
-    }
-
-    .feature h3 {
-      font-size: 30px;
-      margin: 10px 0;
-    }
-
-    .feature p {
-      color: #706a60;
-      max-width: 700px;
-    }
-
-    /* ABOUT */
-    .about {
-      background: #eee6d7;
-      border-top: 1px solid #d9cfbd;
-      border-bottom: 1px solid #d9cfbd;
-    }
-
-    .about-box {
-      display: grid;
-      grid-template-columns: 1fr 1.5fr;
-      gap: 60px;
-      align-items: center;
-    }
-
-    .initial {
-      width: 300px;
-      height: 300px;
-      border: 1px solid #d9cfbd;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      font-size: 65px;
-      color: #687052;
-    }
-
-    .about p {
-      color: #706a60;
-      margin-top: 15px;
-    }
-
-    .signature {
-      margin-top: 25px;
-      font-style: italic;
-    }
-
-    /* MENTOR */
-    .mentor {
-      background: #fffdf8;
-      border: 1px solid #d9cfbd;
-      padding: 35px;
-    }
-
-    .mentor h3 {
-      font-size: 25px;
-      margin: 8px 0;
-    }
-
-    .mentor p {
-      color: #706a60;
-    }
-
-    /* FOOTER */
-    footer {
-      padding: 50px 0 25px;
-    }
-
-    .footer-line {
-      border-top: 1px solid #d9cfbd;
-      padding-top: 25px;
-      display: flex;
-      justify-content: space-between;
-      color: #706a60;
-      font-size: 12px;
-    }
-
-    /* MOBILE */
-    @media (max-width: 700px) {
-      .menu {
-        display: none;
-      }
-
-      .grid,
-      .about-box {
-        grid-template-columns: 1fr;
-      }
-
-      .initial {
-        width: 100%;
-        height: 230px;
-      }
-
-      .feature {
-        padding: 30px;
-      }
-
-      section {
-        padding: 60px 0;
-      }
-    }
-  </style>
+.reveal.show{
+    opacity:1;
+    transform:translateY(0);
+}
+</style>
 </head>
 
 <body>
 
-<header id="home">
-  <div class="container">
+<header>
+<div class="container nav">
 
-    <nav>
-      <a class="logo" href="#home">
-        ANAMIGAM
-        <span>JOURNAL</span>
-      </a>
+<a href="#home" class="logo">
+Anamigam
+<span>JOURNAL</span>
+</a>
 
-      <div class="menu">
-        <a href="#writings">எழுத்துகள்</a>
-        <a href="#ebooks">E-Books</a>
-        <a href="#about">என்னைப் பற்றி</a>
-        <a href="#contact">தொடர்பு</a>
-      </div>
-    </nav>
+<ul class="nav-links" id="navLinks">
+<li><a href="#home">Home</a></li>
+<li><a href="#writings">Writings</a></li>
+<li><a href="#ebooks">E-Books</a></li>
+<li><a href="#about">About</a></li>
+<li><a href="#contact">Contact</a></li>
+</ul>
 
-  </div>
+<div class="nav-actions">
+<button class="icon-btn" onclick="toggleTheme()" title="Dark / Light">◐</button>
+<button class="icon-btn menu-btn" onclick="toggleMenu()">☰</button>
+</div>
 
-  <div class="hero container">
-    <div>
-
-      <div class="symbol">✦</div>
-
-      <h1>ANAMIGAM</h1>
-
-      <div class="journal">J O U R N A L</div>
-
-      <p class="tagline">
-        எண்ணங்களின் தடம்… எழுத்துகளின் பயணம்.
-      </p>
-
-      <div class="founder">
-        <strong>V. MATHESWARAN</strong><br>
-        எழுத்தாளர் | Anamigam Journal நிறுவனர்
-      </div>
-
-      <a class="button" href="#writings">
-        எழுத்துப் பயணத்திற்குள் →
-      </a>
-
-    </div>
-  </div>
+</div>
 </header>
-
 
 <main>
 
-<!-- WRITINGS -->
-<section id="writings">
-  <div class="container">
+<!-- HOME -->
 
-    <div class="heading">
-      <small>Featured Writing</small>
-      <h2>சொற்கள் தொடங்கும் இடம்.</h2>
-      <p>
-        எண்ணங்கள், உணர்வுகள், மனிதர்கள், வாழ்க்கை —
-        ஒவ்வொரு எழுத்தும் ஒரு தடம்.
-      </p>
-    </div>
+<section class="hero" id="home">
+<div class="hero-inner reveal">
 
-    <div class="feature">
-      <small>Latest Feature</small>
+<div class="eyebrow">A Tamil Literary Space</div>
 
-      <h3>என் எழுத்தின் முதல் பக்கம்</h3>
+<h1>
+Anamigam Journal
+<span>எண்ணங்களின் தடம்… எழுத்துகளின் பயணம்.</span>
+</h1>
 
-      <p>
-        இங்கு உன் சிறந்த கவிதை, சிறுகதை அல்லது கட்டுரையை
-        முக்கிய படைப்பாக வெளியிடலாம்.
-      </p>
+<div class="hero-line"></div>
 
-      <a class="button" href="#">
-        முழுவதும் வாசிக்க →
-      </a>
-    </div>
+<p>
+சொல்லப்படாத எண்ணங்களுக்கும்,
+எழுதப்படாத உணர்வுகளுக்கும்
+ஒரு அமைதியான இடம்.
+</p>
 
-  </div>
+</div>
 </section>
 
+<!-- FEATURED -->
+
+<section>
+<div class="container">
+
+<div class="section-heading reveal">
+<small>Explore</small>
+<h2>Featured</h2>
+<p>எழுத்தின் பல முகங்களைத் தேடும் ஒரு பயணம்.</p>
+</div>
+
+<div class="featured">
+
+<article class="feature-card reveal">
+<div class="number">01 — FEATURED</div>
+<h3>எழுத்துகளின் உலகம்</h3>
+<p>
+கவிதை, கதை, சிந்தனை மற்றும் வாழ்க்கையை
+தொடும் பல்வேறு எழுத்துப் பயணங்களுக்கான
+ஒரு தனித்துவமான இடம்.
+</p>
+<a class="read-more" href="#writings">Explore Writings →</a>
+</article>
+
+<article class="feature-card reveal">
+<div class="number">02 — JOURNAL</div>
+<h3>எண்ணங்களின் தடம்</h3>
+<p>
+ஒவ்வொரு எண்ணத்திற்கும் ஒரு கதை இருக்கிறது.
+ஒவ்வொரு வார்த்தைக்கும் ஒரு பயணம் இருக்கிறது.
+</p>
+<a class="read-more" href="#about">Discover →</a>
+</article>
+
+</div>
+</div>
+</section>
+
+<!-- WRITINGS -->
+
+<section id="writings">
+<div class="container">
+
+<div class="section-heading reveal">
+<small>Writing</small>
+<h2>Writings</h2>
+<p>கவிதைகள் • கதைகள் • சிந்தனைகள்</p>
+</div>
+
+<div class="cards">
+
+<article class="card reveal">
+<div class="tag">Poetry</div>
+<h3>கவிதைகள்</h3>
+<p>
+வார்த்தைகளுக்குள் மறைந்திருக்கும்
+உணர்வுகளின் சிறு உலகம்.
+</p>
+<a class="read-more" href="#">Read →</a>
+</article>
+
+<article class="card reveal">
+<div class="tag">Stories</div>
+<h3>சிறுகதைகள்</h3>
+<p>
+மனிதர்களையும் வாழ்க்கையையும்
+மையமாகக் கொண்ட கதைகள்.
+</p>
+<a class="read-more" href="#">Read →</a>
+</article>
+
+<article class="card reveal">
+<div class="tag">Thoughts</div>
+<h3>சிந்தனைகள்</h3>
+<p>
+வாழ்க்கை, மனித இயல்பு மற்றும்
+உலகைப் பற்றிய எண்ணங்கள்.
+</p>
+<a class="read-more" href="#">Read →</a>
+</article>
+
+</div>
+
+</div>
+</section>
 
 <!-- CATEGORIES -->
+
 <section>
-  <div class="container">
+<div class="container">
 
-    <div class="heading">
-      <small>Explore</small>
-      <h2>எழுத்தின் பல முகங்கள்.</h2>
-    </div>
+<div class="section-heading reveal">
+<small>Explore by theme</small>
+<h2>Categories</h2>
+</div>
 
-    <div class="grid">
+<div class="categories reveal">
+<a class="category" href="#">கவிதை</a>
+<a class="category" href="#">சிறுகதை</a>
+<a class="category" href="#">கட்டுரை</a>
+<a class="category" href="#">சிந்தனை</a>
+<a class="category" href="#">மனித இயல்பு</a>
+<a class="category" href="#">வாழ்க்கை</a>
+<a class="category" href="#">இலக்கியம்</a>
+</div>
 
-      <article class="card">
-        <div class="card-number">01</div>
-        <h3>கவிதைகள்</h3>
-        <p>
-          மனதைத் தொட்டுச் செல்லும் கவிதைகள்
-          மற்றும் குறுங்கவிதைகள்.
-        </p>
-      </article>
-
-      <article class="card">
-        <div class="card-number">02</div>
-        <h3>சிறுகதைகள்</h3>
-        <p>
-          மனிதர்களையும் வாழ்க்கையையும்
-          பேசும் கதைகள்.
-        </p>
-      </article>
-
-      <article class="card">
-        <div class="card-number">03</div>
-        <h3>கட்டுரைகள்</h3>
-        <p>
-          சிந்திக்க வைக்கும் கருத்துகள்,
-          பார்வைகள் மற்றும் பதிவுகள்.
-        </p>
-      </article>
-
-    </div>
-
-  </div>
+</div>
 </section>
-
 
 <!-- EBOOK -->
+
 <section id="ebooks">
-  <div class="container">
+<div class="container">
 
-    <div class="heading">
-      <small>Library</small>
-      <h2>E-Books</h2>
-      <p>
-        உன் படைப்புகளுக்கான டிஜிட்டல் நூலகம்.
-      </p>
-    </div>
+<div class="section-heading reveal">
+<small>Books</small>
+<h2>E-Books</h2>
+<p>எழுத்துகளை ஒரு முழுமையான வடிவில் சேமிக்கும் இடம்.</p>
+</div>
 
-    <div class="feature">
+<div class="ebook">
 
-      <small>Coming Soon</small>
+<div class="book-placeholder reveal">
+<div>
+<div class="eyebrow">Coming Soon</div>
+<strong>Anamigam<br>Books</strong>
+</div>
+</div>
 
-      <h3>மனித இயல்பின் ரகசியங்கள்</h3>
+<div class="ebook-info reveal">
+<div class="tag">Future Publication</div>
+<h3>மின் நூல்கள்</h3>
+<p>
+எதிர்காலத்தில் வெளியிடப்படும் மின் நூல்கள்,
+சிறப்பு தொகுப்புகள் மற்றும் இலக்கியப்
+படைப்புகளுக்கான தனி பகுதி.
+</p>
+<a href="#" class="btn">Coming Soon</a>
+</div>
 
-      <p>
-        உன் நீண்டகால புத்தகத் திட்டத்தை இங்கே
-        ஒரு தனிப்பட்ட E-Book page ஆக வெளியிடலாம்.
-      </p>
-
-      <a class="button" href="#">
-        புத்தகத்தைப் பார்க்க →
-      </a>
-
-    </div>
-
-  </div>
-</section>
-
-
-<!-- ABOUT -->
-<section class="about" id="about">
-  <div class="container">
-
-    <div class="about-box">
-
-      <div class="initial">
-        V.M.
-      </div>
-
-      <div>
-
-        <div class="heading">
-          <small>About the Founder</small>
-          <h2>V. MATHESWARAN</h2>
-        </div>
-
-        <strong>
-          எழுத்தாளர் | Anamigam Journal நிறுவனர்
-        </strong>
-
-        <p>
-          எண்ணங்களை எழுத்தாகவும், எழுத்துகளை ஒரு
-          பயணமாகவும் மாற்றும் நோக்கில் உருவாக்கப்பட்ட
-          தளம் — Anamigam Journal.
-        </p>
-
-        <div class="signature">
-          — Mathes_writes
-        </div>
-
-      </div>
-
-    </div>
-
-  </div>
-</section>
-
-
-<!-- MENTOR -->
-<section>
-  <div class="container">
-
-    <div class="heading">
-      <small>Gratitude</small>
-      <h2>அன்பால் கிடைத்த ஒரு உறவு.</h2>
-    </div>
-
-    <div class="mentor">
-
-      <small>Mentor</small>
-
-      <h3>Dr. M. Surath Sheba</h3>
-
-      <p>
-        என் அம்மா — பிறப்பால் அல்ல… அன்பால் கிடைத்த உறவு. ❤️
-      </p>
-
-    </div>
-
-  </div>
+</div>
+</div>
 </section>
 
 </main>
 
-
-<!-- FOOTER -->
 <footer id="contact">
+<div class="container reveal">
 
-  <div class="container">
+<h3>Anamigam Journal</h3>
 
-    <div class="footer-line">
+<p>
+எண்ணங்களின் தடம்… எழுத்துகளின் பயணம்.
+</p>
 
-      <span>
-        © 2026 Anamigam Journal
-      </span>
+<div class="socials">
+<a href="#">Instagram</a>
+<a href="#">Facebook</a>
+<a href="#">YouTube</a>
+<a href="#">Email</a>
+</div>
 
-      <span>
-        V. Matheswaran · Writer & Founder
-      </span>
+<div class="copyright">
+© 2026 Anamigam Journal · V. Matheswaran
+</div>
 
-    </div>
-
-  </div>
-
+</div>
 </footer>
+
+<script>
+
+/* DARK MODE */
+
+function toggleTheme(){
+    document.body.classList.toggle("dark");
+
+    if(document.body.classList.contains("dark")){
+        localStorage.setItem("theme","dark");
+    }else{
+        localStorage.setItem("theme","light");
+    }
+}
+
+if(localStorage.getItem("theme")==="dark"){
+    document.body.classList.add("dark");
+}
+
+
+/* MOBILE MENU */
+
+function toggleMenu(){
+    document.getElementById("navLinks").classList.toggle("active");
+}
+
+
+/* SCROLL REVEAL */
+
+const observer = new IntersectionObserver((entries)=>{
+    entries.forEach(entry=>{
+        if(entry.isIntersecting){
+            entry.target.classList.add("show");
+        }
+    });
+},{
+    threshold:.12
+});
+
+document.querySelectorAll(".reveal").forEach(el=>{
+    observer.observe(el);
+});
+
+</script>
 
 </body>
   </html>
+  <!-- ABOUT -->
+
+<section id="about">
+<div class="container">
+
+<div class="section-heading reveal">
+<small>About</small>
+<h2>About Anamigam</h2>
+<p>ஒரு எழுத்தாளரின் தனிப்பட்ட இலக்கியப் பயணம்.</p>
+</div>
+
+<div class="about-grid">
+
+<div class="about-text reveal">
+
+<div class="quote-mark">“</div>
+
+<p>
+எழுத்து என்பது வெறும் வார்த்தைகளின் தொகுப்பு அல்ல.
+அது ஒரு மனிதனின் எண்ணங்களையும்,
+உணர்வுகளையும், அனுபவங்களையும்
+காலத்தைக் கடந்து கொண்டு செல்லும் ஒரு பாதை.
+</p>
+
+<p>
+<strong>Anamigam Journal</strong> —
+எண்ணங்களை எழுத்துகளாகவும்,
+எழுத்துகளை நினைவுகளாகவும் பதிவு செய்யும்
+ஒரு தமிழ் இலக்கியத் தளம்.
+</p>
+
+</div>
+
+
+<div class="founder-card reveal">
+
+<div class="founder-label">
+FOUNDER & WRITER
+</div>
+
+<h3>V. MATHESWARAN</h3>
+
+<p class="role">
+எழுத்தாளர் | Anamigam Journal நிறுவனர்
+</p>
+
+<div class="founder-line"></div>
+
+<p>
+கவிதை, சிறுகதை, சிந்தனை மற்றும்
+மனித இயல்பை ஆராயும் எழுத்துகளில்
+ஆர்வம் கொண்டவர்.
+</p>
+
+</div>
+
+</div>
+</div>
+</section>
+
+
+<!-- MENTOR -->
+
+<section id="mentor">
+<div class="container">
+
+<div class="section-heading reveal">
+<small>Guidance</small>
+<h2>Mentor</h2>
+</div>
+
+<div class="mentor-box reveal">
+
+<div class="mentor-symbol">
+✦
+</div>
+
+<div>
+
+<div class="mentor-title">
+MENTOR
+</div>
+
+<h3>Dr. M. Surath Sheba</h3>
+
+<p>
+எழுத்துப் பயணத்தில் வழிகாட்டியாகவும்,
+ஊக்கமாகவும், நம்பிக்கையாகவும்
+இருக்கும் ஒரு சிறப்பு உறவு.
+</p>
+
+<div class="mentor-note">
+என் அம்மா — பிறப்பால் அல்ல…<br>
+அன்பால் கிடைத்த உறவு. ❤️
+</div>
+
+</div>
+
+</div>
+
+</div>
+</section>
+
+
+<!-- ACHIEVEMENTS -->
+
+<section id="achievements">
+<div class="container">
+
+<div class="section-heading reveal">
+<small>Journey</small>
+<h2>Achievements</h2>
+<p>எதிர்காலத்தில் சேர்க்கப்படும் விருதுகள், வெளியீடுகள் மற்றும் சான்றிதழ்கள்.</p>
+</div>
+
+
+<div class="achievement-grid">
+
+<div class="achievement-card reveal">
+
+<div class="achievement-icon">
+🏆
+</div>
+
+<div>
+<span>AWARDS</span>
+<h3>Future Awards</h3>
+<p>
+பெறப்படும் இலக்கிய விருதுகள்
+மற்றும் அங்கீகாரங்கள் இங்கே பதிவு செய்யப்படும்.
+</p>
+</div>
+
+</div>
+
+
+<div class="achievement-card reveal">
+
+<div class="achievement-icon">
+📖
+</div>
+
+<div>
+<span>PUBLICATIONS</span>
+<h3>Publications</h3>
+<p>
+வெளியிடப்படும் படைப்புகள்,
+மின் நூல்கள் மற்றும் இதழ் வெளியீடுகள்.
+</p>
+</div>
+
+</div>
+
+
+<div class="achievement-card reveal">
+
+<div class="achievement-icon">
+📜
+</div>
+
+<div>
+<span>CERTIFICATES</span>
+<h3>Certificates</h3>
+<p>
+பங்கேற்பு, சாதனை மற்றும்
+இலக்கிய அங்கீகாரச் சான்றிதழ்கள்.
+</p>
+</div>
+
+</div>
+
+
+</div>
+</div>
+</section>
+
+
+<!-- LATEST -->
+
+<section id="latest">
+<div class="container">
+
+<div class="section-heading reveal">
+<small>Journal</small>
+<h2>Latest</h2>
+<p>புதிய படைப்புகளுக்கான பகுதி.</p>
+</div>
+
+
+<div class="latest-list">
+
+<article class="latest-item reveal">
+
+<div class="latest-number">
+01
+</div>
+
+<div class="latest-content">
+
+<div class="tag">
+COMING SOON
+</div>
+
+<h3>புதிய படைப்புகள் விரைவில்...</h3>
+
+<p>
+Anamigam Journal-ல் விரைவில்
+புதிய கவிதைகள், கதைகள் மற்றும்
+சிந்தனைகள் வெளியாகும்.
+</p>
+
+</div>
+
+<div class="latest-arrow">
+→
+</div>
+
+</article>
+
+
+<article class="latest-item reveal">
+
+<div class="latest-number">
+02
+</div>
+
+<div class="latest-content">
+
+<div class="tag">
+E-BOOK
+</div>
+
+<h3>முதல் மின் நூல்</h3>
+
+<p>
+முழுமையான மின் நூல் தொகுப்பு
+விரைவில் வெளியிடப்படும்.
+</p>
+
+</div>
+
+<div class="latest-arrow">
+→
+</div>
+
+</article>
+
+
+</div>
+</div>
+</section>
+
+
+<!-- CONTACT -->
+
+<section id="contact-section">
+<div class="container">
+
+<div class="section-heading reveal">
+<small>Connect</small>
+<h2>Contact</h2>
+<p>எழுத்துகளின் வழியாக இணைவோம்.</p>
+</div>
+
+
+<div class="contact-grid">
+
+<div class="contact-info reveal">
+
+<h3>Let's connect.</h3>
+
+<p>
+படைப்புகள், வெளியீடுகள் அல்லது
+Anamigam Journal தொடர்பான
+விஷயங்களுக்கு தொடர்பு கொள்ளலாம்.
+</p>
+
+
+<div class="contact-detail">
+
+<span>EMAIL</span>
+
+<a href="mailto:anamigamjournal@gmail.com">
+anamigamjournal@gmail.com
+</a>
+
+</div>
+
+
+<div class="contact-detail">
+
+<span>WRITER</span>
+
+<p>
+V. Matheswaran
+</p>
+
+</div>
+
+
+</div>
+
+
+<form class="contact-form reveal"
+onsubmit="sendMessage(event)">
+
+<label>
+Name
+<input
+type="text"
+id="name"
+placeholder="Your name"
+required>
+</label>
+
+
+<label>
+Email
+<input
+type="email"
+id="email"
+placeholder="Your email"
+required>
+</label>
+
+
+<label>
+Message
+<textarea
+id="message"
+rows="6"
+placeholder="Write your message..."
+required></textarea>
+</label>
+
+
+<button type="submit" class="btn">
+Send Message →
+</button>
+
+</form>
+
+</div>
+
+</div>
+</section>
+
+
+<!-- FINAL QUOTE -->
+
+<section class="final-quote">
+
+<div class="container reveal">
+
+<div class="big-quote">
+“
+</div>
+
+<h2>
+சில எண்ணங்கள்<br>
+எழுதப்படுவதற்காகவே பிறக்கின்றன.
+</h2>
+
+<p>
+— Anamigam Journal
+</p>
+
+</div>
+
+</section>
+
+
+<style>
+
+/* ABOUT */
+
+.about-grid{
+    display:grid;
+    grid-template-columns:1.2fr .8fr;
+    gap:70px;
+    align-items:center;
+}
+
+.about-text{
+    font-size:18px;
+    max-width:700px;
+}
+
+.about-text p{
+    margin-bottom:22px;
+    opacity:.8;
+}
+
+.quote-mark{
+    font-size:90px;
+    line-height:.5;
+    opacity:.18;
+    margin-bottom:30px;
+}
+
+.founder-card{
+    border:1px solid #d8cfc0;
+    padding:40px;
+}
+
+.dark .founder-card{
+    border-color:#403b34;
+}
+
+.founder-label,
+.mentor-title{
+    font-size:10px;
+    letter-spacing:3px;
+    opacity:.5;
+}
+
+.founder-card h3{
+    font-size:30px;
+    font-weight:500;
+    margin:14px 0 3px;
+}
+
+.role{
+    font-size:13px;
+    opacity:.6;
+}
+
+.founder-line{
+    width:45px;
+    height:1px;
+    background:currentColor;
+    margin:25px 0;
+}
+
+.founder-card > p:last-child{
+    font-size:14px;
+    opacity:.7;
+}
+
+
+/* MENTOR */
+
+.mentor-box{
+    border-top:1px solid #d8cfc0;
+    border-bottom:1px solid #d8cfc0;
+    padding:55px 20px;
+    display:flex;
+    gap:35px;
+    align-items:flex-start;
+}
+
+.dark .mentor-box{
+    border-color:#403b34;
+}
+
+.mentor-symbol{
+    font-size:32px;
+    opacity:.5;
+}
+
+.mentor-box h3{
+    font-size:32px;
+    font-weight:500;
+    margin:10px 0;
+}
+
+.mentor-box p{
+    max-width:650px;
+    opacity:.7;
+}
+
+.mentor-note{
+    margin-top:22px;
+    font-size:15px;
+    font-style:italic;
+    opacity:.8;
+}
+
+
+/* ACHIEVEMENTS */
+
+.achievement-grid{
+    display:grid;
+    grid-template-columns:repeat(3,1fr);
+    gap:20px;
+}
+
+.achievement-card{
+    border:1px solid #d8cfc0;
+    padding:30px;
+    display:flex;
+    gap:20px;
+    transition:.35s;
+}
+
+.dark .achievement-card{
+    border-color:#403b34;
+}
+
+.achievement-card:hover{
+    transform:translateY(-5px);
+}
+
+.achievement-icon{
+    font-size:25px;
+}
+
+.achievement-card span{
+    font-size:9px;
+    letter-spacing:2px;
+    opacity:.5;
+}
+
+.achievement-card h3{
+    font-size:21px;
+    font-weight:500;
+    margin:6px 0;
+}
+
+.achievement-card p{
+    font-size:13px;
+    opacity:.65;
+}
+
+
+/* LATEST */
+
+.latest-list{
+    border-top:1px solid #d8cfc0;
+}
+
+.dark .latest-list{
+    border-color:#403b34;
+}
+
+.latest-item{
+    display:grid;
+    grid-template-columns:70px 1fr 50px;
+    align-items:center;
+    gap:25px;
+    padding:35px 10px;
+    border-bottom:1px solid #d8cfc0;
+    transition:.3s;
+}
+
+.dark .latest-item{
+    border-color:#403b34;
+}
+
+.latest-item:hover{
+    padding-left:20px;
+}
+
+.latest-number{
+    font-size:12px;
+    opacity:.4;
+}
+
+.latest-content .tag{
+    font-size:9px;
+    letter-spacing:2px;
+    opacity:.5;
+}
+
+.latest-content h3{
+    font-size:23px;
+    font-weight:500;
+    margin:5px 0;
+}
+
+.latest-content p{
+    font-size:14px;
+    opacity:.65;
+}
+
+.latest-arrow{
+    font-size:25px;
+    opacity:.5;
+}
+
+
+/* CONTACT */
+
+.contact-grid{
+    display:grid;
+    grid-template-columns:.8fr 1.2fr;
+    gap:70px;
+}
+
+.contact-info h3{
+    font-size:34px;
+    font-weight:500;
+    margin-bottom:15px;
+}
+
+.contact-info > p{
+    opacity:.7;
+    margin-bottom:35px;
+}
+
+.contact-detail{
+    margin-top:25px;
+}
+
+.contact-detail span{
+    display:block;
+    font-size:9px;
+    letter-spacing:3px;
+    opacity:.5;
+    margin-bottom:4px;
+}
+
+.contact-detail a,
+.contact-detail p{
+    font-size:14px;
+}
+
+
+.contact-form{
+    display:flex;
+    flex-direction:column;
+    gap:20px;
+}
+
+.contact-form label{
+    font-size:11px;
+    letter-spacing:1px;
+}
+
+.contact-form input,
+.contact-form textarea{
+    display:block;
+    width:100%;
+    margin-top:7px;
+    padding:14px;
+    border:1px solid #d2c8b8;
+    background:transparent;
+    color:inherit;
+    font-family:inherit;
+    outline:none;
+    resize:vertical;
+}
+
+.dark .contact-form input,
+.dark .contact-form textarea{
+    border-color:#474239;
+}
+
+.contact-form input:focus,
+.contact-form textarea:focus{
+    border-color:currentColor;
+}
+
+.contact-form .btn{
+    align-self:flex-start;
+    background:transparent;
+    color:inherit;
+    cursor:pointer;
+}
+
+
+/* FINAL QUOTE */
+
+.final-quote{
+    text-align:center;
+    padding:130px 20px;
+}
+
+.big-quote{
+    font-size:80px;
+    line-height:.6;
+    opacity:.15;
+}
+
+.final-quote h2{
+    font-size:clamp(30px,5vw,55px);
+    font-weight:500;
+    line-height:1.5;
+    margin:25px 0;
+}
+
+.final-quote p{
+    font-size:12px;
+    letter-spacing:3px;
+    opacity:.5;
+}
+
+
+/* CONTACT MOBILE */
+
+@media(max-width:800px){
+
+    .about-grid,
+    .contact-grid{
+        grid-template-columns:1fr;
+        gap:40px;
+    }
+
+    .achievement-grid{
+        grid-template-columns:1fr;
+    }
+
+    .mentor-box{
+        padding:40px 5px;
+    }
+
+    .mentor-box h3{
+        font-size:26px;
+    }
+
+    .latest-item{
+        grid-template-columns:40px 1fr 25px;
+        gap:12px;
+    }
+
+    .latest-content h3{
+        font-size:19px;
+    }
+
+    .contact-info h3{
+        font-size:29px;
+    }
+
+}
+
+</style>
+
+
+<script>
+
+/* CONTACT FORM */
+
+function sendMessage(event){
+
+    event.preventDefault();
+
+    const name =
+        document.getElementById("name").value;
+
+    alert(
+        "Thank you, " +
+        name +
+        "! Your message has been received."
+    );
+
+}
+
+
+/* CLOSE MOBILE MENU AFTER CLICK */
+
+document.querySelectorAll(".nav-links a").forEach(link=>{
+
+    link.addEventListener("click",()=>{
+
+        document
+        .getElementById("navLinks")
+        .classList.remove("active");
+
+    });
+
+});
+
+  </script>
+  <!-- PART 3 : PREMIUM FEATURES -->
+
+<!-- SEARCH -->
+
+<div class="search-overlay" id="searchOverlay">
+
+    <button class="search-close" onclick="closeSearch()">×</button>
+
+    <div class="search-box">
+
+        <div class="search-label">
+            SEARCH ANAMIGAM
+        </div>
+
+        <input
+            type="search"
+            id="searchInput"
+            placeholder="தேடுங்கள்..."
+            onkeyup="performSearch()"
+        >
+
+        <div id="searchResults"></div>
+
+    </div>
+
+</div>
+
+
+<!-- READING PREVIEW -->
+
+<div class="reading-modal" id="readingModal">
+
+    <div class="reading-container">
+
+        <button
+            class="reading-close"
+            onclick="closeReading()">
+            ×
+        </button>
+
+        <div class="reading-meta">
+            ANAMIGAM JOURNAL · READING
+        </div>
+
+        <h2 id="readingTitle">
+            Title
+        </h2>
+
+        <div class="reading-divider"></div>
+
+        <div class="reading-actions">
+
+            <button onclick="likeArticle(this)">
+                ♡ <span>Like</span>
+            </button>
+
+            <button onclick="bookmarkArticle(this)">
+                ☆ <span>Bookmark</span>
+            </button>
+
+            <button onclick="shareArticle()">
+                ↗ <span>Share</span>
+            </button>
+
+        </div>
+
+        <article id="readingText">
+
+            <p>
+                இந்த இடத்தில் எதிர்காலத்தில்
+                முழுமையான படைப்பு இடம்பெறும்.
+            </p>
+
+            <p>
+                Anamigam Journal-ன் ஒவ்வொரு
+                படைப்பும் தனித்துவமான வாசிப்பு
+                அனுபவமாக வடிவமைக்கப்படும்.
+            </p>
+
+        </article>
+
+    </div>
+
+</div>
+
+
+<!-- BACK TO TOP -->
+
+<button
+    id="topButton"
+    onclick="scrollToTop()"
+    aria-label="Back to top">
+    ↑
+</button>
+
+
+<style>
+
+/* SEARCH OVERLAY */
+
+.search-overlay{
+
+    position:fixed;
+
+    inset:0;
+
+    z-index:2000;
+
+    background:rgba(248,244,236,.98);
+
+    display:none;
+
+    align-items:flex-start;
+
+    justify-content:center;
+
+    padding-top:15vh;
+
+}
+
+.dark .search-overlay{
+
+    background:rgba(23,22,20,.98);
+
+}
+
+.search-overlay.active{
+
+    display:flex;
+
+}
+
+.search-box{
+
+    width:min(700px,88%);
+
+}
+
+.search-label{
+
+    font-size:10px;
+
+    letter-spacing:4px;
+
+    opacity:.5;
+
+    margin-bottom:15px;
+
+}
+
+.search-box input{
+
+    width:100%;
+
+    border:0;
+
+    border-bottom:1px solid #bbb1a1;
+
+    background:transparent;
+
+    color:inherit;
+
+    padding:15px 0;
+
+    font-size:30px;
+
+    font-family:inherit;
+
+    outline:none;
+
+}
+
+.dark .search-box input{
+
+    border-color:#575149;
+
+}
+
+.search-close{
+
+    position:absolute;
+
+    top:30px;
+
+    right:35px;
+
+    border:0;
+
+    background:none;
+
+    color:inherit;
+
+    font-size:35px;
+
+    cursor:pointer;
+
+}
+
+#searchResults{
+
+    margin-top:30px;
+
+}
+
+.search-result{
+
+    padding:15px 0;
+
+    border-bottom:1px solid #ddd4c5;
+
+    cursor:pointer;
+
+}
+
+.dark .search-result{
+
+    border-color:#3d3932;
+
+}
+
+.search-result strong{
+
+    display:block;
+
+    font-size:18px;
+
+}
+
+.search-result small{
+
+    opacity:.5;
+
+}
+
+
+/* READING MODAL */
+
+.reading-modal{
+
+    position:fixed;
+
+    inset:0;
+
+    z-index:1900;
+
+    background:#f8f4ec;
+
+    overflow-y:auto;
+
+    display:none;
+
+}
+
+.dark .reading-modal{
+
+    background:#171614;
+
+}
+
+.reading-modal.active{
+
+    display:block;
+
+}
+
+.reading-container{
+
+    width:min(800px,90%);
+
+    margin:100px auto;
+
+    position:relative;
+
+}
+
+.reading-close{
+
+    position:fixed;
+
+    top:30px;
+
+    right:35px;
+
+    width:45px;
+
+    height:45px;
+
+    border:1px solid #cfc5b5;
+
+    border-radius:50%;
+
+    background:transparent;
+
+    color:inherit;
+
+    font-size:25px;
+
+    cursor:pointer;
+
+}
+
+.dark .reading-close{
+
+    border-color:#474239;
+
+}
+
+.reading-meta{
+
+    font-size:10px;
+
+    letter-spacing:3px;
+
+    opacity:.5;
+
+    margin-bottom:20px;
+
+}
+
+.reading-container h2{
+
+    font-size:clamp(35px,6vw,65px);
+
+    font-weight:500;
+
+    line-height:1.25;
+
+}
+
+.reading-divider{
+
+    width:60px;
+
+    height:1px;
+
+    background:currentColor;
+
+    margin:35px 0;
+
+}
+
+.reading-actions{
+
+    display:flex;
+
+    gap:12px;
+
+    margin-bottom:50px;
+
+}
+
+.reading-actions button{
+
+    border:1px solid #cfc5b5;
+
+    background:transparent;
+
+    color:inherit;
+
+    padding:9px 15px;
+
+    cursor:pointer;
+
+    font-family:inherit;
+
+    font-size:12px;
+
+}
+
+.dark .reading-actions button{
+
+    border-color:#474239;
+
+}
+
+.reading-actions button:hover{
+
+    transform:translateY(-2px);
+
+}
+
+#readingText{
+
+    font-size:19px;
+
+    line-height:2;
+
+}
+
+#readingText p{
+
+    margin-bottom:28px;
+
+}
+
+
+/* TOP BUTTON */
+
+#topButton{
+
+    position:fixed;
+
+    right:22px;
+
+    bottom:22px;
+
+    z-index:900;
+
+    width:45px;
+
+    height:45px;
+
+    border-radius:50%;
+
+    border:1px solid #cfc5b5;
+
+    background:#f8f4ec;
+
+    color:#29251f;
+
+    cursor:pointer;
+
+    display:none;
+
+    font-size:20px;
+
+}
+
+.dark #topButton{
+
+    background:#171614;
+
+    color:#eee8dc;
+
+    border-color:#474239;
+
+}
+
+#topButton.visible{
+
+    display:block;
+
+}
+
+
+/* PREMIUM HOVER */
+
+.feature-card,
+.card,
+.achievement-card,
+.founder-card{
+
+    will-change:transform;
+
+}
+
+
+/* MOBILE */
+
+@media(max-width:600px){
+
+    .search-box input{
+
+        font-size:24px;
+
+    }
+
+    .search-close{
+
+        right:20px;
+
+        top:20px;
+
+    }
+
+    .reading-container{
+
+        margin:80px auto;
+
+    }
+
+    .reading-actions{
+
+        flex-wrap:wrap;
+
+    }
+
+    #readingText{
+
+        font-size:17px;
+
+    }
+
+}
+
+</style>
+
+
+<script>
+
+/* SEARCH */
+
+function openSearch(){
+
+    document
+    .getElementById("searchOverlay")
+    .classList.add("active");
+
+    setTimeout(()=>{
+
+        document
+        .getElementById("searchInput")
+        .focus();
+
+    },100);
+
+}
+
+
+function closeSearch(){
+
+    document
+    .getElementById("searchOverlay")
+    .classList.remove("active");
+
+    document
+    .getElementById("searchInput")
+    .value="";
+
+    document
+    .getElementById("searchResults")
+    .innerHTML="";
+
+}
+
+
+function performSearch(){
+
+    const query =
+        document
+        .getElementById("searchInput")
+        .value
+        .toLowerCase()
+        .trim();
+
+    const results =
+        document
+        .getElementById("searchResults");
+
+    if(!query){
+
+        results.innerHTML="";
+
+        return;
+
+    }
+
+    const items=[
+
+        {
+            title:"கவிதைகள்",
+            category:"Poetry"
+        },
+
+        {
+            title:"சிறுகதைகள்",
+            category:"Stories"
+        },
+
+        {
+            title:"சிந்தனைகள்",
+            category:"Thoughts"
+        },
+
+        {
+            title:"மின் நூல்கள்",
+            category:"E-Books"
+        },
+
+        {
+            title:"Anamigam Journal",
+            category:"Journal"
+        },
+
+        {
+            title:"V. Matheswaran",
+            category:"Founder"
+        }
+
+    ];
+
+    const filtered=items.filter(item=>
+
+        item.title
+        .toLowerCase()
+        .includes(query)
+
+        ||
+
+        item.category
+        .toLowerCase()
+        .includes(query)
+
+    );
+
+
+    if(filtered.length===0){
+
+        results.innerHTML=
+        "<p style='opacity:.5'>எந்த முடிவும் கிடைக்கவில்லை.</p>";
+
+        return;
+
+    }
+
+
+    results.innerHTML=
+
+        filtered.map(item=>`
+
+            <div class="search-result"
+                 onclick="openReading('${item.title}')">
+
+                <strong>${item.title}</strong>
+
+                <small>${item.category}</small>
+
+            </div>
+
+        `).join("");
+
+}
+
+
+/* READING */
+
+function openReading(title){
+
+    document
+    .getElementById("readingTitle")
+    .innerText=title;
+
+    document
+    .getElementById("readingModal")
+    .classList.add("active");
+
+    closeSearch();
+
+    document.body.style.overflow="hidden";
+
+}
+
+
+function closeReading(){
+
+    document
+    .getElementById("readingModal")
+    .classList.remove("active");
+
+    document.body.style.overflow="";
+
+}
+
+
+/* LIKE */
+
+function likeArticle(button){
+
+    const span=button.querySelector("span");
+
+    if(button.classList.contains("liked")){
+
+        button.classList.remove("liked");
+
+        button.innerHTML="♡ <span>Like</span>";
+
+    }else{
+
+        button.classList.add("liked");
+
+        button.innerHTML="♥ <span>Liked</span>";
+
+    }
+
+}
+
+
+/* BOOKMARK */
+
+function bookmarkArticle(button){
+
+    const span=button.querySelector("span");
+
+    if(button.classList.contains("saved")){
+
+        button.classList.remove("saved");
+
+        button.innerHTML="☆ <span>Bookmark</span>";
+
+    }else{
+
+        button.classList.add("saved");
+
+        button.innerHTML="★ <span>Saved</span>";
+
+    }
+
+}
+
+
+/* SHARE */
+
+function shareArticle(){
+
+    const title=
+        document
+        .getElementById("readingTitle")
+        .innerText;
+
+    if(navigator.share){
+
+        navigator.share({
+
+            title:title,
+
+            text:
+            "Read this on Anamigam Journal",
+
+            url:window.location.href
+
+        });
+
+    }else{
+
+        navigator.clipboard
+        .writeText(window.location.href);
+
+        alert("Link copied!");
+
+    }
+
+}
+
+
+/* BACK TO TOP */
+
+window.addEventListener("scroll",()=>{
+
+    const button=
+        document.getElementById("topButton");
+
+    if(window.scrollY>500){
+
+        button.classList.add("visible");
+
+    }else{
+
+        button.classList.remove("visible");
+
+    }
+
+});
+
+
+function scrollToTop(){
+
+    window.scrollTo({
+
+        top:0,
+
+        behavior:"smooth"
+
+    });
+
+}
+
+
+/* KEYBOARD */
+
+document.addEventListener("keydown",(event)=>{
+
+    if(event.key==="Escape"){
+
+        closeSearch();
+
+        closeReading();
+
+    }
+
+});
+
+
+/* ADD SEARCH BUTTON */
+
+const navActions=
+    document.querySelector(".nav-actions");
+
+const searchButton=
+    document.createElement("button");
+
+searchButton.className="icon-btn";
+
+searchButton.innerHTML="⌕";
+
+searchButton.title="Search";
+
+searchButton.onclick=openSearch;
+
+navActions.insertBefore(
+    searchButton,
+    navActions.firstChild
+);
+
+  </script>
