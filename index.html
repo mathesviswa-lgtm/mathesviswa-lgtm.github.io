@@ -1,0 +1,536 @@
+<!DOCTYPE html>
+<html lang="ta">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Anamigam Journal</title>
+  <meta name="description" content="Anamigam Journal — எண்ணங்களின் தடம்… எழுத்துகளின் பயணம்.">
+
+  <style>
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      background: #f7f2e8;
+      color: #25231f;
+      font-family: Georgia, "Noto Serif Tamil", serif;
+      line-height: 1.8;
+    }
+
+    a {
+      color: inherit;
+      text-decoration: none;
+    }
+
+    .container {
+      width: min(1100px, 90%);
+      margin: auto;
+    }
+
+    /* NAVIGATION */
+    nav {
+      padding: 24px 0;
+      border-bottom: 1px solid #d9cfbd;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .logo {
+      font-size: 24px;
+      font-weight: bold;
+      letter-spacing: 4px;
+    }
+
+    .logo span {
+      display: block;
+      font-size: 10px;
+      letter-spacing: 7px;
+      color: #706a60;
+      text-align: center;
+    }
+
+    .menu {
+      display: flex;
+      gap: 25px;
+      color: #706a60;
+      font-size: 14px;
+    }
+
+    /* HERO */
+    .hero {
+      min-height: 80vh;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      text-align: center;
+    }
+
+    .symbol {
+      width: 75px;
+      height: 75px;
+      border: 1px solid #687052;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin: 0 auto 30px;
+      color: #687052;
+      font-size: 30px;
+    }
+
+    h1 {
+      font-size: clamp(45px, 9vw, 90px);
+      letter-spacing: 8px;
+      line-height: 1;
+    }
+
+    .journal {
+      margin-top: 18px;
+      color: #706a60;
+      letter-spacing: 9px;
+      font-size: 14px;
+    }
+
+    .tagline {
+      margin-top: 30px;
+      font-size: clamp(19px, 3vw, 28px);
+    }
+
+    .founder {
+      margin-top: 28px;
+      color: #706a60;
+      font-size: 15px;
+    }
+
+    .founder strong {
+      color: #25231f;
+    }
+
+    .button {
+      display: inline-block;
+      margin-top: 30px;
+      padding: 10px 25px;
+      border: 1px solid #25231f;
+      font-size: 14px;
+    }
+
+    .button:hover {
+      background: #25231f;
+      color: #fffdf8;
+    }
+
+    /* SECTIONS */
+    section {
+      padding: 85px 0;
+    }
+
+    .heading {
+      margin-bottom: 35px;
+    }
+
+    .heading small {
+      color: #687052;
+      letter-spacing: 3px;
+      text-transform: uppercase;
+    }
+
+    .heading h2 {
+      font-size: 34px;
+      margin-top: 5px;
+    }
+
+    .heading p {
+      color: #706a60;
+      margin-top: 10px;
+    }
+
+    /* CARDS */
+    .grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 20px;
+    }
+
+    .card {
+      background: #fffdf8;
+      border: 1px solid #d9cfbd;
+      padding: 32px;
+      min-height: 210px;
+    }
+
+    .card-number {
+      color: #687052;
+      font-size: 13px;
+    }
+
+    .card h3 {
+      margin: 18px 0 8px;
+      font-size: 22px;
+    }
+
+    .card p {
+      color: #706a60;
+      font-size: 14px;
+    }
+
+    /* FEATURE */
+    .feature {
+      background: #fffdf8;
+      border: 1px solid #d9cfbd;
+      padding: 45px;
+    }
+
+    .feature h3 {
+      font-size: 30px;
+      margin: 10px 0;
+    }
+
+    .feature p {
+      color: #706a60;
+      max-width: 700px;
+    }
+
+    /* ABOUT */
+    .about {
+      background: #eee6d7;
+      border-top: 1px solid #d9cfbd;
+      border-bottom: 1px solid #d9cfbd;
+    }
+
+    .about-box {
+      display: grid;
+      grid-template-columns: 1fr 1.5fr;
+      gap: 60px;
+      align-items: center;
+    }
+
+    .initial {
+      width: 300px;
+      height: 300px;
+      border: 1px solid #d9cfbd;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 65px;
+      color: #687052;
+    }
+
+    .about p {
+      color: #706a60;
+      margin-top: 15px;
+    }
+
+    .signature {
+      margin-top: 25px;
+      font-style: italic;
+    }
+
+    /* MENTOR */
+    .mentor {
+      background: #fffdf8;
+      border: 1px solid #d9cfbd;
+      padding: 35px;
+    }
+
+    .mentor h3 {
+      font-size: 25px;
+      margin: 8px 0;
+    }
+
+    .mentor p {
+      color: #706a60;
+    }
+
+    /* FOOTER */
+    footer {
+      padding: 50px 0 25px;
+    }
+
+    .footer-line {
+      border-top: 1px solid #d9cfbd;
+      padding-top: 25px;
+      display: flex;
+      justify-content: space-between;
+      color: #706a60;
+      font-size: 12px;
+    }
+
+    /* MOBILE */
+    @media (max-width: 700px) {
+      .menu {
+        display: none;
+      }
+
+      .grid,
+      .about-box {
+        grid-template-columns: 1fr;
+      }
+
+      .initial {
+        width: 100%;
+        height: 230px;
+      }
+
+      .feature {
+        padding: 30px;
+      }
+
+      section {
+        padding: 60px 0;
+      }
+    }
+  </style>
+</head>
+
+<body>
+
+<header id="home">
+  <div class="container">
+
+    <nav>
+      <a class="logo" href="#home">
+        ANAMIGAM
+        <span>JOURNAL</span>
+      </a>
+
+      <div class="menu">
+        <a href="#writings">எழுத்துகள்</a>
+        <a href="#ebooks">E-Books</a>
+        <a href="#about">என்னைப் பற்றி</a>
+        <a href="#contact">தொடர்பு</a>
+      </div>
+    </nav>
+
+  </div>
+
+  <div class="hero container">
+    <div>
+
+      <div class="symbol">✦</div>
+
+      <h1>ANAMIGAM</h1>
+
+      <div class="journal">J O U R N A L</div>
+
+      <p class="tagline">
+        எண்ணங்களின் தடம்… எழுத்துகளின் பயணம்.
+      </p>
+
+      <div class="founder">
+        <strong>V. MATHESWARAN</strong><br>
+        எழுத்தாளர் | Anamigam Journal நிறுவனர்
+      </div>
+
+      <a class="button" href="#writings">
+        எழுத்துப் பயணத்திற்குள் →
+      </a>
+
+    </div>
+  </div>
+</header>
+
+
+<main>
+
+<!-- WRITINGS -->
+<section id="writings">
+  <div class="container">
+
+    <div class="heading">
+      <small>Featured Writing</small>
+      <h2>சொற்கள் தொடங்கும் இடம்.</h2>
+      <p>
+        எண்ணங்கள், உணர்வுகள், மனிதர்கள், வாழ்க்கை —
+        ஒவ்வொரு எழுத்தும் ஒரு தடம்.
+      </p>
+    </div>
+
+    <div class="feature">
+      <small>Latest Feature</small>
+
+      <h3>என் எழுத்தின் முதல் பக்கம்</h3>
+
+      <p>
+        இங்கு உன் சிறந்த கவிதை, சிறுகதை அல்லது கட்டுரையை
+        முக்கிய படைப்பாக வெளியிடலாம்.
+      </p>
+
+      <a class="button" href="#">
+        முழுவதும் வாசிக்க →
+      </a>
+    </div>
+
+  </div>
+</section>
+
+
+<!-- CATEGORIES -->
+<section>
+  <div class="container">
+
+    <div class="heading">
+      <small>Explore</small>
+      <h2>எழுத்தின் பல முகங்கள்.</h2>
+    </div>
+
+    <div class="grid">
+
+      <article class="card">
+        <div class="card-number">01</div>
+        <h3>கவிதைகள்</h3>
+        <p>
+          மனதைத் தொட்டுச் செல்லும் கவிதைகள்
+          மற்றும் குறுங்கவிதைகள்.
+        </p>
+      </article>
+
+      <article class="card">
+        <div class="card-number">02</div>
+        <h3>சிறுகதைகள்</h3>
+        <p>
+          மனிதர்களையும் வாழ்க்கையையும்
+          பேசும் கதைகள்.
+        </p>
+      </article>
+
+      <article class="card">
+        <div class="card-number">03</div>
+        <h3>கட்டுரைகள்</h3>
+        <p>
+          சிந்திக்க வைக்கும் கருத்துகள்,
+          பார்வைகள் மற்றும் பதிவுகள்.
+        </p>
+      </article>
+
+    </div>
+
+  </div>
+</section>
+
+
+<!-- EBOOK -->
+<section id="ebooks">
+  <div class="container">
+
+    <div class="heading">
+      <small>Library</small>
+      <h2>E-Books</h2>
+      <p>
+        உன் படைப்புகளுக்கான டிஜிட்டல் நூலகம்.
+      </p>
+    </div>
+
+    <div class="feature">
+
+      <small>Coming Soon</small>
+
+      <h3>மனித இயல்பின் ரகசியங்கள்</h3>
+
+      <p>
+        உன் நீண்டகால புத்தகத் திட்டத்தை இங்கே
+        ஒரு தனிப்பட்ட E-Book page ஆக வெளியிடலாம்.
+      </p>
+
+      <a class="button" href="#">
+        புத்தகத்தைப் பார்க்க →
+      </a>
+
+    </div>
+
+  </div>
+</section>
+
+
+<!-- ABOUT -->
+<section class="about" id="about">
+  <div class="container">
+
+    <div class="about-box">
+
+      <div class="initial">
+        V.M.
+      </div>
+
+      <div>
+
+        <div class="heading">
+          <small>About the Founder</small>
+          <h2>V. MATHESWARAN</h2>
+        </div>
+
+        <strong>
+          எழுத்தாளர் | Anamigam Journal நிறுவனர்
+        </strong>
+
+        <p>
+          எண்ணங்களை எழுத்தாகவும், எழுத்துகளை ஒரு
+          பயணமாகவும் மாற்றும் நோக்கில் உருவாக்கப்பட்ட
+          தளம் — Anamigam Journal.
+        </p>
+
+        <div class="signature">
+          — Mathes_writes
+        </div>
+
+      </div>
+
+    </div>
+
+  </div>
+</section>
+
+
+<!-- MENTOR -->
+<section>
+  <div class="container">
+
+    <div class="heading">
+      <small>Gratitude</small>
+      <h2>அன்பால் கிடைத்த ஒரு உறவு.</h2>
+    </div>
+
+    <div class="mentor">
+
+      <small>Mentor</small>
+
+      <h3>Dr. M. Surath Sheba</h3>
+
+      <p>
+        என் அம்மா — பிறப்பால் அல்ல… அன்பால் கிடைத்த உறவு. ❤️
+      </p>
+
+    </div>
+
+  </div>
+</section>
+
+</main>
+
+
+<!-- FOOTER -->
+<footer id="contact">
+
+  <div class="container">
+
+    <div class="footer-line">
+
+      <span>
+        © 2026 Anamigam Journal
+      </span>
+
+      <span>
+        V. Matheswaran · Writer & Founder
+      </span>
+
+    </div>
+
+  </div>
+
+</footer>
+
+</body>
+  </html>
