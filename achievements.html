@@ -1,0 +1,629 @@
+<!DOCTYPE html>
+<html lang="ta">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Achievements | Anamigam Journal</title>
+
+<meta name="description"
+content="V. Matheswaran – Awards, Certificates, Publications and Literary Achievements | Anamigam Journal">
+
+<style>
+:root{
+    --bg:#f7f3eb;
+    --card:#fffdf8;
+    --text:#24211d;
+    --muted:#756f66;
+    --line:#ddd5c8;
+    --accent:#8b5e3c;
+    --soft:#eee7dc;
+}
+
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+}
+
+html{
+    scroll-behavior:smooth;
+}
+
+body{
+    font-family:Georgia,"Noto Serif Tamil",serif;
+    background:var(--bg);
+    color:var(--text);
+    line-height:1.7;
+    transition:.3s;
+}
+
+body.dark{
+    --bg:#151412;
+    --card:#201e1b;
+    --text:#f4eee4;
+    --muted:#b8afa2;
+    --line:#3a352e;
+    --accent:#d19a6a;
+    --soft:#2b2722;
+}
+
+a{
+    text-decoration:none;
+    color:inherit;
+}
+
+nav{
+    position:sticky;
+    top:0;
+    z-index:1000;
+    backdrop-filter:blur(15px);
+    background:rgba(247,243,235,.88);
+    border-bottom:1px solid var(--line);
+}
+
+.dark nav{
+    background:rgba(21,20,18,.9);
+}
+
+.nav-inner{
+    max-width:1150px;
+    margin:auto;
+    padding:18px 25px;
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+}
+
+.logo{
+    font-size:22px;
+    font-weight:bold;
+    letter-spacing:.5px;
+}
+
+.logo span{
+    color:var(--accent);
+}
+
+.nav-links{
+    display:flex;
+    gap:25px;
+    align-items:center;
+}
+
+.nav-links a{
+    font-size:14px;
+    color:var(--muted);
+}
+
+.nav-links a:hover{
+    color:var(--accent);
+}
+
+.theme{
+    border:1px solid var(--line);
+    background:var(--card);
+    color:var(--text);
+    border-radius:50%;
+    width:38px;
+    height:38px;
+    cursor:pointer;
+}
+
+.hero{
+    max-width:1100px;
+    margin:auto;
+    padding:100px 25px 70px;
+}
+
+.eyebrow{
+    color:var(--accent);
+    letter-spacing:3px;
+    font-size:12px;
+    text-transform:uppercase;
+    margin-bottom:15px;
+}
+
+h1{
+    font-size:clamp(42px,7vw,76px);
+    line-height:1.05;
+    margin-bottom:20px;
+}
+
+.hero p{
+    max-width:700px;
+    color:var(--muted);
+    font-size:18px;
+}
+
+.divider{
+    width:70px;
+    height:1px;
+    background:var(--accent);
+    margin:35px 0;
+}
+
+.section{
+    max-width:1100px;
+    margin:auto;
+    padding:60px 25px;
+}
+
+.section-title{
+    font-size:34px;
+    margin-bottom:10px;
+}
+
+.section-sub{
+    color:var(--muted);
+    margin-bottom:35px;
+}
+
+.grid{
+    display:grid;
+    grid-template-columns:repeat(3,1fr);
+    gap:22px;
+}
+
+.card{
+    background:var(--card);
+    border:1px solid var(--line);
+    padding:28px;
+    min-height:230px;
+    transition:.3s;
+    position:relative;
+    overflow:hidden;
+}
+
+.card:hover{
+    transform:translateY(-5px);
+    box-shadow:0 15px 35px rgba(0,0,0,.08);
+}
+
+.number{
+    position:absolute;
+    right:20px;
+    top:15px;
+    font-size:45px;
+    color:var(--soft);
+    font-weight:bold;
+}
+
+.icon{
+    font-size:30px;
+    margin-bottom:18px;
+}
+
+.card h3{
+    font-size:21px;
+    margin-bottom:10px;
+}
+
+.card p{
+    color:var(--muted);
+    font-size:14px;
+}
+
+.status{
+    display:inline-block;
+    margin-top:18px;
+    padding:5px 12px;
+    border:1px solid var(--line);
+    color:var(--accent);
+    font-size:11px;
+    letter-spacing:1px;
+}
+
+.gallery{
+    display:grid;
+    grid-template-columns:repeat(2,1fr);
+    gap:25px;
+}
+
+.certificate{
+    background:var(--card);
+    border:1px solid var(--line);
+    padding:18px;
+}
+
+.certificate-box{
+    height:270px;
+    border:1px dashed var(--line);
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    text-align:center;
+    color:var(--muted);
+    background:var(--soft);
+    font-size:14px;
+}
+
+.certificate h3{
+    margin-top:18px;
+}
+
+.certificate p{
+    color:var(--muted);
+    font-size:13px;
+}
+
+.quote{
+    margin:40px auto;
+    max-width:800px;
+    text-align:center;
+    padding:45px 25px;
+    border-top:1px solid var(--line);
+    border-bottom:1px solid var(--line);
+}
+
+.quote-mark{
+    font-size:60px;
+    color:var(--accent);
+    line-height:.7;
+}
+
+.quote p{
+    font-size:24px;
+    margin-top:15px;
+}
+
+.future{
+    background:var(--soft);
+    padding:50px 25px;
+    margin-top:40px;
+}
+
+.future-inner{
+    max-width:1050px;
+    margin:auto;
+}
+
+footer{
+    border-top:1px solid var(--line);
+    padding:40px 25px;
+    text-align:center;
+    color:var(--muted);
+    font-size:13px;
+}
+
+.footer-name{
+    color:var(--text);
+    font-weight:bold;
+    margin-bottom:8px;
+}
+
+@media(max-width:800px){
+    .nav-links{
+        display:none;
+    }
+
+    .hero{
+        padding-top:70px;
+    }
+
+    .grid{
+        grid-template-columns:1fr;
+    }
+
+    .gallery{
+        grid-template-columns:1fr;
+    }
+
+    h1{
+        font-size:48px;
+    }
+}
+
+.reveal{
+    opacity:0;
+    transform:translateY(25px);
+    transition:opacity .7s,transform .7s;
+}
+
+.reveal.show{
+    opacity:1;
+    transform:none;
+}
+</style>
+</head>
+
+<body>
+
+<nav>
+<div class="nav-inner">
+
+<a href="index.html" class="logo">
+Anamigam <span>Journal</span>
+</a>
+
+<div class="nav-links">
+<a href="index.html">Home</a>
+<a href="writings.html">Writings</a>
+<a href="ebooks.html">E-Books</a>
+<a href="achievements.html">Achievements</a>
+<a href="about.html">About</a>
+<a href="contact.html">Contact</a>
+</div>
+
+<button class="theme" onclick="toggleTheme()">☾</button>
+
+</div>
+</nav>
+
+<section class="hero reveal">
+
+<div class="eyebrow">Achievements • Recognition • Journey</div>
+
+<h1>
+எழுத்தின்<br>
+அடையாளங்கள்.
+</h1>
+
+<p>
+ஒரு எழுத்தாளரின் பயணம்,
+அவர் எழுதிய வார்த்தைகளால் மட்டுமல்ல;
+அவர் பெற்ற அனுபவங்கள்,
+அங்கீகாரங்கள் மற்றும் சாதனைகளாலும்
+அடையாளம் காணப்படுகிறது.
+</p>
+
+<div class="divider"></div>
+
+</section>
+
+
+<section class="section reveal">
+
+<h2 class="section-title">Achievements</h2>
+
+<p class="section-sub">
+V. Matheswaran — எழுத்து மற்றும் படைப்புப் பயணத்தின் முக்கிய அடையாளங்கள்.
+</p>
+
+<div class="grid">
+
+<div class="card">
+<div class="number">01</div>
+<div class="icon">🏆</div>
+<h3>Literary Awards</h3>
+<p>
+எழுத்து மற்றும் இலக்கியப் படைப்புகளுக்காக
+எதிர்காலத்தில் பெறப்படும் விருதுகள்
+இங்கே பதிவு செய்யப்படும்.
+</p>
+<span class="status">COMING SOON</span>
+</div>
+
+<div class="card">
+<div class="number">02</div>
+<div class="icon">📜</div>
+<h3>Certificates</h3>
+<p>
+Writing contests, literary events மற்றும்
+படைப்புத் துறையில் பெறப்படும்
+சான்றிதழ்களின் தொகுப்பு.
+</p>
+<span class="status">UPDATING</span>
+</div>
+
+<div class="card">
+<div class="number">03</div>
+<div class="icon">📚</div>
+<h3>Publications</h3>
+<p>
+வெளியாகும் கவிதைகள், சிறுகதைகள்,
+கட்டுரைகள் மற்றும் மின் நூல்களின்
+பதிவு.
+</p>
+<span class="status">COMING SOON</span>
+</div>
+
+</div>
+
+</section>
+
+
+<section class="section reveal">
+
+<h2 class="section-title">Certificate Gallery</h2>
+
+<p class="section-sub">
+பெறும் ஒவ்வொரு சான்றிதழும் ஒரு சிறிய வெற்றி;
+அவை சேர்ந்து ஒரு பெரிய பயணமாகின்றன.
+</p>
+
+<div class="gallery">
+
+<div class="certificate">
+
+<div class="certificate-box">
+📜<br><br>
+Certificate Image<br>
+will appear here
+</div>
+
+<h3>Writing Competition</h3>
+
+<p>
+போட்டி / நிகழ்வு பெயர் இங்கே சேர்க்கப்படும்.
+</p>
+
+<span class="status">TO BE ADDED</span>
+
+</div>
+
+
+<div class="certificate">
+
+<div class="certificate-box">
+🏆<br><br>
+Award / Certificate<br>
+will appear here
+</div>
+
+<h3>Literary Recognition</h3>
+
+<p>
+அங்கீகாரம் மற்றும் விருது விவரங்கள்
+இங்கே சேர்க்கப்படும்.
+</p>
+
+<span class="status">TO BE ADDED</span>
+
+</div>
+
+
+<div class="certificate">
+
+<div class="certificate-box">
+✍🏻<br><br>
+Participation Certificate<br>
+will appear here
+</div>
+
+<h3>Writing Event</h3>
+
+<p>
+பங்கேற்பு சான்றிதழ்கள் மற்றும்
+நிகழ்வு விவரங்கள்.
+</p>
+
+<span class="status">TO BE ADDED</span>
+
+</div>
+
+
+<div class="certificate">
+
+<div class="certificate-box">
+📖<br><br>
+Publication<br>
+will appear here
+</div>
+
+<h3>Publication</h3>
+
+<p>
+வெளியிடப்படும் படைப்புகளின்
+ஆவணப் பதிவு.
+</p>
+
+<span class="status">TO BE ADDED</span>
+
+</div>
+
+</div>
+
+</section>
+
+
+<section class="future">
+
+<div class="future-inner reveal">
+
+<h2 class="section-title">The Journey Ahead</h2>
+
+<p class="section-sub">
+இது முடிவுகளின் பட்டியல் அல்ல.
+இன்னும் எழுதப்பட வேண்டிய
+பல அத்தியாயங்களின் தொடக்கம்.
+</p>
+
+<div class="grid">
+
+<div class="card">
+<div class="icon">✍🏻</div>
+<h3>More Writing</h3>
+<p>
+புதிய கவிதைகள், சிறுகதைகள்,
+சிந்தனைகள் மற்றும் கட்டுரைகள்.
+</p>
+</div>
+
+<div class="card">
+<div class="icon">📕</div>
+<h3>New E-Books</h3>
+<p>
+Anamigam Journal வழியாக
+புதிய மின் நூல்கள்.
+</p>
+</div>
+
+<div class="card">
+<div class="icon">🌱</div>
+<h3>New Milestones</h3>
+<p>
+ஒவ்வொரு முயற்சியும் அடுத்த
+மைல்கல்லை நோக்கிய ஒரு படி.
+</p>
+</div>
+
+</div>
+
+</div>
+
+</section>
+
+
+<section class="quote reveal">
+
+<div class="quote-mark">“</div>
+
+<p>
+ஒரு சான்றிதழ் ஒரு காகிதம் மட்டுமல்ல;
+அதன் பின்னால் நிற்கும் முயற்சியின்
+அடையாளம்.
+</p>
+
+</section>
+
+
+<footer>
+
+<div class="footer-name">
+V. MATHESWARAN
+</div>
+
+<p>
+எழுத்தாளர் | Anamigam Journal நிறுவனர்
+</p>
+
+<p style="margin-top:12px;">
+எண்ணங்களின் தடம்… எழுத்துகளின் பயணம்.
+</p>
+
+</footer>
+
+
+<script>
+
+function toggleTheme(){
+    document.body.classList.toggle("dark");
+
+    if(document.body.classList.contains("dark")){
+        localStorage.setItem("theme","dark");
+    }else{
+        localStorage.setItem("theme","light");
+    }
+}
+
+if(localStorage.getItem("theme")==="dark"){
+    document.body.classList.add("dark");
+}
+
+const observer = new IntersectionObserver(entries=>{
+    entries.forEach(entry=>{
+        if(entry.isIntersecting){
+            entry.target.classList.add("show");
+        }
+    });
+},{threshold:.12});
+
+document.querySelectorAll(".reveal").forEach(el=>{
+    observer.observe(el);
+});
+
+</script>
+
+</body>
+</html>
