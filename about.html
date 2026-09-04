@@ -1,0 +1,1082 @@
+<!DOCTYPE html>
+<html lang="ta">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>About | Anamigam Journal</title>
+
+<meta name="description"
+content="V. Matheswaran — Writer & Founder of Anamigam Journal.">
+
+<style>
+
+*{
+margin:0;
+padding:0;
+box-sizing:border-box;
+}
+
+html{
+scroll-behavior:smooth;
+}
+
+body{
+font-family:Georgia,"Noto Serif Tamil",serif;
+background:#f8f4ec;
+color:#29251f;
+line-height:1.8;
+transition:.4s;
+}
+
+body.dark{
+background:#171614;
+color:#eee8dc;
+}
+
+a{
+text-decoration:none;
+color:inherit;
+}
+
+.container{
+width:min(1120px,92%);
+margin:auto;
+}
+
+/* HEADER */
+
+header{
+position:sticky;
+top:0;
+z-index:1000;
+background:rgba(248,244,236,.94);
+backdrop-filter:blur(15px);
+border-bottom:1px solid #ddd5c7;
+}
+
+.dark header{
+background:rgba(23,22,20,.94);
+border-color:#39352f;
+}
+
+.nav{
+min-height:76px;
+display:flex;
+align-items:center;
+justify-content:space-between;
+}
+
+.logo{
+font-size:23px;
+font-weight:bold;
+}
+
+.logo span{
+display:block;
+font-size:9px;
+letter-spacing:3px;
+opacity:.55;
+}
+
+.nav-links{
+display:flex;
+gap:28px;
+list-style:none;
+}
+
+.nav-links a{
+font-size:13px;
+}
+
+.nav-links a:hover{
+opacity:.55;
+}
+
+.icon{
+width:40px;
+height:40px;
+border-radius:50%;
+border:1px solid #d4cabb;
+background:transparent;
+color:inherit;
+cursor:pointer;
+font-size:17px;
+}
+
+/* HERO */
+
+.hero{
+padding:110px 0 80px;
+}
+
+.eyebrow{
+font-size:10px;
+letter-spacing:5px;
+opacity:.5;
+}
+
+.hero h1{
+font-size:clamp(45px,7vw,75px);
+font-weight:500;
+line-height:1.2;
+margin:18px 0;
+}
+
+.hero p{
+max-width:650px;
+font-size:17px;
+opacity:.65;
+}
+
+.line{
+width:60px;
+height:1px;
+background:currentColor;
+margin:30px 0;
+}
+
+/* FOUNDER */
+
+.founder{
+display:grid;
+grid-template-columns:.75fr 1.25fr;
+gap:70px;
+align-items:center;
+padding:70px 0 120px;
+}
+
+.profile-box{
+aspect-ratio:1/1;
+border:1px solid #d4cabb;
+display:flex;
+align-items:center;
+justify-content:center;
+text-align:center;
+padding:30px;
+}
+
+.dark .profile-box{
+border-color:#454038;
+}
+
+.profile-initial{
+font-size:90px;
+font-weight:500;
+opacity:.18;
+}
+
+.profile-name{
+font-size:10px;
+letter-spacing:4px;
+opacity:.5;
+margin-top:10px;
+}
+
+.founder-content small{
+font-size:10px;
+letter-spacing:4px;
+opacity:.5;
+}
+
+.founder-content h2{
+font-size:42px;
+font-weight:500;
+margin:12px 0 3px;
+}
+
+.role{
+font-size:14px;
+opacity:.55;
+}
+
+.founder-content p{
+margin-top:25px;
+font-size:17px;
+opacity:.72;
+}
+
+/* PHILOSOPHY */
+
+.section{
+padding:100px 0;
+}
+
+.section-head{
+margin-bottom:45px;
+}
+
+.section-head small{
+font-size:10px;
+letter-spacing:4px;
+opacity:.5;
+}
+
+.section-head h2{
+font-size:38px;
+font-weight:500;
+margin-top:8px;
+}
+
+.philosophy{
+display:grid;
+grid-template-columns:repeat(3,1fr);
+gap:22px;
+}
+
+.philosophy-card{
+border-top:1px solid #d4cabb;
+padding:30px 10px;
+}
+
+.dark .philosophy-card{
+border-color:#454038;
+}
+
+.philosophy-card span{
+font-size:11px;
+opacity:.4;
+letter-spacing:2px;
+}
+
+.philosophy-card h3{
+font-size:23px;
+font-weight:500;
+margin:15px 0 8px;
+}
+
+.philosophy-card p{
+font-size:14px;
+opacity:.65;
+}
+
+/* ANAMIGAM */
+
+.story-box{
+max-width:850px;
+border-left:1px solid currentColor;
+padding-left:35px;
+}
+
+.story-box p{
+font-size:19px;
+opacity:.75;
+margin-bottom:25px;
+}
+
+/* MENTOR */
+
+.mentor{
+border-top:1px solid #d4cabb;
+border-bottom:1px solid #d4cabb;
+padding:70px 0;
+}
+
+.dark .mentor{
+border-color:#454038;
+}
+
+.mentor-grid{
+display:grid;
+grid-template-columns:100px 1fr;
+gap:35px;
+align-items:start;
+}
+
+.mentor-symbol{
+width:80px;
+height:80px;
+border:1px solid #cfc5b5;
+border-radius:50%;
+display:grid;
+place-items:center;
+font-size:28px;
+}
+
+.dark .mentor-symbol{
+border-color:#49443c;
+}
+
+.mentor small{
+font-size:10px;
+letter-spacing:4px;
+opacity:.5;
+}
+
+.mentor h2{
+font-size:34px;
+font-weight:500;
+margin:8px 0;
+}
+
+.mentor p{
+max-width:700px;
+opacity:.68;
+}
+
+.mentor-note{
+margin-top:20px;
+font-style:italic;
+font-size:16px;
+}
+
+/* TIMELINE */
+
+.timeline{
+max-width:800px;
+}
+
+.timeline-item{
+display:grid;
+grid-template-columns:100px 1fr;
+gap:30px;
+padding:30px 0;
+border-bottom:1px solid #d4cabb;
+}
+
+.dark .timeline-item{
+border-color:#454038;
+}
+
+.timeline-year{
+font-size:12px;
+letter-spacing:2px;
+opacity:.45;
+}
+
+.timeline-item h3{
+font-size:22px;
+font-weight:500;
+}
+
+.timeline-item p{
+font-size:14px;
+opacity:.65;
+margin-top:5px;
+}
+
+/* ACHIEVEMENTS */
+
+.achievement-grid{
+display:grid;
+grid-template-columns:repeat(3,1fr);
+gap:20px;
+}
+
+.achievement{
+border:1px solid #d4cabb;
+padding:30px;
+}
+
+.dark .achievement{
+border-color:#454038;
+}
+
+.achievement-icon{
+font-size:26px;
+margin-bottom:15px;
+}
+
+.achievement h3{
+font-size:21px;
+font-weight:500;
+}
+
+.achievement p{
+font-size:13px;
+opacity:.6;
+margin-top:6px;
+}
+
+/* QUOTE */
+
+.quote{
+text-align:center;
+padding:130px 20px;
+}
+
+.quote-mark{
+font-size:75px;
+opacity:.15;
+line-height:.6;
+}
+
+.quote h2{
+font-size:clamp(30px,5vw,52px);
+font-weight:500;
+line-height:1.5;
+max-width:850px;
+margin:25px auto;
+}
+
+.quote p{
+font-size:11px;
+letter-spacing:3px;
+opacity:.45;
+}
+
+/* FOOTER */
+
+footer{
+padding:60px 0;
+border-top:1px solid #ddd5c7;
+text-align:center;
+}
+
+.dark footer{
+border-color:#39352f;
+}
+
+footer h3{
+font-size:25px;
+font-weight:500;
+}
+
+footer p{
+font-size:12px;
+opacity:.5;
+margin-top:6px;
+}
+
+/* MOBILE */
+
+@media(max-width:800px){
+
+.nav-links{
+display:none;
+}
+
+.founder{
+grid-template-columns:1fr;
+gap:40px;
+padding-top:40px;
+}
+
+.philosophy{
+grid-template-columns:1fr;
+}
+
+.achievement-grid{
+grid-template-columns:1fr;
+}
+
+.mentor-grid{
+grid-template-columns:1fr;
+}
+
+.hero{
+padding:80px 0 50px;
+}
+
+.hero h1{
+font-size:48px;
+}
+
+.founder-content h2{
+font-size:34px;
+}
+
+.timeline-item{
+grid-template-columns:65px 1fr;
+gap:15px;
+}
+
+}
+
+/* ANIMATION */
+
+.reveal{
+opacity:0;
+transform:translateY(20px);
+transition:.7s;
+}
+
+.reveal.show{
+opacity:1;
+transform:translateY(0);
+}
+
+</style>
+</head>
+
+<body>
+
+<header>
+
+<div class="container nav">
+
+<a href="index.html" class="logo">
+Anamigam
+<span>JOURNAL</span>
+</a>
+
+<ul class="nav-links">
+
+<li>
+<a href="index.html">Home</a>
+</li>
+
+<li>
+<a href="writings.html">Writings</a>
+</li>
+
+<li>
+<a href="ebooks.html">E-Books</a>
+</li>
+
+<li>
+<a href="about.html">About</a>
+</li>
+
+<li>
+<a href="index.html#contact">Contact</a>
+</li>
+
+</ul>
+
+<button class="icon" onclick="toggleTheme()">
+◐
+</button>
+
+</div>
+
+</header>
+
+
+<!-- HERO -->
+
+<section class="hero">
+
+<div class="container reveal">
+
+<div class="eyebrow">
+THE STORY BEHIND THE JOURNAL
+</div>
+
+<h1>
+About
+</h1>
+
+<div class="line"></div>
+
+<p>
+Anamigam Journal என்பது ஒரு website மட்டும் அல்ல;
+எண்ணங்களை எழுத்துகளாகப் பதிவு செய்யும்
+ஒரு தொடரும் இலக்கியப் பயணம்.
+</p>
+
+</div>
+
+</section>
+
+
+<!-- FOUNDER -->
+
+<section>
+
+<div class="container founder">
+
+<div class="profile-box reveal">
+
+<div>
+
+<div class="profile-initial">
+V.M
+</div>
+
+<div class="profile-name">
+V. MATHESWARAN
+</div>
+
+</div>
+
+</div>
+
+
+<div class="founder-content reveal">
+
+<small>
+FOUNDER & WRITER
+</small>
+
+<h2>
+V. MATHESWARAN
+</h2>
+
+<div class="role">
+எழுத்தாளர் | Anamigam Journal நிறுவனர்
+</div>
+
+<p>
+எழுத்து என்பது எண்ணங்களை மட்டும்
+பதிவு செய்வதற்கான கருவி அல்ல;
+மனிதர்களையும், அவர்களின் உணர்வுகளையும்,
+வாழ்க்கையின் நுண்ணிய தருணங்களையும்
+புரிந்துகொள்ளும் ஒரு வழி.
+</p>
+
+<p>
+அந்த எண்ணத்தில் உருவானதே
+<strong>Anamigam Journal</strong>.
+தமிழ் எழுத்துகளுக்கென ஒரு
+அமைதியான, தனித்துவமான இடத்தை
+உருவாக்குவதே இதன் நோக்கம்.
+</p>
+
+</div>
+
+</div>
+
+</section>
+
+
+<!-- PHILOSOPHY -->
+
+<section class="section">
+
+<div class="container">
+
+<div class="section-head reveal">
+
+<small>WRITING PHILOSOPHY</small>
+
+<h2>
+எழுத்தைப் பற்றிய பார்வை
+</h2>
+
+</div>
+
+
+<div class="philosophy">
+
+
+<div class="philosophy-card reveal">
+
+<span>01</span>
+
+<h3>
+உணர்வு
+</h3>
+
+<p>
+ஒரு நல்ல எழுத்து முதலில்
+ஒரு உணர்விலிருந்து பிறக்கிறது.
+</p>
+
+</div>
+
+
+<div class="philosophy-card reveal">
+
+<span>02</span>
+
+<h3>
+சிந்தனை
+</h3>
+
+<p>
+கேள்வி கேட்கும் எண்ணங்களே
+புதிய எழுத்துகளுக்கு வழி காட்டுகின்றன.
+</p>
+
+</div>
+
+
+<div class="philosophy-card reveal">
+
+<span>03</span>
+
+<h3>
+வார்த்தை
+</h3>
+
+<p>
+சரியான வார்த்தை ஒரு எண்ணத்தை
+நீண்ட காலம் உயிரோடு வைத்திருக்க முடியும்.
+</p>
+
+</div>
+
+
+</div>
+
+</div>
+
+</section>
+
+
+<!-- ANAMIGAM STORY -->
+
+<section class="section">
+
+<div class="container">
+
+<div class="section-head reveal">
+
+<small>THE JOURNEY</small>
+
+<h2>
+Anamigam Journal
+</h2>
+
+</div>
+
+
+<div class="story-box reveal">
+
+<p>
+சில எண்ணங்கள் மனதில் தோன்றியவுடன்
+மறைந்து விடுகின்றன.
+சில எண்ணங்கள் மட்டும் மீண்டும் மீண்டும்
+நம்மைத் தேடி வருகின்றன.
+</p>
+
+<p>
+அந்த எண்ணங்களுக்கு ஒரு இடம் வேண்டும்.
+அந்த இடமே Anamigam Journal.
+</p>
+
+<p>
+கவிதை முதல் சிந்தனை வரை,
+சிறுகதை முதல் எதிர்கால மின் நூல்கள் வரை,
+எழுத்தின் பல வடிவங்களை ஒரே இடத்தில்
+கொண்டுவரும் முயற்சியாக இந்தப் பயணம் தொடர்கிறது.
+</p>
+
+</div>
+
+</div>
+
+</section>
+
+
+<!-- MENTOR -->
+
+<section class="mentor">
+
+<div class="container">
+
+<div class="mentor-grid reveal">
+
+<div class="mentor-symbol">
+✦
+</div>
+
+<div>
+
+<small>
+MENTOR
+</small>
+
+<h2>
+Dr. M. Surath Sheba
+</h2>
+
+<p>
+எழுத்துப் பயணத்தில் வழிகாட்டியாகவும்,
+ஊக்கமாகவும், நம்பிக்கையாகவும்
+இருக்கும் ஒரு சிறப்பு உறவு.
+</p>
+
+<div class="mentor-note">
+என் அம்மா — பிறப்பால் அல்ல…<br>
+அன்பால் கிடைத்த உறவு. ❤️
+</div>
+
+</div>
+
+</div>
+
+</div>
+
+</section>
+
+
+<!-- JOURNEY -->
+
+<section class="section">
+
+<div class="container">
+
+<div class="section-head reveal">
+
+<small>JOURNEY</small>
+
+<h2>
+எழுத்துப் பயணம்
+</h2>
+
+</div>
+
+
+<div class="timeline">
+
+
+<div class="timeline-item reveal">
+
+<div class="timeline-year">
+01
+</div>
+
+<div>
+
+<h3>
+Writing Begins
+</h3>
+
+<p>
+எண்ணங்களை எழுத்துகளாக
+மாற்றும் பயணத்தின் தொடக்கம்.
+</p>
+
+</div>
+
+</div>
+
+
+<div class="timeline-item reveal">
+
+<div class="timeline-year">
+02
+</div>
+
+<div>
+
+<h3>
+Anamigam Journal
+</h3>
+
+<p>
+தனித்துவமான தமிழ் இலக்கியத்
+தளமாக Anamigam Journal உருவாக்கம்.
+</p>
+
+</div>
+
+</div>
+
+
+<div class="timeline-item reveal">
+
+<div class="timeline-year">
+03
+</div>
+
+<div>
+
+<h3>
+Future Publications
+</h3>
+
+<p>
+மின் நூல்கள், இதழ் வெளியீடுகள்
+மற்றும் பல இலக்கிய முயற்சிகளுக்கான எதிர்காலப் பயணம்.
+</p>
+
+</div>
+
+</div>
+
+
+</div>
+
+</div>
+
+</section>
+
+
+<!-- ACHIEVEMENTS -->
+
+<section class="section">
+
+<div class="container">
+
+<div class="section-head reveal">
+
+<small>FUTURE</small>
+
+<h2>
+Achievements
+</h2>
+
+<p style="opacity:.6;margin-top:5px;">
+எதிர்காலத்தில் சேர்க்கப்படும் அங்கீகாரங்கள்.
+</p>
+
+</div>
+
+
+<div class="achievement-grid">
+
+
+<div class="achievement reveal">
+
+<div class="achievement-icon">
+🏆
+</div>
+
+<h3>
+Awards
+</h3>
+
+<p>
+பெறப்படும் இலக்கிய விருதுகள்
+மற்றும் அங்கீகாரங்கள்.
+</p>
+
+</div>
+
+
+<div class="achievement reveal">
+
+<div class="achievement-icon">
+📜
+</div>
+
+<h3>
+Certificates
+</h3>
+
+<p>
+இலக்கியப் போட்டிகள் மற்றும்
+பங்கேற்பு சான்றிதழ்கள்.
+</p>
+
+</div>
+
+
+<div class="achievement reveal">
+
+<div class="achievement-icon">
+📖
+</div>
+
+<h3>
+Publications
+</h3>
+
+<p>
+வெளியிடப்படும் படைப்புகள்
+மற்றும் மின் நூல்கள்.
+</p>
+
+</div>
+
+
+</div>
+
+</div>
+
+</section>
+
+
+<!-- QUOTE -->
+
+<section class="quote">
+
+<div class="container reveal">
+
+<div class="quote-mark">
+“
+</div>
+
+<h2>
+எழுதப்படும் ஒவ்வொரு வார்த்தையும்,
+ஒருநாள் யாரோ ஒருவரின்
+மனதில் ஒரு தடமாக மாறலாம்.
+</h2>
+
+<p>
+ANAMIGAM JOURNAL
+</p>
+
+</div>
+
+</section>
+
+
+<!-- FOOTER -->
+
+<footer>
+
+<div class="container">
+
+<h3>
+Anamigam Journal
+</h3>
+
+<p>
+எண்ணங்களின் தடம்… எழுத்துகளின் பயணம்.
+</p>
+
+<p>
+© 2026 V. Matheswaran
+</p>
+
+</div>
+
+</footer>
+
+
+<script>
+
+/* DARK MODE */
+
+function toggleTheme(){
+
+document.body.classList.toggle("dark");
+
+if(document.body.classList.contains("dark")){
+
+localStorage.setItem("theme","dark");
+
+}else{
+
+localStorage.setItem("theme","light");
+
+}
+
+}
+
+if(localStorage.getItem("theme")==="dark"){
+
+document.body.classList.add("dark");
+
+}
+
+
+/* SCROLL ANIMATION */
+
+const observer =
+new IntersectionObserver(
+entries=>{
+
+entries.forEach(entry=>{
+
+if(entry.isIntersecting){
+
+entry.target.classList.add("show");
+
+}
+
+});
+
+},
+{
+threshold:.1
+}
+);
+
+
+document
+.querySelectorAll(".reveal")
+.forEach(el=>{
+
+observer.observe(el);
+
+});
+
+</script>
+
+</body>
+  </html>
