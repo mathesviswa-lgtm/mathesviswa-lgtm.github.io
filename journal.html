@@ -1,0 +1,735 @@
+<!DOCTYPE html>
+<html lang="ta">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Journal | Anamigam Journal</title>
+
+<link rel="icon" type="image/png" href="logo.png">
+
+<meta name="description"
+content="Anamigam Journal — இலக்கியம், எழுத்து, சிந்தனை மற்றும் படைப்புப் பயணத்தின் பதிவுகள்.">
+
+<style>
+*{
+margin:0;
+padding:0;
+box-sizing:border-box;
+}
+
+html{
+scroll-behavior:smooth;
+}
+
+:root{
+--bg:#f7f3eb;
+--card:#fffdf8;
+--text:#24211d;
+--muted:#777066;
+--accent:#8b5e34;
+--border:#e5ddd0;
+--shadow:0 18px 50px rgba(40,30,20,.08);
+}
+
+body.dark{
+--bg:#151311;
+--card:#201d1a;
+--text:#f5efe5;
+--muted:#aaa197;
+--accent:#d8a66d;
+--border:#39332d;
+--shadow:0 18px 50px rgba(0,0,0,.3);
+}
+
+body{
+font-family:Georgia,"Noto Serif Tamil",serif;
+background:var(--bg);
+color:var(--text);
+line-height:1.7;
+transition:.3s;
+}
+
+a{
+text-decoration:none;
+color:inherit;
+}
+
+/* NAV */
+
+nav{
+position:sticky;
+top:0;
+z-index:100;
+background:rgba(247,243,235,.92);
+backdrop-filter:blur(14px);
+border-bottom:1px solid var(--border);
+}
+
+body.dark nav{
+background:rgba(21,19,17,.92);
+}
+
+.nav-inner{
+max-width:1150px;
+margin:auto;
+padding:15px 22px;
+display:flex;
+align-items:center;
+justify-content:space-between;
+}
+
+.brand img{
+width:145px;
+height:auto;
+display:block;
+}
+
+.nav-links{
+display:flex;
+gap:23px;
+align-items:center;
+}
+
+.nav-links a{
+font-size:14px;
+color:var(--muted);
+}
+
+.nav-links a:hover,
+.nav-links a.active{
+color:var(--accent);
+}
+
+.theme{
+border:1px solid var(--border);
+background:var(--card);
+color:var(--text);
+border-radius:50%;
+width:38px;
+height:38px;
+cursor:pointer;
+}
+
+.menu{
+display:none;
+font-size:25px;
+cursor:pointer;
+}
+
+/* HERO */
+
+.hero{
+max-width:1050px;
+margin:auto;
+padding:95px 22px 70px;
+text-align:center;
+}
+
+.kicker{
+color:var(--accent);
+font-size:12px;
+letter-spacing:3px;
+margin-bottom:14px;
+}
+
+.hero h1{
+font-size:clamp(43px,7vw,75px);
+line-height:1.05;
+margin-bottom:20px;
+}
+
+.hero p{
+max-width:680px;
+margin:auto;
+font-size:17px;
+color:var(--muted);
+}
+
+.line{
+width:65px;
+height:1px;
+background:var(--accent);
+margin:28px auto;
+}
+
+/* SECTION */
+
+section{
+max-width:1100px;
+margin:auto;
+padding:60px 22px;
+}
+
+.section-head{
+margin-bottom:35px;
+}
+
+.section-head small{
+color:var(--accent);
+letter-spacing:2px;
+}
+
+.section-head h2{
+font-size:34px;
+margin-top:5px;
+}
+
+.section-head p{
+color:var(--muted);
+margin-top:7px;
+}
+
+/* FEATURED */
+
+.featured{
+display:grid;
+grid-template-columns:1.1fr 1fr;
+gap:25px;
+background:var(--card);
+border:1px solid var(--border);
+border-radius:24px;
+overflow:hidden;
+box-shadow:var(--shadow);
+}
+
+.feature-image{
+min-height:330px;
+display:flex;
+align-items:center;
+justify-content:center;
+background:linear-gradient(135deg,#eee5d6,#faf7f0);
+font-size:50px;
+}
+
+body.dark .feature-image{
+background:linear-gradient(135deg,#2a251f,#211e1b);
+}
+
+.feature-content{
+padding:40px;
+display:flex;
+flex-direction:column;
+justify-content:center;
+}
+
+.badge{
+display:inline-block;
+width:max-content;
+padding:5px 11px;
+border-radius:20px;
+background:rgba(139,94,52,.12);
+color:var(--accent);
+font-size:11px;
+letter-spacing:1px;
+margin-bottom:14px;
+}
+
+.feature-content h2{
+font-size:32px;
+line-height:1.25;
+margin-bottom:12px;
+}
+
+.feature-content p{
+color:var(--muted);
+font-size:15px;
+}
+
+.read-btn{
+display:inline-block;
+margin-top:22px;
+padding:11px 20px;
+border-radius:30px;
+background:var(--accent);
+color:white;
+font-size:13px;
+width:max-content;
+}
+
+/* JOURNAL GRID */
+
+.journal-grid{
+display:grid;
+grid-template-columns:repeat(3,1fr);
+gap:22px;
+}
+
+.journal-card{
+background:var(--card);
+border:1px solid var(--border);
+border-radius:18px;
+padding:25px;
+box-shadow:var(--shadow);
+transition:.25s;
+}
+
+.journal-card:hover{
+transform:translateY(-5px);
+}
+
+.journal-icon{
+font-size:30px;
+margin-bottom:15px;
+}
+
+.journal-card h3{
+font-size:21px;
+line-height:1.3;
+margin-bottom:9px;
+}
+
+.journal-card p{
+font-size:14px;
+color:var(--muted);
+}
+
+.meta{
+margin-top:17px;
+font-size:11px;
+color:var(--accent);
+letter-spacing:1px;
+}
+
+/* TOPICS */
+
+.topic-list{
+display:flex;
+flex-wrap:wrap;
+gap:10px;
+}
+
+.topic{
+padding:9px 16px;
+border:1px solid var(--border);
+border-radius:30px;
+color:var(--muted);
+font-size:13px;
+background:var(--card);
+}
+
+/* QUOTE */
+
+.quote{
+text-align:center;
+background:var(--card);
+border:1px solid var(--border);
+border-radius:22px;
+padding:45px 25px;
+box-shadow:var(--shadow);
+}
+
+.quote mark{
+background:none;
+color:var(--accent);
+font-size:42px;
+}
+
+.quote p{
+max-width:700px;
+margin:auto;
+font-size:22px;
+font-style:italic;
+}
+
+.quote small{
+display:block;
+margin-top:18px;
+color:var(--muted);
+}
+
+/* FOOTER */
+
+footer{
+border-top:1px solid var(--border);
+margin-top:40px;
+padding:40px 22px;
+text-align:center;
+color:var(--muted);
+font-size:13px;
+}
+
+footer strong{
+color:var(--text);
+}
+
+/* MOBILE */
+
+@media(max-width:800px){
+
+.nav-links{
+display:none;
+position:absolute;
+top:68px;
+left:0;
+right:0;
+background:var(--card);
+padding:20px;
+flex-direction:column;
+border-bottom:1px solid var(--border);
+}
+
+.nav-links.show{
+display:flex;
+}
+
+.menu{
+display:block;
+}
+
+.brand img{
+width:125px;
+}
+
+.hero{
+padding-top:70px;
+}
+
+.featured{
+grid-template-columns:1fr;
+}
+
+.feature-content{
+padding:28px;
+}
+
+.feature-content h2{
+font-size:27px;
+}
+
+.journal-grid{
+grid-template-columns:1fr;
+}
+
+.section-head h2{
+font-size:29px;
+}
+
+.quote p{
+font-size:19px;
+}
+
+}
+</style>
+</head>
+
+<body>
+
+<!-- NAV -->
+
+<nav>
+
+<div class="nav-inner">
+
+<a href="index.html" class="brand">
+<img src="logo.png" alt="Anamigam Journal">
+</a>
+
+<div class="nav-links" id="navLinks">
+
+<a href="index.html">Home</a>
+<a href="writings.html">Writings</a>
+<a href="ebooks.html">E-Books</a>
+<a href="journal.html" class="active">Journal</a>
+<a href="achievements.html">Achievements</a>
+<a href="about.html">About</a>
+<a href="contact.html">Contact</a>
+
+</div>
+
+<div style="display:flex;gap:10px;align-items:center">
+
+<button class="theme"
+id="themeBtn"
+onclick="toggleTheme()">☾</button>
+
+<div class="menu"
+onclick="toggleMenu()">☰</div>
+
+</div>
+
+</div>
+
+</nav>
+
+
+<!-- HERO -->
+
+<header class="hero">
+
+<div class="kicker">ANAMIGAM JOURNAL</div>
+
+<h1>Journal</h1>
+
+<div class="line"></div>
+
+<p>
+எழுத்தின் பின்னால் இருக்கும் எண்ணங்கள்,
+படைப்புகளின் பின்னால் இருக்கும் பயணங்கள்,
+மற்றும் இலக்கியத்தைச் சுற்றியுள்ள சிறிய பதிவுகள்.
+</p>
+
+</header>
+
+
+<!-- FEATURED -->
+
+<section>
+
+<div class="section-head">
+
+<small>FEATURED</small>
+
+<h2>Featured Journal</h2>
+
+<p>
+ஒவ்வொரு பதிவும் ஒரு எண்ணத்தின் தடம்.
+</p>
+
+</div>
+
+
+<div class="featured">
+
+<div class="feature-image">
+✍🏻
+</div>
+
+<div class="feature-content">
+
+<span class="badge">
+COMING SOON
+</span>
+
+<h2>
+எழுத்தின் பின்னால் இருக்கும் மனிதன்
+</h2>
+
+<p>
+ஒரு எழுத்தாளர் எழுதும் ஒவ்வொரு வார்த்தைக்கும்
+பின்னால் ஒரு அனுபவம், ஒரு உணர்வு அல்லது
+ஒரு சிந்தனை இருக்கிறது.
+</p>
+
+<a href="#posts" class="read-btn">
+Read Journal →
+</a>
+
+</div>
+
+</div>
+
+</section>
+
+
+<!-- POSTS -->
+
+<section id="posts">
+
+<div class="section-head">
+
+<small>RECENT NOTES</small>
+
+<h2>Journal Entries</h2>
+
+<p>
+Anamigam Journal-ல் வெளியாக இருக்கும்
+சிந்தனைப் பதிவுகளின் தொடக்கம்.
+</p>
+
+</div>
+
+
+<div class="journal-grid">
+
+
+<div class="journal-card">
+
+<div class="journal-icon">✍🏻</div>
+
+<span class="badge">
+WRITING
+</span>
+
+<h3>
+ஏன் எழுத வேண்டும்?
+</h3>
+
+<p>
+எண்ணங்களை வார்த்தைகளாக மாற்றுவதன்
+அர்த்தம் என்ன?
+</p>
+
+<div class="meta">
+COMING SOON
+</div>
+
+</div>
+
+
+<div class="journal-card">
+
+<div class="journal-icon">💭</div>
+
+<span class="badge">
+THOUGHT
+</span>
+
+<h3>
+ஒரு எண்ணத்தின் பயணம்
+</h3>
+
+<p>
+ஒரு சிறிய எண்ணம் எப்படி ஒரு
+படைப்பாக மாறுகிறது?
+</p>
+
+<div class="meta">
+COMING SOON
+</div>
+
+</div>
+
+
+<div class="journal-card">
+
+<div class="journal-icon">📖</div>
+
+<span class="badge">
+LITERATURE
+</span>
+
+<h3>
+வாசிப்பிலிருந்து எழுத்துக்கு
+</h3>
+
+<p>
+வாசிப்பு ஒரு எழுத்தாளரின்
+பயணத்தை எப்படி மாற்றுகிறது?
+</p>
+
+<div class="meta">
+COMING SOON
+</div>
+
+</div>
+
+
+</div>
+
+</section>
+
+
+<!-- TOPICS -->
+
+<section>
+
+<div class="section-head">
+
+<small>EXPLORE</small>
+
+<h2>Journal Topics</h2>
+
+</div>
+
+<div class="topic-list">
+
+<span class="topic">எழுத்து</span>
+<span class="topic">இலக்கியம்</span>
+<span class="topic">சிந்தனை</span>
+<span class="topic">வாசிப்பு</span>
+<span class="topic">படைப்பு</span>
+<span class="topic">எழுத்துப் பயணம்</span>
+<span class="topic">மனித இயல்பு</span>
+
+</div>
+
+</section>
+
+
+<!-- QUOTE -->
+
+<section>
+
+<div class="quote">
+
+<mark>“</mark>
+
+<p>
+எண்ணங்கள் வார்த்தைகளாகும் போது,
+அவை ஒருவரின் தனிப்பட்ட அனுபவத்தைத்
+தாண்டி இன்னொருவரின் உணர்வாக மாறுகின்றன.
+</p>
+
+<small>
+— Anamigam Journal
+</small>
+
+</div>
+
+</section>
+
+
+<!-- FOOTER -->
+
+<footer>
+
+<p>
+<strong>Anamigam Journal</strong>
+</p>
+
+<p>
+எண்ணங்களின் தடம்… எழுத்துகளின் பயணம்.
+</p>
+
+<p style="margin-top:15px">
+© 2026 Anamigam Journal · All Rights Reserved
+</p>
+
+</footer>
+
+
+<script>
+
+function toggleMenu(){
+
+document
+.getElementById("navLinks")
+.classList.toggle("show");
+
+}
+
+
+function toggleTheme(){
+
+document.body.classList.toggle("dark");
+
+if(document.body.classList.contains("dark")){
+
+localStorage.setItem("theme","dark");
+
+document.getElementById("themeBtn").innerHTML="☀";
+
+}else{
+
+localStorage.setItem("theme","light");
+
+document.getElementById("themeBtn").innerHTML="☾";
+
+}
+
+}
+
+
+if(localStorage.getItem("theme")==="dark"){
+
+document.body.classList.add("dark");
+
+document.getElementById("themeBtn").innerHTML="☀";
+
+}
+
+</script>
+
+</body>
+  </html>
