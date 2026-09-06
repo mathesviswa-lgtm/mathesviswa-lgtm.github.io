@@ -1,0 +1,749 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Admin Dashboard | Anamigam Journal</title>
+<meta name="description" content="Anamigam Journal - Owner Dashboard">
+<meta name="robots" content="noindex, nofollow">
+<link rel="icon" type="image/png" href="logo.png">
+
+<!-- Supabase JS Client -->
+<script async src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+
+<style>
+
+:root {
+  --bg: #f7f3eb;
+  --card: #fffdf8;
+  --text: #24211d;
+  --muted: #756f66;
+  --line: #ddd5c8;
+  --accent: #8b5e3c;
+  --soft: #eee7dc;
+  --shadow: 0 18px 50px rgba(45, 35, 25, .08);
+  --danger: #c92a2a;
+  --success: #51a851;
+}
+
+body.dark {
+  --bg: #151412;
+  --card: #201e1b;
+  --text: #f4eee4;
+  --muted: #b8afa2;
+  --line: #3a352e;
+  --accent: #d19a6a;
+  --soft: #2b2722;
+  --shadow: 0 18px 50px rgba(0, 0, 0, .25);
+}
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  font-family: Georgia, "Noto Serif Tamil", serif;
+  background: var(--bg);
+  color: var(--text);
+  line-height: 1.7;
+  transition: .3s;
+}
+
+.container {
+  max-width: 1150px;
+  margin: auto;
+  padding: 0 25px;
+}
+
+a {
+  color: inherit;
+  text-decoration: none;
+}
+
+button {
+  font-family: inherit;
+  cursor: pointer;
+}
+
+/* HEADER */
+
+header {
+  border-bottom: 1px solid var(--line);
+  padding: 25px 0;
+  background: var(--card);
+}
+
+.header-inner {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.logo-group {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+}
+
+.logo-img {
+  height: 44px;
+  width: auto;
+}
+
+.logo-text {
+  font-size: 18px;
+  font-weight: bold;
+  letter-spacing: .5px;
+}
+
+.logo-text span {
+  color: var(--accent);
+}
+
+.logo-subtext {
+  font-size: 11px;
+  color: var(--muted);
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  margin-top: 2px;
+}
+
+.header-actions {
+  display: flex;
+  align-items: center;
+  gap: 20px;
+}
+
+.user-info {
+  text-align: right;
+}
+
+.user-email {
+  font-size: 13px;
+  color: var(--muted);
+}
+
+.user-role {
+  font-size: 11px;
+  color: var(--accent);
+  letter-spacing: 1px;
+  text-transform: uppercase;
+  margin-top: 2px;
+}
+
+.btn-icon {
+  width: 38px;
+  height: 38px;
+  border: 1px solid var(--line);
+  border-radius: 50%;
+  background: var(--bg);
+  color: var(--text);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 16px;
+  transition: .2s;
+}
+
+.btn-icon:hover {
+  border-color: var(--accent);
+  color: var(--accent);
+}
+
+/* MAIN CONTENT */
+
+main {
+  padding: 60px 0;
+}
+
+/* PAGE TITLE */
+
+.page-head {
+  margin-bottom: 50px;
+}
+
+.page-title {
+  font-size: 42px;
+  margin-bottom: 12px;
+}
+
+.page-desc {
+  font-size: 16px;
+  color: var(--muted);
+}
+
+/* STATS GRID */
+
+.stats-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 22px;
+  margin-bottom: 60px;
+}
+
+.stat-card {
+  background: var(--card);
+  border: 1px solid var(--line);
+  padding: 32px;
+  text-align: center;
+  box-shadow: var(--shadow);
+  transition: .3s;
+}
+
+.stat-card:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 28px 60px rgba(45, 35, 25, .12);
+}
+
+.stat-icon {
+  font-size: 36px;
+  margin-bottom: 16px;
+}
+
+.stat-number {
+  font-size: 42px;
+  font-weight: bold;
+  color: var(--accent);
+  margin-bottom: 8px;
+}
+
+.stat-label {
+  font-size: 13px;
+  color: var(--muted);
+  letter-spacing: .5px;
+}
+
+/* SECTION */
+
+section {
+  margin-bottom: 50px;
+}
+
+.section-title {
+  font-size: 28px;
+  margin-bottom: 25px;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.section-title::before {
+  content: "";
+  width: 4px;
+  height: 28px;
+  background: var(--accent);
+}
+
+/* QUICK ACTIONS */
+
+.quick-actions {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 22px;
+}
+
+.action-card {
+  background: var(--card);
+  border: 1px solid var(--line);
+  padding: 32px;
+  display: flex;
+  align-items: center;
+  gap: 24px;
+  box-shadow: var(--shadow);
+  transition: .3s;
+  text-decoration: none;
+}
+
+.action-card:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 28px 60px rgba(45, 35, 25, .12);
+  border-color: var(--accent);
+}
+
+.action-icon {
+  font-size: 42px;
+  flex-shrink: 0;
+}
+
+.action-content h3 {
+  font-size: 18px;
+  margin-bottom: 6px;
+}
+
+.action-content p {
+  font-size: 13px;
+  color: var(--muted);
+}
+
+.action-arrow {
+  margin-left: auto;
+  font-size: 18px;
+  color: var(--accent);
+}
+
+/* LOGOUT BUTTON */
+
+.btn-logout {
+  background: var(--danger);
+  color: #fff;
+  border: 1px solid var(--danger);
+  padding: 13px 22px;
+  font-size: 14px;
+  border-radius: 4px;
+  transition: .25s;
+}
+
+.btn-logout:hover {
+  opacity: .9;
+  transform: translateY(-2px);
+}
+
+.btn-logout:active {
+  transform: translateY(0);
+}
+
+/* INFO BOX */
+
+.info-box {
+  background: rgba(139, 94, 60, .08);
+  border: 1px solid var(--line);
+  border-left: 3px solid var(--accent);
+  padding: 20px;
+  margin-bottom: 40px;
+  border-radius: 4px;
+}
+
+.info-box p {
+  font-size: 13px;
+  color: var(--muted);
+  margin: 0;
+}
+
+/* LOADING STATE */
+
+.loading-spinner {
+  display: inline-block;
+  width: 20px;
+  height: 20px;
+  border: 3px solid rgba(139, 94, 60, .2);
+  border-radius: 50%;
+  border-top-color: var(--accent);
+  animation: spin .8s linear infinite;
+}
+
+@keyframes spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+.loading-container {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 400px;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.loading-text {
+  color: var(--muted);
+  font-size: 14px;
+}
+
+/* FOOTER */
+
+footer {
+  border-top: 1px solid var(--line);
+  padding: 40px 0 30px;
+  text-align: center;
+  font-size: 12px;
+  color: var(--muted);
+}
+
+/* RESPONSIVE */
+
+@media (max-width: 1024px) {
+  .stats-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  .quick-actions {
+    grid-template-columns: 1fr;
+  }
+}
+
+@media (max-width: 768px) {
+  .header-inner {
+    flex-direction: column;
+    gap: 16px;
+  }
+
+  .header-actions {
+    width: 100%;
+    justify-content: space-between;
+  }
+
+  .user-info {
+    text-align: left;
+  }
+
+  .page-title {
+    font-size: 32px;
+  }
+
+  .stats-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .section-title {
+    font-size: 24px;
+  }
+
+  main {
+    padding: 40px 0;
+  }
+}
+
+@media (max-width: 480px) {
+  .container {
+    padding: 0 15px;
+  }
+
+  .logo-text {
+    font-size: 16px;
+  }
+
+  .page-title {
+    font-size: 26px;
+  }
+
+  .stat-number {
+    font-size: 32px;
+  }
+
+  .action-card {
+    padding: 20px;
+    flex-direction: column;
+    text-align: center;
+  }
+
+  .action-arrow {
+    margin-left: 0;
+  }
+}
+
+</style>
+
+</head>
+
+<body>
+
+<!-- HEADER -->
+<header>
+  <div class="container">
+    <div class="header-inner">
+      <div class="logo-group">
+        <img src="logo.png" alt="Anamigam Journal" class="logo-img">
+        <div>
+          <div class="logo-text">Anamigam <span>Journal</span></div>
+          <div class="logo-subtext">Admin Dashboard</div>
+        </div>
+      </div>
+
+      <div class="header-actions">
+        <div class="user-info">
+          <div class="user-email" id="userEmail">—</div>
+          <div class="user-role">Owner</div>
+        </div>
+
+        <button class="btn-icon" onclick="toggleTheme()" title="Dark / Light Mode">☾</button>
+      </div>
+    </div>
+  </div>
+</header>
+
+<!-- MAIN CONTENT -->
+<main>
+  <div class="container">
+
+    <!-- LOADING STATE -->
+    <div id="loadingState" class="loading-container" style="display: none;">
+      <div class="loading-spinner"></div>
+      <p class="loading-text">Loading dashboard...</p>
+    </div>
+
+    <!-- DASHBOARD CONTENT -->
+    <div id="dashboardContent" style="display: none;">
+
+      <!-- PAGE HEAD -->
+      <div class="page-head">
+        <h1 class="page-title">Welcome Back</h1>
+        <p class="page-desc">Manage your Anamigam Journal content and view publication statistics.</p>
+      </div>
+
+      <!-- INFO BOX -->
+      <div class="info-box">
+        <p>
+          💡 <strong>Tip:</strong> Use the Quick Links below to manage your writings, e-books, achievements, and journal posts. All changes are saved to Supabase.
+        </p>
+      </div>
+
+      <!-- STATISTICS -->
+      <section>
+        <div class="section-title">Overview</div>
+
+        <div class="stats-grid">
+          <div class="stat-card">
+            <div class="stat-icon">✍️</div>
+            <div class="stat-number" id="writingsCount">0</div>
+            <div class="stat-label">Writings</div>
+          </div>
+
+          <div class="stat-card">
+            <div class="stat-icon">📖</div>
+            <div class="stat-number" id="ebooksCount">0</div>
+            <div class="stat-label">E-Books</div>
+          </div>
+
+          <div class="stat-card">
+            <div class="stat-icon">🏆</div>
+            <div class="stat-number" id="achievementsCount">0</div>
+            <div class="stat-label">Achievements</div>
+          </div>
+
+          <div class="stat-card">
+            <div class="stat-icon">📝</div>
+            <div class="stat-number" id="postsCount">0</div>
+            <div class="stat-label">Journal Posts</div>
+          </div>
+        </div>
+      </section>
+
+      <!-- QUICK ACTIONS -->
+      <section>
+        <div class="section-title">Quick Actions</div>
+
+        <div class="quick-actions">
+          <a href="admin-content.html" class="action-card">
+            <div class="action-icon">✏️</div>
+            <div class="action-content">
+              <h3>Manage Content</h3>
+              <p>Add, edit, or delete your writings, e-books, and achievements</p>
+            </div>
+            <div class="action-arrow">→</div>
+          </a>
+
+          <button onclick="handleLogout()" class="action-card" style="border: 1px solid var(--danger); background: rgba(201, 42, 42, .05);">
+            <div class="action-icon">🚪</div>
+            <div class="action-content">
+              <h3 style="color: var(--danger);">Sign Out</h3>
+              <p>End your session and return to the login page</p>
+            </div>
+            <div class="action-arrow" style="color: var(--danger);">→</div>
+          </button>
+        </div>
+      </section>
+
+      <!-- ADDITIONAL ACTIONS -->
+      <section style="margin-top: 60px; padding-top: 40px; border-top: 1px solid var(--line);">
+        <div class="section-title">Dashboard Actions</div>
+
+        <div class="quick-actions">
+          <a href="index.html" class="action-card">
+            <div class="action-icon">🏠</div>
+            <div class="action-content">
+              <h3>View Website</h3>
+              <p>Visit the public Anamigam Journal homepage</p>
+            </div>
+            <div class="action-arrow">→</div>
+          </a>
+
+          <a href="admin-content.html" class="action-card">
+            <div class="action-icon">⚙️</div>
+            <div class="action-content">
+              <h3>Settings</h3>
+              <p>Manage your account preferences and security settings</p>
+            </div>
+            <div class="action-arrow">→</div>
+          </a>
+        </div>
+      </section>
+
+    </div>
+
+  </div>
+</main>
+
+<!-- FOOTER -->
+<footer>
+  <div class="container">
+    <p>Anamigam Journal Admin Dashboard — Secure Owner Access</p>
+    <p style="margin-top: 8px;">© 2024 V. Matheswaran. All Rights Reserved.</p>
+  </div>
+</footer>
+
+<!-- SUPABASE CONFIGURATION & AUTH LOGIC -->
+<script>
+
+// Supabase Configuration
+// Replace with your actual Supabase credentials
+const SUPABASE_URL = 'YOUR_SUPABASE_URL';
+const SUPABASE_ANON_KEY = 'YOUR_SUPABASE_ANON_KEY';
+
+let supabase = null;
+let currentUser = null;
+
+// Initialize Supabase client after library loads
+window.addEventListener('load', () => {
+  if (typeof window.supabase !== 'undefined') {
+    supabase = window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
+    checkAuthentication();
+  } else {
+    console.error('Supabase library failed to load');
+    redirectToLogin('Failed to load authentication service.');
+  }
+});
+
+// Check if user is authenticated
+async function checkAuthentication() {
+  if (!supabase) {
+    redirectToLogin('Authentication service unavailable.');
+    return;
+  }
+
+  try {
+    const { data: { session } } = await supabase.auth.getSession();
+
+    if (!session) {
+      redirectToLogin('Please log in to access the dashboard.');
+      return;
+    }
+
+    currentUser = session.user;
+    displayUserInfo();
+    showDashboardContent();
+    loadDashboardStats();
+
+  } catch (error) {
+    console.error('Auth check error:', error);
+    redirectToLogin('Authentication error. Please log in again.');
+  }
+}
+
+// Redirect to login page
+function redirectToLogin(message) {
+  if (message) {
+    localStorage.setItem('loginMessage', message);
+  }
+  window.location.href = 'admin-login.html';
+}
+
+// Display user information
+function displayUserInfo() {
+  if (currentUser) {
+    document.getElementById('userEmail').textContent = currentUser.email || 'User';
+  }
+}
+
+// Show dashboard content
+function showDashboardContent() {
+  document.getElementById('loadingState').style.display = 'none';
+  document.getElementById('dashboardContent').style.display = 'block';
+}
+
+// Load dashboard statistics
+async function loadDashboardStats() {
+  if (!supabase) return;
+
+  try {
+    // Fetch writings count
+    const { count: writingsCount } = await supabase
+      .from('writings')
+      .select('*', { count: 'exact', head: true });
+
+    // Fetch e-books count
+    const { count: ebooksCount } = await supabase
+      .from('ebooks')
+      .select('*', { count: 'exact', head: true });
+
+    // Fetch achievements count
+    const { count: achievementsCount } = await supabase
+      .from('achievements')
+      .select('*', { count: 'exact', head: true });
+
+    // Fetch journal posts count
+    const { count: postsCount } = await supabase
+      .from('journal_posts')
+      .select('*', { count: 'exact', head: true });
+
+    // Update UI with counts
+    document.getElementById('writingsCount').textContent = writingsCount || 0;
+    document.getElementById('ebooksCount').textContent = ebooksCount || 0;
+    document.getElementById('achievementsCount').textContent = achievementsCount || 0;
+    document.getElementById('postsCount').textContent = postsCount || 0;
+
+  } catch (error) {
+    console.error('Error loading statistics:', error);
+    // Show default values on error
+    document.getElementById('writingsCount').textContent = '—';
+    document.getElementById('ebooksCount').textContent = '—';
+    document.getElementById('achievementsCount').textContent = '—';
+    document.getElementById('postsCount').textContent = '—';
+  }
+}
+
+// Handle logout
+async function handleLogout() {
+  if (!supabase) {
+    redirectToLogin('Logout failed. Please try again.');
+    return;
+  }
+
+  try {
+    await supabase.auth.signOut();
+    localStorage.setItem('loginMessage', 'You have been logged out successfully.');
+    window.location.href = 'admin-login.html';
+  } catch (error) {
+    console.error('Logout error:', error);
+    redirectToLogin('Logout error. Please refresh and try again.');
+  }
+}
+
+// Theme toggle
+function toggleTheme() {
+  const body = document.body;
+  body.classList.toggle('dark');
+  localStorage.setItem('theme', body.classList.contains('dark') ? 'dark' : 'light');
+}
+
+// Apply saved theme on load
+window.addEventListener('DOMContentLoaded', () => {
+  const savedTheme = localStorage.getItem('theme') || 'light';
+  if (savedTheme === 'dark') {
+    document.body.classList.add('dark');
+  }
+});
+
+// Set up auth state listener
+window.addEventListener('load', () => {
+  if (supabase) {
+    supabase.auth.onAuthStateChange((event, session) => {
+      if (!session && event !== 'SIGNED_OUT') {
+        redirectToLogin('Session expired. Please log in again.');
+      }
+    });
+  }
+});
+
+</script>
+
+</body>
+
+</html>
