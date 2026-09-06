@@ -5,7 +5,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
 <title>E-Books | Anamigam Journal</title>
-<meta name="description" content="Anamigam Journal - தமிழ் மின் நூல்கள் மற்றும் இலவசமாக வாசிக்கக்கூடிய தம[...]>
+<meta name="description" content="Anamigam Journal - தமிழ் மின் நூல்கள் மற்றும் இலவசமாக வாசிக்கக்கூடிய தம[...]">
 
 <link rel="icon" type="image/png" href="logo.png">
 
@@ -625,9 +625,9 @@ Anamigam Journal-ன் முழுமையான PDF பதிப்பு.
 
 <div class="buttons">
 
-<a class="btn primary" href="anamigam%20Final.pdf">Read Online</a>
+<a class="btn primary" href="anamigam-final.pdf">Read Online</a>
 
-<a class="btn" href="anamigam%20Final.pdf">Download PDF</a>
+<a class="btn" href="anamigam-final.pdf">Download PDF</a>
 
 </div>
 
@@ -908,7 +908,7 @@ Official source: Project Madurai
 
 <br><br>
 
-இந்த பகுதியில் இடம்பெறும் நூல்களின்
+இந்த பகுதியில் வெளியாகும் நூல்களின்
 மூல உரிமைகள் மற்றும் பயன்பாட்டு விதிமுறைகள்
 அந்தந்த source-ன் விதிகளுக்கு உட்பட்டவை.
 
@@ -998,28 +998,8 @@ function searchBooks(){
 
 let input =
 document.getElementById("bookSearch")
-.value
-.toLowerCase()
-.trim();
-
-let cards =
-document.querySelectorAll(".book-card");
-
-cards.forEach(card => {
-
-let text =
-card.innerText.toLowerCase();
-
-card.style.display =
-text.includes(input)
-? ""
-: "none";
-
-});
-
-}
+[...] 
 
 </script>
-
 </body>
-	</html>
+</html>
