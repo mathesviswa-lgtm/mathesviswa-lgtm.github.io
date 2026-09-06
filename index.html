@@ -4,36 +4,39 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <head>
-
+ 
 <meta charset="UTF-8">
-
+ 
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
+ 
 <title>Anamigam Journal | V. MATHESWARAN</title>
-
-<meta name="description" content="Anamigam Journal — எண்ணங்களின் தடம்… எழுத்துகளின் பயணம். V. Matheswaran அவர்களின் கவிதை, சிறுகதை மற்றும் சிந்தனை பகிர்வு.">
-
+ 
+<meta name="description" content="Anamigam Journal — எண்ணங்களின் தடம்… எழுத்துகளின் பயணம். V. Matheswaran அவர்களி[...]
+ 
 <meta name="author" content="வி.மாதேஸ்வரன்">
-
+ 
 <meta name="robots" content="index, follow">
-
+ 
 <meta property="og:title" content="Anamigam Journal | V. MATHESWARAN">
-
+ 
 <meta property="og:description" content="எண்ணங்களின் தடம்… எழுத்துகளின் பயணம்.">
-
+ 
 <meta property="og:type" content="website">
-
+ 
 <meta property="og:url" content="https://mathesviswa-lgtm.github.io/">
-
+ 
 <meta name="twitter:card" content="summary">
 <title>Anamigam Journal | V. Matheswaran</title>
-
+ 
 <meta name="description"
-content="Anamigam Journal — எண்ணங்களின் தடம்… எழுத்துகளின் பயணம். V. Matheswaran எழுத்தாளர் மற்றும் கவி தனது படைப்புகளை பகிரும் ஆன்லைன் தளம்.">
-
+content="Anamigam Journal — எண்ணங்களின் தடம்… எழுத்துகளின் பயணம். V. Matheswaran எழுத்தாளர் மற்று[...]
+ 
 <meta name="author" content="V. Matheswaran">
-
+ 
 <link rel="icon" type="image/png" href="logo.png">
+
+<!-- Supabase JS Client -->
+<script async src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 
 <style>
 
@@ -164,6 +167,65 @@ font-size:17px;
 
 .menu-btn{
 display:none;
+}
+
+/* AUTH BUTTON */
+.auth-btn {
+font-size:14px;
+padding:8px 16px;
+border:1px solid var(--accent);
+background:var(--accent);
+color:var(--bg);
+cursor:pointer;
+border-radius:4px;
+transition:.2s;
+}
+
+.auth-btn:hover {
+opacity:0.9;
+}
+
+.user-menu {
+display:none;
+position:absolute;
+top:72px;
+right:25px;
+background:var(--card);
+border:1px solid var(--line);
+border-radius:4px;
+padding:10px 0;
+min-width:150px;
+box-shadow:var(--shadow);
+z-index:999;
+}
+
+.user-menu.show {
+display:block;
+}
+
+.user-menu a,
+.user-menu button {
+display:block;
+width:100%;
+text-align:left;
+padding:10px 16px;
+border:none;
+background:none;
+color:var(--text);
+cursor:pointer;
+font-size:13px;
+transition:.2s;
+border-bottom:1px solid var(--line);
+}
+
+.user-menu a:hover,
+.user-menu button:hover {
+background:var(--soft);
+color:var(--accent);
+}
+
+.user-menu button:last-child {
+border-bottom:none;
 }
 
 /* HERO */
@@ -856,6 +918,16 @@ height:330px;
 ☰
 </button>
 
+<button class="auth-btn" id="authBtn" onclick="handleAuthClick()" title="Owner Login">
+Login
+</button>
+
+<div class="user-menu" id="userMenu">
+<a href="admin.html">Dashboard</a>
+<a href="admin-content.html">Manage Content</a>
+<button onclick="handleLogout()">Logout</button>
+</div>
+
 </div>
 
 </div>
@@ -964,7 +1036,7 @@ Anamigam Journal-ன் தற்போதைய முக்கிய பகு
 <h3>எழுத்துகளின் உலகம்</h3>
 
 <p>
-கவிதை, சிறுகதை, சிந்தனை மற்றும் கட்டுரைகள் —
+கவி��ை, சிறுகதை, சிந்தனை மற்றும் கட்டுரைகள் —
 ஒவ்வொரு படைப்பும் ஒரு எண்ணத்தின் தடம்.
 </p>
 
@@ -1002,50 +1074,77 @@ Anamigam Journal-ன் தற்போதைய முக்கிய பகு
 <div class="section-head reveal">
 
 <div>
-<div class="section-label">Writing</div>
-<h2 class="section-title">எழுத்துகள்</h2>
+<div class="section-label">WRITINGS</div>
+<h2 class="section-title">சிறிய பயணங்கள்</h2>
 <p class="section-desc">
-Anamigam Journal-ல் உள்ள மற்ற எழுத்துகளைக் காணலாம்.
+எண்ணங்களிலிருந்து ஆரம்பித்து, வார்த்தைகளாக மாறி, எழுத்துகளாக தொடரும் ஒவ்வொரு பயணமும் உள்ளடக்கிய சிறிய எழுத்துக் தொகுப்பு.
 </p>
 </div>
 
+<a href="writings.html" class="view-all">
+View All →
+</a>
+
 </div>
+
 
 <div class="writing-grid">
 
-<div class="writing-card reveal">
-<div class="writing-number">01</div>
-<h3>ஐக்கியம்</h3>
-<p>
-பல கைகள் இணையும்போது,
-கனவுகள் எதிரொலிக்க ஆரம்பிக்கிறது…
-ஐக்கியம் - Anamigam Journal.
-</p>
-<span class="read">வாசிக்க →</span>
-</div>
+<a href="javascript:void(0)" class="writing-card reveal">
 
-<div class="writing-card reveal">
-<div class="writing-number">02</div>
-<h3>மணல் புளுக்கு</h3>
-<p>
-சமுத்திரத்தின் ஆட்டம் தரையைக் கட்டி அமைக்கிறது.
-மணல் புளுக்குக்குள் எங்கோ ஒரு கனவு
-தூங்கிக்கிடக்கிறது...
+<p class="writing-number">
+01. Poem
 </p>
-<span class="read">வாசிக்க →</span>
-</div>
 
-<div class="writing-card reveal">
-<div class="writing-number">03</div>
-<h3>விடி</h3>
+<h3>
+தனிமையின் புதிய பரிமாணம்
+</h3>
+
 <p>
-இருட்டின் எல்லைக்கு அப்பாலே,
-விடியல் ஒன்று பெருமூச்சு விடுகிறது.
-நம்மை எழுப்பும் அந்த ஒளி —
-விடி.
+தனிமை என்பது வெறும் உணர்வு மட்டுமல்ல. இது ஒரு தத்துவம். ஆழமான சிந்தனைக்கான ஒரு இடம்.
 </p>
-<span class="read">வாசிக்க →</span>
-</div>
+
+<span class="read">Read →</span>
+
+</a>
+
+
+<a href="javascript:void(0)" class="writing-card reveal">
+
+<p class="writing-number">
+02. Short Story
+</p>
+
+<h3>
+இரவின் ரகசியங்கள்
+</h3>
+
+<p>
+இரவில் நக்ஷத்திரங்கள் பேசுகின்றன. அவை பேசுவது கேட்க தயாரான மனங்களுக்கு மட்டும்.
+</p>
+
+<span class="read">Read →</span>
+
+</a>
+
+
+<a href="javascript:void(0)" class="writing-card reveal">
+
+<p class="writing-number">
+03. Reflection
+</p>
+
+<h3>
+எண்ணங்கள் பற்றிய எண்ணங்கள்
+</h3>
+
+<p>
+என் எண்ணங்கள் சரியா? சரியல்லையா? இந்தக் கேள்வி மட்டுமே என்னை வாழ வைக்கிறது.
+</p>
+
+<span class="read">Read →</span>
+
+</a>
 
 </div>
 
@@ -1054,7 +1153,7 @@ Anamigam Journal-ல் உள்ள மற்ற எழுத்துகளை
 </section>
 
 
-<!-- EBOOK -->
+<!-- EBOOK SECTION -->
 
 <section class="ebook">
 
@@ -1063,10 +1162,10 @@ Anamigam Journal-ல் உள்ள மற்ற எழுத்துகளை
 <div class="section-head reveal">
 
 <div>
-<div class="section-label">E-Books</div>
-<h2 class="section-title">மின் நூல்கள்</h2>
+<div class="section-label">E-BOOKS</div>
+<h2 class="section-title">மின் நூல் சংகல்பம்</h2>
 <p class="section-desc">
-வாசிப்பு ஒரு பயணம். ஒவ்வொரு நூலும் ஒரு செம்மந்திரை.
+எழுத்துக்களை முழுமையான அனுபவமாக வழங்குவற்கான முயற்சி.
 </p>
 </div>
 
@@ -1075,28 +1174,25 @@ Anamigam Journal-ல் உள்ள மற்ற எழுத்துகளை
 <div class="ebook-box">
 
 <div class="book-cover reveal">
-
 <div class="book-cover-inner">
-
-<h3>சாயல்</h3>
-
-<p>COMING SOON</p>
-
+<p style="color:var(--muted); margin-bottom:10px;">EBOOK</p>
+<h3>உணர்வுகளின் நூல்</h3>
+<p>கவிதை &amp; சிந்தனைகள்</p>
 </div>
-
 </div>
 
 <div class="ebook-content reveal">
 
-<h2>சாயல் — Shadows</h2>
+<h2>
+வாசிப்பை ஒரு அனுபவமாக மாற்றுதல்
+</h2>
 
 <p>
-வாழ்வின் நிழல்களை எழுத்தாகக் கொட்டி வைக்கிறது 'சாயல்'. 
-வாழ்க்கையின் பலவிதமான தருணங்களில் பிறந்த கவிதைகள் இந்த நூலில் உள்ளன.
+Anamigam Journal-ன் மின் நூல்கள் வெறுமே எழுத்துக் சংகல்பம் அல்ல. ஒவ்வொரு வார்த்தையும், ஒவ்வொரு வரியும் ஒரு உணர்வுக்கான பயணம்.
 </p>
 
 <p>
-ஆழ்ந்த சிந்தனைகளையும், தூய உணர்வுகளையும் பகிர்ந்து கொள்ளும் ஒரு முயற்சி 'சாயல்'.
+தமிழ் இலக்கியத்தில் புதிய மிஷ்ரம் சேர்க்க, மதிப்பு ச��ர்க்க இந்த சிறிய முயற்சி.
 </p>
 
 <a href="ebooks.html" class="btn btn-primary">
@@ -1121,10 +1217,10 @@ Anamigam Journal-ல் உள்ள மற்ற எழுத்துகளை
 <div class="section-head reveal">
 
 <div>
-<div class="section-label">Achievements</div>
-<h2 class="section-title">சாதனைகள்</h2>
+<div class="section-label">ACHIEVEMENTS</div>
+<h2 class="section-title">சாதனைகளும் வாழ்வும்</h2>
 <p class="section-desc">
-Anamigam Journal-ற் கொடுக்கப்பட்ட பாராட்டுக்கள் மற்றும் நன்மதிப்பீடுகள்.
+ஒரு எழுத்தாளர் என்ற முறையில் இவரது பயணத்தில் இடம்பெற்ற சில குறிப்பிடத்தக்க தருணங்கள்.
 </p>
 </div>
 
@@ -1135,48 +1231,62 @@ Anamigam Journal-ற் கொடுக்கப்பட்ட பாராட�
 <div class="achievement reveal">
 
 <div class="achievement-icon">
-🎖️
+📖
 </div>
 
-<h3>Award One</h3>
+<h3>
+பதிப்பிக்கப்பட்ட பணிகள்
+</h3>
 
 <p>
-இந்த விருது Anamigam Journal-ன் சிறுந்த கொணர்வுக்கொக்க வழங்கப்பட்டது.
+பல்வேறு தமிழ் இலக்கியப் பத்திரிகைகளில் பதிப்பிக்கப்பட்ட கவிதைகள் மற்றும் கட்டுரைகள்.
 </p>
 
-<span class="status">AWARDED</span>
+<span class="status">
+Ongoing
+</span>
 
 </div>
+
 
 <div class="achievement reveal">
 
 <div class="achievement-icon">
-⭐
+✍️
 </div>
 
-<h3>Award Two</h3>
+<h3>
+Anamigam Journal
+</h3>
 
 <p>
-இந்த விருது Anamigam Journal-ன் சிறுந்த கொணர்வுக்கொக்க வழங்கப்பட்டது.
+ব্যক্তিগত ব্লগ ও ডিজিটাল প্রকাশনার মাধ্যমে দৈনিক উচ্চারণ এবং চিন্তাভাবনার প্রকাশ।
 </p>
 
-<span class="status">AWARDED</span>
+<span class="status">
+Active
+</span>
 
 </div>
+
 
 <div class="achievement reveal">
 
 <div class="achievement-icon">
-🏆
+🎓
 </div>
 
-<h3>Award Three</h3>
+<h3>
+সাহিত্য গবেষণা
+</h3>
 
 <p>
-இந்த விருது Anamigam Journal-ன் சிறுந்த கொணர்வுக்கொக்க வழங்கப்பட்டது.
+তমিழ் সাহিত্য এবং সমসাময়িক লেখার উপর বিভিন্ন গবেষণা কাজ।
 </p>
 
-<span class="status">AWARDED</span>
+<span class="status">
+In Progress
+</span>
 
 </div>
 
@@ -1196,8 +1306,8 @@ Anamigam Journal-ற் கொடுக்கப்பட்ட பாராட�
 <div class="section-head reveal">
 
 <div>
-<div class="section-label">About</div>
-<h2 class="section-title">என்பற்றி</h2>
+<div class="section-label">ABOUT</div>
+<h2 class="section-title">V. Matheswaran</h2>
 </div>
 
 </div>
@@ -1206,50 +1316,49 @@ Anamigam Journal-ற் கொடுக்கப்பட்ட பாராட�
 
 <div class="profile-box reveal">
 
-<div class="profile-circle">📖</div>
+<div class="profile-circle">
+வி
+</div>
 
-<h2>வி. மாதேஸ்வரன்</h2>
+<h2>
+வி.மாதேஸ்வரன்
+</h2>
 
 <p>
-Anamigam Journal -ன் ��ிறப்பாளர் மற்றும் உள்ளீடு கொடுப்பவர்
+Anamigam Journal ৰ স্থাপক এবং সম్ప్ादক
 </p>
 
-<div class="contact-info">
-
-<div class="contact-item">
-<span>📧</span> email@example.com
-</div>
-
-<div class="contact-item">
-<span>🔗</span> Portfolio Link
-</div>
-
-<div class="contact-item">
-<span>📱</span> +91 XXXXXXXXXX
-</div>
+<p style="margin-top: 15px; font-size: 12px;">
+தமிழ் ஆக்க எழுத்தாளர் மற்றும் ডিজিটাল பাবளிશர்
+</p>
 
 </div>
 
-</div>
 
 <div class="about-text reveal">
 
-<h2>கதை</h2>
+<h2>
+என் பயணம்
+</h2>
 
 <p>
-Anamigam Journal என்பது கூட்டுப் பயணத்தின் ஒரு பெயர். 
-ஒரு தனி சிந்தனையாக தொடங்கிய இந்த ஆக்க தளம், 
-இன்று பல எழுத்தாளர்களின் குரலை கொண்ட ஒரு பூமி ஆகிவிட்டுள்ளது.
+Anamigam Journal என்பது என் சிந்தனைகளின் ஒரு சிறிய களம். எண்ணங்கள் பிறக்கின்றன, வளர்கின்றன, மாறுகின்றன. அவற்றைக் கைவிடாமல் எழுத்துக்களாக வாழ்த்துவதுதான் இங்கே நடக்கிறது.
 </p>
 
 <p>
-"Anamigam" என்ற தமிழ் சொல்லை நிரந்தரச்சாசனமாக கொண்ட இந்த ஆக்க தளம், 
-பல்வேறு எண்ணங்களைப் பகிர்ந்து கொள்ளும் ஒரு மேடை.
+தமிழ் இலக்கியத்தில் ஆழம் இருக்கிறது. அதைத் தொட்ட ஒவ்வொருவரும் வேறு ஆளாகிப் போகிறார். உம் இப்பயணத்தில் கூட்டாளிகளாக வருவீர்களா?
 </p>
 
 <div class="mentor">
-<strong>வின்சென்ட் வேன் கோ</strong>
-ஐ நினைக்கிறேன், நான் நாயாய் பிறந்திருக்க விரும்புகிறேன்.
+
+<strong>
+வாழ்வின் குறிக்கோள்
+</strong>
+
+<p style="margin-top: 10px; font-size: 14px; color: var(--muted);">
+"எழுத்தின் மூலம் மனங்களை நெகிழ்த்தல், சிந்தனை தூண்டல், ஆழ்ந்த অর்த்தத்தை ஏற்படுத்தல்."
+</p>
+
 </div>
 
 </div>
@@ -1263,24 +1372,23 @@ Anamigam Journal என்பது கூட்டுப் பயணத்த�
 
 <!-- QUOTE -->
 
-<div class="quote">
+<section class="quote">
 
-<div class="container reveal">
+<div class="quote-mark">
+❟
+</div>
 
-<div class="quote-mark">"</div>
-
-<p>
-எழுத்து என்பது வெறுமே இயந்திர சொல்லுதல் அல்ல,
-ஆன்ம ஆடையாய் மாறிய ஓர் தொழிலுமை.
+<p class="reveal">
+நல்ல எழுத்தைத் திரட்ட நிறையப் பொய் சொல்ல வேண்டும்.
+ஆனால் அந்தப் பொய்ப்பு உண்மையை மூடிக்கொள்ள பொய்யுமல்ல…
+அது உண்மையை வெளிக்கொணர்ந்துவிடும்.
 </p>
 
-<small>
-— வி. மாதேஸ்வரன்
+<small class="reveal">
+— V. Matheswaran
 </small>
 
-</div>
-
-</div>
+</section>
 
 
 <!-- CONTACT -->
@@ -1293,26 +1401,26 @@ Anamigam Journal என்பது கூட்டுப் பயணத்த�
 
 <div>
 
-<h2>தொடர்பு கொள்ள</h2>
+<h2>
+Contact me
+</h2>
 
 <p>
-Anamigam Journal குறித்து உங்களிடம் ஏதாவது கேள்வியோ, 
-제안்மையோ, அபிப்பிரிப்பாயோ இருந்தாலோ, 
-தயவு செய்து கீழே கொடுக்கப்பட்ட வடிவ மூலம் எங்களுடன் தொடர்பு கொள்ளுங்கள்.
+Any feedback, collaboration queries or just a hello —
 </p>
 
 <div class="contact-info">
 
 <div class="contact-item">
-<span>📧</span> email@example.com
+<span>📧 Email:</span> contact@anamigam.journal
 </div>
 
 <div class="contact-item">
-<span>🔗</span> Portfolio Link
+<span>🐦 Twitter:</span> @anamigamjournal
 </div>
 
 <div class="contact-item">
-<span>📱</span> +91 XXXXXXXXXX
+<span>📱 Instagram:</span> @anamigamjournal
 </div>
 
 </div>
@@ -1321,14 +1429,14 @@ Anamigam Journal குறித்து உங்களிடம் ஏதா�
 
 <form>
 
-<input type="text" placeholder="பெயர்" required>
+<input type="text" placeholder="Your Name" required>
 
-<input type="email" placeholder="மின் அஞ்சல்" required>
+<input type="email" placeholder="Your Email" required>
 
-<textarea placeholder="உங்கள் செய்தி" required></textarea>
+<textarea placeholder="Message"></textarea>
 
-<button class="btn btn-primary" type="submit">
-அனுப்பு →
+<button type="submit" class="btn btn-primary">
+Send Message
 </button>
 
 </form>
@@ -1350,58 +1458,60 @@ Anamigam Journal குறித்து உங்களிடம் ஏதா�
 
 <div>
 
-<h3 class="footer-brand">
+<div class="footer-brand">
 Anamigam <span>Journal</span>
-</h3>
+</div>
 
 <p>
 எண்ணங்களின் தடம்… எழுத்துகளின் பயணம்.
 </p>
 
+<p style="margin-top: 15px; font-size: 11px; color: var(--muted);">
+© 2024 V. Matheswaran. All Rights Reserved.
+</p>
+
 </div>
 
 <div>
 
-<h4>பக்கங்கள்</h4>
+<h4>
+Navigation
+</h4>
 
 <div class="footer-links">
-
 <a href="index.html">Home</a>
-
 <a href="writings.html">Writings</a>
-
 <a href="ebooks.html">E-Books</a>
-
+<a href="achievements.html">Achievements</a>
 </div>
 
 </div>
 
 <div>
 
-<h4>வலை</h4>
+<h4>
+Connect
+</h4>
 
 <div class="footer-links">
-
-<a href="#">GitHub</a>
-
-<a href="#">Portfolio</a>
-
-<a href="#">Social</a>
-
+<a href="contact.html">Get in Touch</a>
+<a href="about.html">About</a>
+<a href="javascript:void(0)">Privacy</a>
+<a href="javascript:void(0)">Terms</a>
 </div>
 
 </div>
 
 </div>
 
-<div class="copyright reveal">
+<div class="copyright">
 
 <p>
-© 2024 Anamigam Journal. All rights reserved. Handcrafted with 💚 by வி. மாதேஸ்வரன்.
+Anamigam Journal — A Personal Space for Thoughts & Words
 </p>
 
 <p>
-<a href="#">Privacy Policy</a> • <a href="#">Terms of Service</a>
+Designed with care. Built with intent.
 </p>
 
 </div>
@@ -1410,54 +1520,132 @@ Anamigam <span>Journal</span>
 
 </footer>
 
-
-<!-- SCRIPTS -->
-
+<!-- Supabase Client Configuration & Auth Handler -->
 <script>
+// Initialize Supabase client
+// Replace with your Supabase URL and Anon Key
+const SUPABASE_URL = 'YOUR_SUPABASE_URL';
+const SUPABASE_ANON_KEY = 'YOUR_SUPABASE_ANON_KEY';
 
-function toggleTheme(){
+let supabase = null;
 
-const body = document.body;
-body.classList.toggle("dark");
-localStorage.setItem("theme",body.classList.contains("dark")?"dark":"light");
+// Initialize after Supabase library loads
+window.addEventListener('load', () => {
+  if (typeof window.supabase !== 'undefined') {
+    supabase = window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
+    initializeAuth();
+  }
+});
 
+// Initialize authentication state
+async function initializeAuth() {
+  if (!supabase) return;
+  
+  try {
+    const { data: { session } } = await supabase.auth.getSession();
+    updateAuthUI(session);
+  } catch (error) {
+    console.error('Auth initialization error:', error);
+  }
 }
 
-function toggleMenu(){
-
-const menu = document.getElementById("mobileMenu");
-menu.style.display = menu.style.display === "block" ? "none" : "block";
-
+// Listen for auth state changes
+if (typeof window.supabase !== 'undefined') {
+  window.addEventListener('load', () => {
+    if (supabase) {
+      supabase.auth.onAuthStateChange((event, session) => {
+        updateAuthUI(session);
+      });
+    }
+  });
 }
 
-function handleScroll(){
-
-const reveals = document.querySelectorAll(".reveal");
-
-for(let i = 0;i < reveals.length;i++){
-
-const windowHeight = window.innerHeight;
-const elementTop = reveals[i].getBoundingClientRect().top;
-const elementVisible = 150;
-
-if(elementTop < windowHeight - elementVisible){
-reveals[i].classList.add("show");
+// Handle authentication button click
+function handleAuthClick() {
+  const userMenu = document.getElementById('userMenu');
+  const authBtn = document.getElementById('authBtn');
+  
+  if (authBtn.textContent.trim() === 'Login') {
+    // Redirect to admin login page
+    window.location.href = 'admin-login.html';
+  } else {
+    // Toggle user menu
+    userMenu.classList.toggle('show');
+  }
 }
 
+// Handle logout
+async function handleLogout() {
+  if (!supabase) return;
+  
+  try {
+    await supabase.auth.signOut();
+    updateAuthUI(null);
+    document.getElementById('userMenu').classList.remove('show');
+  } catch (error) {
+    console.error('Logout error:', error);
+  }
 }
 
+// Update UI based on auth state
+function updateAuthUI(session) {
+  const authBtn = document.getElementById('authBtn');
+  const userMenu = document.getElementById('userMenu');
+  
+  if (session) {
+    authBtn.textContent = session.user.email;
+    authBtn.style.color = 'var(--accent)';
+    authBtn.style.background = 'transparent';
+  } else {
+    authBtn.textContent = 'Login';
+    authBtn.style.color = 'var(--bg)';
+    authBtn.style.background = 'var(--accent)';
+    userMenu.classList.remove('show');
+  }
 }
 
-window.addEventListener("scroll",handleScroll);
-
-handleScroll();
-
-if(localStorage.getItem("theme")==="dark"){
-document.body.classList.add("dark");
+// Theme toggle
+function toggleTheme() {
+  const body = document.body;
+  body.classList.toggle('dark');
+  localStorage.setItem('theme', body.classList.contains('dark') ? 'dark' : 'light');
 }
 
+// Apply saved theme on load
+window.addEventListener('load', () => {
+  const savedTheme = localStorage.getItem('theme') || 'light';
+  if (savedTheme === 'dark') {
+    document.body.classList.add('dark');
+  }
+});
+
+// Mobile menu toggle
+function toggleMenu() {
+  const menu = document.getElementById('mobileMenu');
+  menu.style.display = menu.style.display === 'block' ? 'none' : 'block';
+}
+
+// Reveal animation on scroll
+const observerOptions = {
+  threshold: 0.1,
+  rootMargin: '0px 0px -100px 0px'
+};
+
+const observer = new IntersectionObserver(function(entries) {
+  entries.forEach(entry => {
+    if (entry.isIntersecting) {
+      entry.target.classList.add('show');
+      observer.unobserve(entry.target);
+    }
+  });
+}, observerOptions);
+
+window.addEventListener('load', () => {
+  document.querySelectorAll('.reveal').forEach(el => {
+    observer.observe(el);
+  });
+});
 </script>
 
 </body>
-
 </html>
