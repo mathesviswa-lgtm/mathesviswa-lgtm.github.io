@@ -1,0 +1,595 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Owner Login | Anamigam Journal</title>
+<meta name="description" content="Anamigam Journal - Owner Login">
+<meta name="robots" content="noindex, nofollow">
+<link rel="icon" type="image/png" href="logo.png">
+
+<!-- Supabase JS Client -->
+<script async src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+
+<style>
+
+:root {
+  --bg: #f7f3eb;
+  --card: #fffdf8;
+  --text: #24211d;
+  --muted: #756f66;
+  --line: #ddd5c8;
+  --accent: #8b5e3c;
+  --soft: #eee7dc;
+  --shadow: 0 18px 50px rgba(45, 35, 25, .08);
+  --error: #c92a2a;
+  --success: #51a851;
+}
+
+body.dark {
+  --bg: #151412;
+  --card: #201e1b;
+  --text: #f4eee4;
+  --muted: #b8afa2;
+  --line: #3a352e;
+  --accent: #d19a6a;
+  --soft: #2b2722;
+  --shadow: 0 18px 50px rgba(0, 0, 0, .25);
+}
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  font-family: Georgia, "Noto Serif Tamil", serif;
+  background: var(--bg);
+  color: var(--text);
+  line-height: 1.7;
+  transition: .3s;
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.container {
+  max-width: 450px;
+  width: 100%;
+  padding: 25px;
+}
+
+/* HEADER */
+
+.login-header {
+  text-align: center;
+  margin-bottom: 50px;
+}
+
+.logo-link {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 12px;
+  margin-bottom: 30px;
+  text-decoration: none;
+}
+
+.logo-img {
+  height: 48px;
+  width: auto;
+}
+
+.logo-text {
+  font-size: 20px;
+  font-weight: bold;
+  letter-spacing: .5px;
+}
+
+.logo-text span {
+  color: var(--accent);
+}
+
+.login-header h1 {
+  font-size: 32px;
+  margin-bottom: 12px;
+}
+
+.login-header p {
+  color: var(--muted);
+  font-size: 15px;
+}
+
+/* LOGIN BOX */
+
+.login-box {
+  background: var(--card);
+  border: 1px solid var(--line);
+  padding: 42px;
+  box-shadow: var(--shadow);
+}
+
+/* FORM */
+
+.form-group {
+  margin-bottom: 22px;
+}
+
+label {
+  display: block;
+  font-size: 13px;
+  font-weight: 500;
+  color: var(--text);
+  margin-bottom: 8px;
+  letter-spacing: .5px;
+}
+
+input {
+  width: 100%;
+  padding: 13px 14px;
+  background: var(--bg);
+  border: 1px solid var(--line);
+  color: var(--text);
+  font-family: inherit;
+  font-size: 14px;
+  outline: none;
+  transition: .2s;
+}
+
+input:focus {
+  border-color: var(--accent);
+  box-shadow: 0 0 0 3px rgba(139, 94, 60, .08);
+}
+
+input::placeholder {
+  color: var(--muted);
+}
+
+/* BUTTON */
+
+.btn-login {
+  width: 100%;
+  padding: 13px 22px;
+  background: var(--text);
+  color: var(--bg);
+  border: 1px solid var(--text);
+  font-size: 14px;
+  font-weight: 500;
+  cursor: pointer;
+  transition: .25s;
+  margin-top: 8px;
+}
+
+.btn-login:hover {
+  transform: translateY(-2px);
+  box-shadow: var(--shadow);
+}
+
+.btn-login:active {
+  transform: translateY(0);
+}
+
+.btn-login:disabled {
+  opacity: .6;
+  cursor: not-allowed;
+  transform: none;
+}
+
+/* MESSAGES */
+
+.alert {
+  padding: 14px 16px;
+  border-radius: 4px;
+  margin-bottom: 22px;
+  font-size: 13px;
+  line-height: 1.5;
+  display: none;
+}
+
+.alert.show {
+  display: block;
+  animation: slideDown .3s ease;
+}
+
+.alert-error {
+  background: rgba(201, 42, 42, .12);
+  border: 1px solid rgba(201, 42, 42, .3);
+  color: var(--error);
+}
+
+.alert-success {
+  background: rgba(81, 168, 81, .12);
+  border: 1px solid rgba(81, 168, 81, .3);
+  color: var(--success);
+}
+
+.alert-info {
+  background: rgba(139, 94, 60, .12);
+  border: 1px solid rgba(139, 94, 60, .3);
+  color: var(--accent);
+}
+
+@keyframes slideDown {
+  from {
+    opacity: 0;
+    transform: translateY(-10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* DIVIDER */
+
+.divider {
+  text-align: center;
+  margin: 30px 0;
+  position: relative;
+}
+
+.divider::before {
+  content: "";
+  position: absolute;
+  top: 50%;
+  left: 0;
+  right: 0;
+  height: 1px;
+  background: var(--line);
+}
+
+.divider span {
+  position: relative;
+  background: var(--card);
+  padding: 0 12px;
+  color: var(--muted);
+  font-size: 12px;
+}
+
+/* FOOTER */
+
+.login-footer {
+  text-align: center;
+  margin-top: 30px;
+  font-size: 13px;
+  color: var(--muted);
+}
+
+.login-footer a {
+  color: var(--accent);
+  text-decoration: none;
+  transition: .2s;
+}
+
+.login-footer a:hover {
+  text-decoration: underline;
+}
+
+/* THEME TOGGLE */
+
+.theme-toggle {
+  position: fixed;
+  top: 25px;
+  right: 25px;
+  width: 38px;
+  height: 38px;
+  border: 1px solid var(--line);
+  border-radius: 50%;
+  background: var(--card);
+  color: var(--text);
+  cursor: pointer;
+  font-size: 17px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: .2s;
+}
+
+.theme-toggle:hover {
+  border-color: var(--accent);
+  color: var(--accent);
+}
+
+/* LOADING STATE */
+
+.loading {
+  display: inline-block;
+  width: 14px;
+  height: 14px;
+  border: 2px solid rgba(139, 94, 60, .2);
+  border-radius: 50%;
+  border-top-color: var(--accent);
+  animation: spin .8s linear infinite;
+  margin-right: 8px;
+}
+
+@keyframes spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+.btn-login.loading {
+  pointer-events: none;
+  opacity: .8;
+}
+
+/* RESPONSIVE */
+
+@media (max-width: 480px) {
+  .container {
+    padding: 15px;
+  }
+
+  .login-box {
+    padding: 28px;
+  }
+
+  .login-header {
+    margin-bottom: 35px;
+  }
+
+  .login-header h1 {
+    font-size: 26px;
+  }
+
+  .theme-toggle {
+    top: 15px;
+    right: 15px;
+  }
+}
+
+</style>
+
+</head>
+
+<body>
+
+<!-- THEME TOGGLE -->
+<button class="theme-toggle" onclick="toggleTheme()" title="Dark / Light Mode">☾</button>
+
+<!-- MAIN CONTAINER -->
+<div class="container">
+
+  <!-- HEADER -->
+  <div class="login-header">
+    <a href="index.html" class="logo-link">
+      <img src="logo.png" alt="Anamigam Journal" class="logo-img">
+      <div class="logo-text">
+        Anamigam <span>Journal</span>
+      </div>
+    </a>
+    <h1>Owner Login</h1>
+    <p>Access your content management dashboard</p>
+  </div>
+
+  <!-- LOGIN BOX -->
+  <div class="login-box">
+
+    <!-- ERROR ALERT -->
+    <div id="errorAlert" class="alert alert-error"></div>
+
+    <!-- SUCCESS ALERT -->
+    <div id="successAlert" class="alert alert-success"></div>
+
+    <!-- INFO ALERT -->
+    <div id="infoAlert" class="alert alert-info"></div>
+
+    <!-- LOGIN FORM -->
+    <form id="loginForm" onsubmit="handleLogin(event)">
+
+      <div class="form-group">
+        <label for="email">Email Address</label>
+        <input
+          type="email"
+          id="email"
+          name="email"
+          placeholder="your@email.com"
+          required
+          autocomplete="email"
+        >
+      </div>
+
+      <div class="form-group">
+        <label for="password">Password</label>
+        <input
+          type="password"
+          id="password"
+          name="password"
+          placeholder="••••••••"
+          required
+          autocomplete="current-password"
+        >
+      </div>
+
+      <button type="submit" class="btn-login" id="submitBtn">
+        Sign In
+      </button>
+
+    </form>
+
+    <!-- DIVIDER -->
+    <div class="divider">
+      <span>Anamigam Journal</span>
+    </div>
+
+    <!-- FOOTER -->
+    <div class="login-footer">
+      <p>Protected admin area. Unauthorized access is prohibited.</p>
+      <p style="margin-top: 12px;">
+        <a href="index.html">← Back to Anamigam Journal</a>
+      </p>
+    </div>
+
+  </div>
+
+</div>
+
+<!-- SUPABASE CONFIGURATION & AUTH LOGIC -->
+<script>
+
+// Supabase Configuration
+// Replace with your actual Supabase credentials
+const SUPABASE_URL = 'YOUR_SUPABASE_URL';
+const SUPABASE_ANON_KEY = 'YOUR_SUPABASE_ANON_KEY';
+
+let supabase = null;
+
+// Initialize Supabase client after library loads
+window.addEventListener('load', () => {
+  if (typeof window.supabase !== 'undefined') {
+    supabase = window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
+    checkExistingSession();
+  } else {
+    showError('Supabase library failed to load. Please refresh the page.');
+  }
+});
+
+// Check if user is already logged in
+async function checkExistingSession() {
+  if (!supabase) return;
+
+  try {
+    const { data: { session } } = await supabase.auth.getSession();
+    
+    if (session) {
+      // User is already logged in, redirect to admin
+      showInfo('Redirecting to dashboard...');
+      setTimeout(() => {
+        window.location.href = 'admin.html';
+      }, 500);
+    }
+  } catch (error) {
+    console.error('Session check error:', error);
+  }
+}
+
+// Handle form submission
+async function handleLogin(event) {
+  event.preventDefault();
+
+  if (!supabase) {
+    showError('Authentication service unavailable. Please try again.');
+    return;
+  }
+
+  const email = document.getElementById('email').value.trim();
+  const password = document.getElementById('password').value;
+  const submitBtn = document.getElementById('submitBtn');
+
+  // Validation
+  if (!email || !password) {
+    showError('Please fill in all fields.');
+    return;
+  }
+
+  if (password.length < 6) {
+    showError('Password must be at least 6 characters.');
+    return;
+  }
+
+  // Disable button and show loading state
+  submitBtn.disabled = true;
+  submitBtn.innerHTML = '<span class="loading"></span>Signing in...';
+  clearAlerts();
+
+  try {
+    // Attempt login
+    const { data, error } = await supabase.auth.signInWithPassword({
+      email: email,
+      password: password
+    });
+
+    if (error) {
+      // Handle specific error messages
+      if (error.message.includes('Invalid login credentials')) {
+        showError('Invalid email or password. Please try again.');
+      } else if (error.message.includes('Email not confirmed')) {
+        showError('Please verify your email before logging in.');
+      } else if (error.message.includes('User not found')) {
+        showError('No account found with this email.');
+      } else {
+        showError(error.message || 'Login failed. Please try again.');
+      }
+      
+      submitBtn.disabled = false;
+      submitBtn.innerHTML = 'Sign In';
+      return;
+    }
+
+    if (data.session) {
+      showSuccess('Login successful! Redirecting...');
+      
+      // Redirect after brief delay
+      setTimeout(() => {
+        window.location.href = 'admin.html';
+      }, 1000);
+    }
+
+  } catch (error) {
+    console.error('Login error:', error);
+    showError('An unexpected error occurred. Please try again.');
+    
+    submitBtn.disabled = false;
+    submitBtn.innerHTML = 'Sign In';
+  }
+}
+
+// Show error message
+function showError(message) {
+  const alert = document.getElementById('errorAlert');
+  alert.textContent = message;
+  alert.classList.add('show');
+}
+
+// Show success message
+function showSuccess(message) {
+  const alert = document.getElementById('successAlert');
+  alert.textContent = message;
+  alert.classList.add('show');
+}
+
+// Show info message
+function showInfo(message) {
+  const alert = document.getElementById('infoAlert');
+  alert.textContent = message;
+  alert.classList.add('show');
+}
+
+// Clear all alerts
+function clearAlerts() {
+  document.getElementById('errorAlert').classList.remove('show');
+  document.getElementById('successAlert').classList.remove('show');
+  document.getElementById('infoAlert').classList.remove('show');
+}
+
+// Theme toggle
+function toggleTheme() {
+  const body = document.body;
+  body.classList.toggle('dark');
+  localStorage.setItem('theme', body.classList.contains('dark') ? 'dark' : 'light');
+}
+
+// Apply saved theme on load
+window.addEventListener('DOMContentLoaded', () => {
+  const savedTheme = localStorage.getItem('theme') || 'light';
+  if (savedTheme === 'dark') {
+    document.body.classList.add('dark');
+  }
+});
+
+// Clear alerts when user starts typing
+document.getElementById('email').addEventListener('input', clearAlerts);
+document.getElementById('password').addEventListener('input', clearAlerts);
+
+</script>
+
+</body>
+
+</html>
