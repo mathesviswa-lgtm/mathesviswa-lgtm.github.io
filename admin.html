@@ -5,348 +5,379 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
 <title>Admin Dashboard — Anamigam Journal</title>
-<meta name="robots" content="noindex,nofollow">
+
+<link rel="icon" href="logo.png">
 
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 
 <style>
-:root{
-  --bg:#f7f3eb;
-  --card:#fffdf8;
-  --text:#26261f;
-  --muted:#77746a;
-  --border:#ddd7ca;
-  --accent:#66734f;
-  --danger:#a94442;
-  --shadow:0 10px 30px rgba(40,35,25,.08);
+*{
+  box-sizing:border-box;
 }
-
-*{box-sizing:border-box}
 
 body{
   margin:0;
-  background:var(--bg);
-  color:var(--text);
-  font-family:Georgia,"Noto Serif Tamil",serif;
+  font-family:Georgia,"Times New Roman",serif;
+  background:#f7f3ea;
+  color:#20251b;
 }
 
 body.dark{
-  --bg:#151612;
-  --card:#20211d;
-  --text:#f2efe7;
-  --muted:#aaa79d;
-  --border:#393a34;
-  --accent:#aab98b;
-  --danger:#ef8b87;
-  --shadow:0 10px 30px rgba(0,0,0,.3);
+  background:#171914;
+  color:#eee;
 }
 
 header{
-  position:sticky;
-  top:0;
-  z-index:100;
-  background:rgba(247,243,235,.94);
-  backdrop-filter:blur(12px);
-  border-bottom:1px solid var(--border);
-}
-
-.dark header{
-  background:rgba(21,22,18,.94);
-}
-
-.nav{
-  max-width:1250px;
-  margin:auto;
-  padding:13px 20px;
   display:flex;
   justify-content:space-between;
   align-items:center;
-  gap:15px;
+  padding:24px 6%;
+  border-bottom:1px solid #ddd5c5;
+  background:#f7f3ea;
+}
+
+.dark header{
+  background:#171914;
+  border-color:#33382d;
 }
 
 .logo{
   display:flex;
   align-items:center;
-  gap:10px;
+  gap:12px;
   font-weight:bold;
-  letter-spacing:1px;
+  letter-spacing:2px;
 }
 
 .logo img{
-  width:42px;
-  height:42px;
+  width:48px;
+  height:48px;
   object-fit:contain;
 }
 
-.nav-actions{
+.header-buttons{
   display:flex;
-  align-items:center;
-  gap:8px;
+  gap:12px;
 }
 
-.btn{
-  border:1px solid var(--border);
-  background:var(--card);
-  color:var(--text);
-  padding:10px 14px;
-  border-radius:10px;
+button{
+  border:0;
+  padding:12px 20px;
+  border-radius:12px;
   cursor:pointer;
-  text-decoration:none;
+  font-size:15px;
+  font-weight:bold;
 }
 
-.btn.primary{
-  background:var(--accent);
-  border-color:var(--accent);
-  color:white;
+.theme-btn{
+  background:transparent;
+  border:1px solid #cfc7b7;
 }
 
-.btn.danger{
-  color:var(--danger);
+.logout{
+  background:#fff;
+  color:#9a4f4f;
+  border:1px solid #d8caca;
+}
+
+.dark .logout{
+  background:#252820;
+  color:#ffaaaa;
 }
 
 .container{
-  max-width:1250px;
-  margin:auto;
-  padding:35px 20px 70px;
+  width:min(1100px,92%);
+  margin:40px auto;
 }
 
-.hero{
-  margin-bottom:25px;
+h1{
+  font-size:42px;
+  margin-bottom:8px;
 }
 
-.hero h1{
-  margin:0 0 8px;
-  font-size:clamp(30px,5vw,48px);
+.subtitle{
+  color:#777;
+  margin-bottom:35px;
 }
 
-.hero p{
-  margin:0;
-  color:var(--muted);
+.dark .subtitle{
+  color:#aaa;
 }
 
 .stats{
   display:grid;
   grid-template-columns:repeat(4,1fr);
   gap:15px;
-  margin-bottom:25px;
+  margin-bottom:30px;
 }
 
 .stat{
-  background:var(--card);
-  border:1px solid var(--border);
-  border-radius:16px;
+  background:#fffdf8;
+  border:1px solid #ddd6c8;
+  border-radius:18px;
   padding:20px;
-  box-shadow:var(--shadow);
 }
 
-.stat span{
-  display:block;
-  color:var(--muted);
-  font-size:14px;
+.dark .stat,
+.dark .card{
+  background:#20231d;
+  border-color:#363a30;
 }
 
 .stat strong{
   display:block;
-  font-size:32px;
-  margin-top:7px;
-}
-
-.panel{
-  background:var(--card);
-  border:1px solid var(--border);
-  border-radius:18px;
-  padding:22px;
-  box-shadow:var(--shadow);
-  margin-bottom:22px;
-}
-
-.panel h2{
-  margin-top:0;
+  font-size:28px;
+  margin-top:5px;
 }
 
 .tabs{
   display:flex;
-  gap:8px;
-  overflow-x:auto;
-  padding-bottom:5px;
-  margin-bottom:20px;
+  flex-wrap:wrap;
+  gap:10px;
+  margin-bottom:25px;
 }
 
 .tab{
-  white-space:nowrap;
-  border:1px solid var(--border);
-  background:var(--bg);
-  color:var(--text);
-  padding:10px 15px;
-  border-radius:10px;
-  cursor:pointer;
+  background:#e9e4d8;
+  color:#333;
 }
 
 .tab.active{
-  background:var(--accent);
+  background:#697a53;
   color:white;
-  border-color:var(--accent);
+}
+
+.dark .tab{
+  background:#2b3027;
+  color:#eee;
+}
+
+.card{
+  background:#fffdf8;
+  border:1px solid #ddd6c8;
+  border-radius:22px;
+  padding:28px;
+  margin-bottom:30px;
+}
+
+.card h2{
+  margin-top:0;
 }
 
 .form-grid{
   display:grid;
   grid-template-columns:1fr 1fr;
-  gap:15px;
+  gap:20px;
 }
 
-.full{
+.field{
+  margin-bottom:20px;
+}
+
+.field.full{
   grid-column:1/-1;
 }
 
 label{
   display:block;
   font-weight:bold;
-  margin-bottom:6px;
+  margin-bottom:8px;
+  font-size:17px;
 }
 
 input,
 textarea,
 select{
   width:100%;
-  padding:12px;
-  border:1px solid var(--border);
-  border-radius:10px;
-  background:var(--bg);
-  color:var(--text);
-  font:inherit;
+  padding:15px;
+  border-radius:14px;
+  border:1px solid #d7d0c2;
+  background:#f9f6ef;
+  font-size:16px;
+  font-family:inherit;
+  color:inherit;
 }
 
 textarea{
-  min-height:150px;
+  min-height:180px;
   resize:vertical;
 }
 
-.check-row{
+.dark input,
+.dark textarea,
+.dark select{
+  background:#292d25;
+  border-color:#41463a;
+}
+
+input[type="file"]{
+  padding:12px;
+  background:#f0ece2;
+  cursor:pointer;
+}
+
+.dark input[type="file"]{
+  background:#30342c;
+}
+
+.upload-box{
+  border:1px dashed #a8ad98;
+  padding:18px;
+  border-radius:16px;
+}
+
+.upload-btn{
+  margin-top:10px;
+  background:#697a53;
+  color:#fff;
+}
+
+.url-field{
+  margin-top:12px;
+}
+
+.readonly{
+  opacity:.8;
+}
+
+.actions{
   display:flex;
-  gap:20px;
-  align-items:center;
-  margin-top:15px;
-}
-
-.check{
-  display:flex;
-  gap:7px;
-  align-items:center;
-}
-
-.check input{
-  width:auto;
-}
-
-.form-actions{
-  display:flex;
-  gap:8px;
-  margin-top:18px;
-}
-
-.toolbar{
-  display:flex;
-  gap:10px;
-  margin-bottom:15px;
-}
-
-.toolbar input{
-  flex:1;
-}
-
-.items{
-  display:grid;
   gap:12px;
+  flex-wrap:wrap;
+}
+
+.save-btn{
+  background:#697a53;
+  color:white;
+}
+
+.cancel-btn{
+  background:#ddd8cd;
+}
+
+.dark .cancel-btn{
+  background:#363a31;
+  color:#fff;
+}
+
+.content-list{
+  display:grid;
+  gap:15px;
 }
 
 .item{
-  background:var(--bg);
-  border:1px solid var(--border);
-  border-radius:14px;
-  padding:17px;
+  border:1px solid #ddd6c8;
+  border-radius:16px;
+  padding:18px;
+  display:flex;
+  justify-content:space-between;
+  gap:15px;
+  align-items:center;
 }
 
-.item-title{
-  font-size:19px;
-  font-weight:bold;
-  margin-bottom:6px;
+.dark .item{
+  border-color:#3a3f34;
 }
 
-.meta{
-  color:var(--muted);
-  font-size:14px;
+.item-info{
+  flex:1;
 }
 
-.badge{
-  display:inline-block;
-  padding:5px 9px;
-  border:1px solid var(--border);
-  border-radius:20px;
-  font-size:12px;
-  margin:8px 5px 0 0;
+.item-info h3{
+  margin:0 0 7px;
+}
+
+.item-info small{
+  color:#777;
+}
+
+.dark .item-info small{
+  color:#aaa;
 }
 
 .item-actions{
   display:flex;
-  flex-wrap:wrap;
-  gap:7px;
-  margin-top:13px;
+  gap:8px;
 }
 
-.empty{
-  text-align:center;
-  color:var(--muted);
-  padding:30px;
+.edit-btn{
+  background:#dce5d1;
+}
+
+.delete-btn{
+  background:#f1d7d7;
+  color:#8b3030;
 }
 
 .message{
-  margin-top:12px;
-  color:var(--accent);
+  padding:14px;
+  border-radius:12px;
+  margin-bottom:20px;
+  display:none;
 }
 
-.hidden{
-  display:none!important;
+.success{
+  background:#dfead7;
+  color:#36522b;
 }
 
-.loading{
-  text-align:center;
-  padding:25px;
-  color:var(--muted);
+.error{
+  background:#f2dada;
+  color:#7a2828;
 }
 
-@media(max-width:900px){
-  .stats{
-    grid-template-columns:1fr 1fr;
-  }
+.dark .success{
+  background:#293c25;
+  color:#c9e7bc;
+}
+
+.dark .error{
+  background:#432727;
+  color:#ffc2c2;
 }
 
 @media(max-width:700px){
+
+  header{
+    padding:18px 4%;
+  }
+
+  .logo{
+    font-size:13px;
+  }
+
+  .logo img{
+    width:40px;
+    height:40px;
+  }
+
+  h1{
+    font-size:32px;
+  }
+
+  .stats{
+    grid-template-columns:1fr 1fr;
+  }
+
   .form-grid{
     grid-template-columns:1fr;
   }
 
-  .full{
+  .field.full{
     grid-column:auto;
   }
 
-  .stats{
-    grid-template-columns:1fr;
-  }
-
-  .toolbar{
+  .item{
     flex-direction:column;
+    align-items:flex-start;
   }
 
-  .logo span{
-    display:none;
+  .item-actions{
+    width:100%;
   }
 
-  .nav{
-    padding:12px 15px;
-  }
-
-  .nav-actions .website{
-    display:none;
+  .item-actions button{
+    flex:1;
   }
 }
 </style>
@@ -355,199 +386,294 @@ textarea{
 <body>
 
 <header>
-  <div class="nav">
 
-    <div class="logo">
-      <img src="logo.png" alt="Anamigam Journal">
-      <span>ANAMIGAM JOURNAL</span>
-    </div>
-
-    <div class="nav-actions">
-      <a class="btn website" href="index.html">Website</a>
-      <button class="btn" id="themeBtn">☾</button>
-      <button class="btn danger" id="logoutBtn">Logout</button>
-    </div>
-
+  <div class="logo">
+    <img src="logo.png" alt="Anamigam Journal">
+    <span>ANAMIGAM JOURNAL — ADMIN</span>
   </div>
+
+  <div class="header-buttons">
+    <button class="theme-btn" onclick="toggleTheme()">☾</button>
+    <button class="logout" onclick="logout()">Logout</button>
+  </div>
+
 </header>
 
 
 <main class="container">
 
-<section class="hero">
   <h1>Admin Dashboard</h1>
-  <p>அனாமிகம் ஜர்னலின் முழு உள்ளடக்க நிர்வாகம்.</p>
-</section>
+
+  <p class="subtitle">
+    Manage your writings, e-books, achievements and journal.
+  </p>
+
+  <div id="message" class="message"></div>
 
 
-<!-- STATS -->
+  <div class="stats">
 
-<section class="stats">
-
-  <div class="stat">
-    <span>Writings</span>
-    <strong id="writingCount">—</strong>
-  </div>
-
-  <div class="stat">
-    <span>E-Books</span>
-    <strong id="ebookCount">—</strong>
-  </div>
-
-  <div class="stat">
-    <span>Achievements</span>
-    <strong id="achievementCount">—</strong>
-  </div>
-
-  <div class="stat">
-    <span>Journal</span>
-    <strong id="journalCount">—</strong>
-  </div>
-
-</section>
-
-
-<!-- ADD / EDIT -->
-
-<section class="panel">
-
-<h2 id="formTitle">Add New Content</h2>
-
-<div class="tabs">
-
-  <button class="tab active" data-type="Writing">
-    ✍️ Writing
-  </button>
-
-  <button class="tab" data-type="E-book">
-    📚 E-Book
-  </button>
-
-  <button class="tab" data-type="Achievement">
-    🏆 Achievement
-  </button>
-
-  <button class="tab" data-type="Journal">
-    📰 Journal
-  </button>
-
-</div>
-
-
-<form id="contentForm">
-
-<div class="form-grid">
-
-  <div>
-    <label>Title</label>
-    <input id="title" required>
-  </div>
-
-  <div>
-    <label>Author</label>
-    <input id="author">
-  </div>
-
-  <div>
-    <label>Category</label>
-    <input id="category" placeholder="கவிதை / சிறுகதை / கட்டுரை">
-  </div>
-
-  <div>
-    <label>Status</label>
-    <select id="status">
-      <option value="draft">Draft</option>
-      <option value="published">Published</option>
-    </select>
-  </div>
-
-  <div class="full">
-    <label>Description / Content</label>
-    <textarea id="content"></textarea>
-  </div>
-
-  <div>
-    <label>File URL / PDF URL</label>
-    <input id="fileUrl">
-  </div>
-
-  <div>
-    <label>Cover / Image URL</label>
-    <input id="imageUrl">
-  </div>
-
-</div>
-
-
-<div class="check-row">
-
-  <label class="check">
-    <input type="checkbox" id="featured">
-    Featured
-  </label>
-
-</div>
-
-
-<div class="form-actions">
-
-  <button class="btn primary" type="submit" id="saveBtn">
-    Save
-  </button>
-
-  <button class="btn hidden" type="button" id="cancelBtn">
-    Cancel
-  </button>
-
-</div>
-
-<div class="message" id="message"></div>
-
-</form>
-
-</section>
-
-
-<!-- CONTENT -->
-
-<section class="panel">
-
-<h2>Manage Content</h2>
-
-<div class="toolbar">
-
-  <input
-    id="search"
-    placeholder="Search..."
-  >
-
-  <select id="listFilter">
-
-    <option value="Writing">
+    <div class="stat">
       Writings
-    </option>
+      <strong id="writingCount">0</strong>
+    </div>
 
-    <option value="E-book">
-      E-Books
-    </option>
+    <div class="stat">
+      E-books
+      <strong id="ebookCount">0</strong>
+    </div>
 
-    <option value="Achievement">
+    <div class="stat">
       Achievements
-    </option>
+      <strong id="achievementCount">0</strong>
+    </div>
 
-    <option value="Journal">
+    <div class="stat">
       Journal
-    </option>
+      <strong id="journalCount">0</strong>
+    </div>
 
-  </select>
+  </div>
 
-</div>
 
-<div id="items" class="items">
-  <div class="loading">Loading...</div>
-</div>
+  <div class="tabs">
 
-</section>
+    <button class="tab active" data-type="writings">
+      ✍️ Writings
+    </button>
+
+    <button class="tab" data-type="ebooks">
+      📚 E-books
+    </button>
+
+    <button class="tab" data-type="achievements">
+      🏆 Achievements
+    </button>
+
+    <button class="tab" data-type="journal_posts">
+      📰 Journal
+    </button>
+
+  </div>
+
+
+  <!-- ADD / EDIT -->
+
+  <section class="card">
+
+    <h2 id="formTitle">Add New Content</h2>
+
+    <form id="contentForm">
+
+      <input type="hidden" id="editId">
+
+      <div class="form-grid">
+
+        <div class="field">
+
+          <label>Title</label>
+
+          <input
+            type="text"
+            id="title"
+            required
+            placeholder="Enter title"
+          >
+
+        </div>
+
+
+        <div class="field">
+
+          <label>Author</label>
+
+          <input
+            type="text"
+            id="author"
+            value="வி.மாதேஸ்வரன்"
+            placeholder="Author"
+          >
+
+        </div>
+
+
+        <div class="field">
+
+          <label>Category</label>
+
+          <select id="category">
+
+            <option value="கவிதை">கவிதை</option>
+            <option value="சிறுகதை">சிறுகதை</option>
+            <option value="சிந்தனை">சிந்தனை</option>
+            <option value="கட்டுரை">கட்டுரை</option>
+            <option value="Psychology">Psychology</option>
+            <option value="Self-Discovery">Self-Discovery</option>
+            <option value="Other">Other</option>
+
+          </select>
+
+        </div>
+
+
+        <div class="field">
+
+          <label>Status</label>
+
+          <select id="status">
+
+            <option value="published">Published</option>
+            <option value="draft">Draft</option>
+
+          </select>
+
+        </div>
+
+
+        <div class="field full">
+
+          <label>Description / Content</label>
+
+          <textarea
+            id="content"
+            placeholder="Write your content here..."
+          ></textarea>
+
+        </div>
+
+
+        <!-- FILE UPLOAD -->
+
+        <div class="field full">
+
+          <label>📄 PDF / File Upload</label>
+
+          <div class="upload-box">
+
+            <input
+              type="file"
+              id="fileUpload"
+              accept=".pdf,.doc,.docx,.txt"
+            >
+
+            <button
+              type="button"
+              class="upload-btn"
+              onclick="uploadFile()"
+            >
+              ⬆️ Upload File
+            </button>
+
+            <input
+              type="text"
+              id="fileUrl"
+              class="url-field readonly"
+              readonly
+              placeholder="Uploaded file URL will appear here"
+            >
+
+          </div>
+
+        </div>
+
+
+        <!-- IMAGE UPLOAD -->
+
+        <div class="field full">
+
+          <label>🖼️ Cover / Image Upload</label>
+
+          <div class="upload-box">
+
+            <input
+              type="file"
+              id="imageUpload"
+              accept="image/*"
+            >
+
+            <button
+              type="button"
+              class="upload-btn"
+              onclick="uploadImage()"
+            >
+              ⬆️ Upload Image
+            </button>
+
+            <input
+              type="text"
+              id="imageUrl"
+              class="url-field readonly"
+              readonly
+              placeholder="Uploaded image URL will appear here"
+            >
+
+          </div>
+
+        </div>
+
+
+        <div class="field full">
+
+          <label>
+
+            <input
+              type="checkbox"
+              id="featured"
+              style="width:auto;margin-right:8px;"
+            >
+
+            Featured
+
+          </label>
+
+        </div>
+
+      </div>
+
+
+      <div class="actions">
+
+        <button
+          type="submit"
+          class="save-btn"
+        >
+          💾 Save
+        </button>
+
+        <button
+          type="button"
+          class="cancel-btn"
+          onclick="resetForm()"
+        >
+          Cancel
+        </button>
+
+      </div>
+
+    </form>
+
+  </section>
+
+
+  <!-- CONTENT LIST -->
+
+  <section class="card">
+
+    <h2>Manage Content</h2>
+
+    <input
+      type="search"
+      id="search"
+      placeholder="Search content..."
+      style="margin-bottom:20px;"
+    >
+
+    <div
+      id="contentList"
+      class="content-list"
+    ></div>
+
+  </section>
 
 </main>
 
@@ -559,50 +685,45 @@ textarea{
 ========================================= */
 
 const SUPABASE_URL =
-'https://msgwhxeqnljmbzalnawe.supabase.co';
+  'https://msgwhxeqnljmbzalnawe.supabase.co';
 
 const SUPABASE_ANON_KEY =
   'sb_publishable_862-UtuOzY14PCtKYVvjEA_sPTK1FPd';
 
-const { createClient } = supabase;
-
-const db = createClient(
-  SUPABASE_URL,
-  SUPABASE_ANON_KEY
-);
-
-
-/* =========================================
-   STATE
-========================================= */
-
-let currentType = 'Writing';
-let editingId = null;
-let allData = [];
+const db =
+  window.supabase.createClient(
+    SUPABASE_URL,
+    SUPABASE_ANON_KEY
+  );
 
 
 /* =========================================
-   TABLE MAP
+   VARIABLES
 ========================================= */
 
-const tables = {
-  'Writing':'writings',
-  'E-book':'ebooks',
-  'Achievement':'achievements',
-  'Journal':'journal_posts'
+let currentType = 'writings';
+
+const tableNames = {
+  writings: 'writings',
+  ebooks: 'ebooks',
+  achievements: 'achievements',
+  journal_posts: 'journal_posts'
 };
 
 
 /* =========================================
-   AUTH
+   LOGIN CHECK
 ========================================= */
 
-async function checkAuth(){
+async function checkLogin(){
 
-  const { data, error } =
-    await db.auth.getSession();
+  const {
+    data:{
+      user
+    }
+  } = await db.auth.getUser();
 
-  if(error || !data.session){
+  if(!user){
 
     window.location.href =
       'admin-login.html';
@@ -615,484 +736,729 @@ async function checkAuth(){
 
 
 /* =========================================
-   TABS
+   MESSAGE
 ========================================= */
 
-document.querySelectorAll('.tab')
-.forEach(tab => {
+function showMessage(text,type){
 
-  tab.addEventListener('click', () => {
+  const box =
+    document.getElementById('message');
 
-    document.querySelectorAll('.tab')
-    .forEach(x =>
-      x.classList.remove('active')
-    );
+  box.textContent = text;
 
-    tab.classList.add('active');
+  box.className =
+    'message ' + type;
 
-    currentType =
-      tab.dataset.type;
+  box.style.display = 'block';
 
-    document.getElementById(
-      'listFilter'
-    ).value = currentType;
+  setTimeout(()=>{
 
-    resetForm();
+    box.style.display = 'none';
 
-    loadData();
-
-  });
-
-});
+  },4000);
+}
 
 
 /* =========================================
-   LOAD DATA
+   UPLOAD FILE
 ========================================= */
 
-async function loadData(){
+async function uploadToStorage(file,type){
+
+  if(!file){
+
+    throw new Error(
+      'Please choose a file first.'
+    );
+
+  }
+
+  const {
+    data:{
+      user
+    }
+  } = await db.auth.getUser();
+
+  if(!user){
+
+    throw new Error(
+      'Please login again.'
+    );
+
+  }
+
+
+  const safeName =
+    file.name.replace(
+      /[^a-zA-Z0-9._-]/g,
+      '_'
+    );
+
+
+  const folder =
+    type === 'image'
+      ? 'images'
+      : 'files';
+
+
+  const filePath =
+    folder +
+    '/' +
+    Date.now() +
+    '_' +
+    safeName;
+
+
+  const {
+    error
+  } = await db.storage
+    .from('anamigam-files')
+    .upload(
+      filePath,
+      file,
+      {
+        upsert:false
+      }
+    );
+
+
+  if(error){
+
+    throw error;
+
+  }
+
+
+  const {
+    data
+  } = db.storage
+    .from('anamigam-files')
+    .getPublicUrl(filePath);
+
+
+  return data.publicUrl;
+
+}
+
+
+/* =========================================
+   PDF / FILE UPLOAD BUTTON
+========================================= */
+
+async function uploadFile(){
+
+  const input =
+    document.getElementById(
+      'fileUpload'
+    );
+
+  const file =
+    input.files[0];
+
+  if(!file){
+
+    showMessage(
+      'Please choose a PDF / file first.',
+      'error'
+    );
+
+    return;
+  }
+
+
+  try{
+
+    showMessage(
+      'Uploading file...',
+      'success'
+    );
+
+
+    const url =
+      await uploadToStorage(
+        file,
+        'file'
+      );
+
+
+    document.getElementById(
+      'fileUrl'
+    ).value = url;
+
+
+    showMessage(
+      '✅ File uploaded successfully!',
+      'success'
+    );
+
+
+  }catch(error){
+
+    console.error(error);
+
+    showMessage(
+      '❌ Upload failed: ' +
+      error.message,
+      'error'
+    );
+
+  }
+
+}
+
+
+/* =========================================
+   IMAGE UPLOAD BUTTON
+========================================= */
+
+async function uploadImage(){
+
+  const input =
+    document.getElementById(
+      'imageUpload'
+    );
+
+  const file =
+    input.files[0];
+
+  if(!file){
+
+    showMessage(
+      'Please choose an image first.',
+      'error'
+    );
+
+    return;
+  }
+
+
+  try{
+
+    showMessage(
+      'Uploading image...',
+      'success'
+    );
+
+
+    const url =
+      await uploadToStorage(
+        file,
+        'image'
+      );
+
+
+    document.getElementById(
+      'imageUrl'
+    ).value = url;
+
+
+    showMessage(
+      '✅ Image uploaded successfully!',
+      'success'
+    );
+
+
+  }catch(error){
+
+    console.error(error);
+
+    showMessage(
+      '❌ Image upload failed: ' +
+      error.message,
+      'error'
+    );
+
+  }
+
+}
+
+
+/* =========================================
+   LOAD CONTENT
+========================================= */
+
+async function loadContent(){
 
   const table =
-    tables[currentType];
+    tableNames[currentType];
 
-  const items =
-    document.getElementById('items');
 
-  items.innerHTML =
-    '<div class="loading">Loading...</div>';
+  const {
+    data,
+    error
+  } = await db
+    .from(table)
+    .select('*')
+    .order(
+      'created_at',
+      {
+        ascending:false
+      }
+    );
 
-  const { data, error } =
-    await db
-      .from(table)
-      .select('*')
-      .order(
-        'created_at',
-        { ascending:false }
-      );
 
   if(error){
 
     console.error(error);
 
-    items.innerHTML =
-      '<div class="empty">Unable to load content.</div>';
+    showMessage(
+      error.message,
+      'error'
+    );
 
     return;
   }
 
-  allData = data || [];
 
-  renderData();
-
-  updateCounts();
+  renderContent(data || []);
 
 }
 
 
 /* =========================================
-   RENDER
+   RENDER CONTENT
 ========================================= */
 
-function renderData(){
+function renderContent(items){
+
+  const list =
+    document.getElementById(
+      'contentList'
+    );
+
 
   const search =
     document.getElementById(
       'search'
     ).value
-    .toLowerCase()
-    .trim();
+    .toLowerCase();
 
-  let data =
-    allData.filter(item => {
 
-      return !search ||
+  const filtered =
+    items.filter(item => {
+
+      const title =
         (item.title || '')
-          .toLowerCase()
-          .includes(search) ||
+        .toLowerCase();
 
+      const category =
         (item.category || '')
-          .toLowerCase()
-          .includes(search) ||
+        .toLowerCase();
 
-        (item.author || '')
-          .toLowerCase()
-          .includes(search);
+      return (
+        title.includes(search) ||
+        category.includes(search)
+      );
 
     });
 
 
-  const items =
-    document.getElementById(
-      'items'
-    );
+  if(!filtered.length){
 
-
-  if(!data.length){
-
-    items.innerHTML =
-      '<div class="empty">No content found.</div>';
+    list.innerHTML =
+      '<p>No content found.</p>';
 
     return;
   }
 
 
-  items.innerHTML =
-    data.map(item => {
+  list.innerHTML =
+    filtered.map(item => `
 
-      return `
-        <article class="item">
+      <div class="item">
 
-          <div class="item-title">
+        <div class="item-info">
+
+          <h3>
             ${escapeHtml(item.title || 'Untitled')}
-          </div>
+          </h3>
 
-          <div class="meta">
-            ${escapeHtml(item.author || '')}
-            ${item.category
-              ? ' • ' + escapeHtml(item.category)
-              : ''}
-          </div>
+          <small>
+            ${escapeHtml(item.category || '')}
+            •
+            ${escapeHtml(item.status || '')}
+          </small>
 
-          <span class="badge">
-            ${escapeHtml(item.status || 'draft')}
-          </span>
+        </div>
 
-          ${
-            item.featured
-            ? '<span class="badge">⭐ Featured</span>'
-            : ''
-          }
+        <div class="item-actions">
 
-          <div class="item-actions">
+          <button
+            class="edit-btn"
+            onclick="editContent('${item.id}')"
+          >
+            Edit
+          </button>
 
-            <button
-              class="btn"
-              onclick="editItem('${item.id}')">
-              Edit
-            </button>
+          <button
+            class="delete-btn"
+            onclick="deleteContent('${item.id}')"
+          >
+            Delete
+          </button>
 
-            <button
-              class="btn danger"
-              onclick="deleteItem('${item.id}')">
-              Delete
-            </button>
+        </div>
 
-          </div>
+      </div>
 
-        </article>
-      `;
-
-    }).join('');
+    `).join('');
 
 }
+
+
+/* =========================================
+   ESCAPE HTML
+========================================= */
+
+function escapeHtml(value){
+
+  return String(value)
+    .replace(/&/g,'&amp;')
+    .replace(/</g,'&lt;')
+    .replace(/>/g,'&gt;')
+    .replace(/"/g,'&quot;')
+    .replace(/'/g,'&#039;');
+
+}
+
+
+/* =========================================
+   SAVE CONTENT
+========================================= */
+
+document
+  .getElementById('contentForm')
+  .addEventListener(
+    'submit',
+    async function(e){
+
+      e.preventDefault();
+
+
+      const table =
+        tableNames[currentType];
+
+
+      const id =
+        document.getElementById(
+          'editId'
+        ).value;
+
+
+      const baseData = {
+
+        title:
+          document.getElementById(
+            'title'
+          ).value.trim(),
+
+        author:
+          document.getElementById(
+            'author'
+          ).value.trim(),
+
+        category:
+          document.getElementById(
+            'category'
+          ).value,
+
+        status:
+          document.getElementById(
+            'status'
+          ).value,
+
+        featured:
+          document.getElementById(
+            'featured'
+          ).checked
+
+      };
+
+
+      /* CONTENT FIELD */
+
+      if(
+        currentType === 'writings' ||
+        currentType === 'journal_posts'
+      ){
+
+        baseData.content =
+          document.getElementById(
+            'content'
+          ).value;
+
+      }
+
+
+      /* EBOOK DESCRIPTION */
+
+      if(
+        currentType === 'ebooks' ||
+        currentType === 'achievements'
+      ){
+
+        baseData.description =
+          document.getElementById(
+            'content'
+          ).value;
+
+      }
+
+
+      /* FILE URL */
+
+      if(
+        currentType === 'ebooks'
+      ){
+
+        baseData.file_url =
+          document.getElementById(
+            'fileUrl'
+          ).value.trim();
+
+        baseData.cover_url =
+          document.getElementById(
+            'imageUrl'
+          ).value.trim();
+
+      }
+
+
+      /* ACHIEVEMENT */
+
+      if(
+        currentType === 'achievements'
+      ){
+
+        baseData.file_url =
+          document.getElementById(
+            'fileUrl'
+          ).value.trim();
+
+        baseData.image_url =
+          document.getElementById(
+            'imageUrl'
+          ).value.trim();
+
+      }
+
+
+      /* WRITINGS */
+
+      if(
+        currentType === 'writings'
+      ){
+
+        baseData.cover_url =
+          document.getElementById(
+            'imageUrl'
+          ).value.trim();
+
+      }
+
+
+      /* JOURNAL */
+
+      if(
+        currentType === 'journal_posts'
+      ){
+
+        baseData.cover_url =
+          document.getElementById(
+            'imageUrl'
+          ).value.trim();
+
+      }
+
+
+      let result;
+
+
+      if(id){
+
+        result =
+          await db
+            .from(table)
+            .update(baseData)
+            .eq('id',id);
+
+      }else{
+
+        result =
+          await db
+            .from(table)
+            .insert(baseData);
+
+      }
+
+
+      if(result.error){
+
+        console.error(result.error);
+
+        showMessage(
+          '❌ Save failed: ' +
+          result.error.message,
+          'error'
+        );
+
+        return;
+      }
+
+
+      showMessage(
+        '✅ Saved successfully!',
+        'success'
+      );
+
+
+      resetForm();
+
+      loadContent();
+
+      loadStats();
+
+    }
+  );
 
 
 /* =========================================
    EDIT
 ========================================= */
 
-window.editItem = function(id){
-
-  const item =
-    allData.find(
-      x => x.id === id
-    );
-
-  if(!item) return;
-
-  editingId = id;
-
-  document.getElementById(
-    'formTitle'
-  ).textContent =
-    'Edit Content';
-
-  document.getElementById(
-    'title'
-  ).value =
-    item.title || '';
-
-  document.getElementById(
-    'author'
-  ).value =
-    item.author || '';
-
-  document.getElementById(
-    'category'
-  ).value =
-    item.category || '';
-
-  document.getElementById(
-    'content'
-  ).value =
-    item.content ||
-    item.description ||
-    '';
-
-  document.getElementById(
-    'status'
-  ).value =
-    item.status ||
-    'draft';
-
-  document.getElementById(
-    'featured'
-  ).checked =
-    !!item.featured;
-
-  document.getElementById(
-    'fileUrl'
-  ).value =
-    item.file_url || '';
-
-  document.getElementById(
-    'imageUrl'
-  ).value =
-    item.cover_url ||
-    item.image_url ||
-    '';
-
-  document.getElementById(
-    'cancelBtn'
-  ).classList.remove('hidden');
-
-  window.scrollTo({
-    top:0,
-    behavior:'smooth'
-  });
-
-};
-
-
-/* =========================================
-   SAVE
-========================================= */
-
-document.getElementById(
-  'contentForm'
-).addEventListener(
-  'submit',
-  async e => {
-
-    e.preventDefault();
-
-    const saveBtn =
-      document.getElementById(
-        'saveBtn'
-      );
-
-    saveBtn.disabled = true;
-
-    saveBtn.textContent =
-      'Saving...';
-
-
-    const base = {
-
-      title:
-        document.getElementById(
-          'title'
-        ).value.trim(),
-
-      author:
-        document.getElementById(
-          'author'
-        ).value.trim(),
-
-      category:
-        document.getElementById(
-          'category'
-        ).value.trim(),
-
-      status:
-        document.getElementById(
-          'status'
-        ).value,
-
-      featured:
-        document.getElementById(
-          'featured'
-        ).checked,
-
-      created_at:
-        new Date().toISOString(),
-
-      updated_at:
-        new Date().toISOString()
-
-    };
-
-
-    let payload;
-
-
-    if(currentType === 'E-book'){
-
-      payload = {
-
-        ...base,
-
-        description:
-          document.getElementById(
-            'content'
-          ).value.trim(),
-
-        file_url:
-          document.getElementById(
-            'fileUrl'
-          ).value.trim(),
-
-        cover_url:
-          document.getElementById(
-            'imageUrl'
-          ).value.trim()
-
-      };
-
-    }
-
-    else if(currentType === 'Achievement'){
-
-      payload = {
-
-        ...base,
-
-        description:
-          document.getElementById(
-            'content'
-          ).value.trim(),
-
-        file_url:
-          document.getElementById(
-            'fileUrl'
-          ).value.trim(),
-
-        image_url:
-          document.getElementById(
-            'imageUrl'
-          ).value.trim()
-
-      };
-
-    }
-
-    else{
-
-      payload = {
-
-        ...base,
-
-        content:
-          document.getElementById(
-            'content'
-          ).value.trim(),
-
-        cover_url:
-          document.getElementById(
-            'imageUrl'
-          ).value.trim()
-
-      };
-
-    }
-
-
-    const table =
-      tables[currentType];
-
-    let result;
-
-
-    if(editingId){
-
-      delete payload.created_at;
-
-      result =
-        await db
-          .from(table)
-          .update(payload)
-          .eq('id', editingId);
-
-    }
-
-    else{
-
-      result =
-        await db
-          .from(table)
-          .insert(payload);
-
-    }
-
-
-    if(result.error){
-
-      showMessage(
-        result.error.message,
-        true
-      );
-
-    }
-
-    else{
-
-      showMessage(
-        editingId
-          ? 'Updated successfully.'
-          : 'Added successfully.'
-      );
-
-      resetForm();
-
-      await loadData();
-
-    }
-
-
-    saveBtn.disabled = false;
-
-    saveBtn.textContent =
-      'Save';
-
-  }
-);
-
-
-/* =========================================
-   DELETE
-========================================= */
-
-window.deleteItem =
-async function(id){
+async function editContent(id){
 
   const table =
-    tables[currentType];
-
-  const item =
-    allData.find(
-      x => x.id === id
-    );
-
-  if(!item) return;
+    tableNames[currentType];
 
 
-  if(!confirm(
-    `Delete "${item.title}"?`
-  )) return;
-
-
-  const { error } =
-    await db
-      .from(table)
-      .delete()
-      .eq('id', id);
+  const {
+    data,
+    error
+  } = await db
+    .from(table)
+    .select('*')
+    .eq('id',id)
+    .single();
 
 
   if(error){
 
     showMessage(
       error.message,
-      true
+      'error'
+    );
+
+    return;
+  }
+
+
+  document.getElementById(
+    'editId'
+  ).value = data.id;
+
+
+  document.getElementById(
+    'title'
+  ).value =
+    data.title || '';
+
+
+  document.getElementById(
+    'author'
+  ).value =
+    data.author || '';
+
+
+  document.getElementById(
+    'category'
+  ).value =
+    data.category || 'Other';
+
+
+  document.getElementById(
+    'status'
+  ).value =
+    data.status || 'published';
+
+
+  document.getElementById(
+    'content'
+  ).value =
+    data.content ||
+    data.description ||
+    '';
+
+
+  document.getElementById(
+    'featured'
+  ).checked =
+    !!data.featured;
+
+
+  document.getElementById(
+    'fileUrl'
+  ).value =
+    data.file_url || '';
+
+
+  document.getElementById(
+    'imageUrl'
+  ).value =
+    data.cover_url ||
+    data.image_url ||
+    '';
+
+
+  document.getElementById(
+    'formTitle'
+  ).textContent =
+    'Edit Content';
+
+
+  window.scrollTo({
+    top:0,
+    behavior:'smooth'
+  });
+
+}
+
+
+/* =========================================
+   DELETE
+========================================= */
+
+async function deleteContent(id){
+
+  if(
+    !confirm(
+      'இந்த content-ஐ delete செய்யவா?'
+    )
+  ){
+
+    return;
+
+  }
+
+
+  const table =
+    tableNames[currentType];
+
+
+  const {
+    error
+  } = await db
+    .from(table)
+    .delete()
+    .eq('id',id);
+
+
+  if(error){
+
+    showMessage(
+      '❌ Delete failed: ' +
+      error.message,
+      'error'
     );
 
     return;
@@ -1100,230 +1466,179 @@ async function(id){
 
 
   showMessage(
-    'Deleted successfully.'
+    '✅ Deleted successfully!',
+    'success'
   );
 
-  await loadData();
 
-};
+  loadContent();
+
+  loadStats();
+
+}
 
 
 /* =========================================
-   RESET
+   RESET FORM
 ========================================= */
 
 function resetForm(){
 
-  editingId = null;
+  document
+    .getElementById(
+      'contentForm'
+    )
+    .reset();
+
 
   document.getElementById(
-    'contentForm'
-  ).reset();
+    'editId'
+  ).value = '';
+
+
+  document.getElementById(
+    'author'
+  ).value =
+    'வி.மாதேஸ்வரன்';
+
 
   document.getElementById(
     'formTitle'
   ).textContent =
     'Add New Content';
 
-  document.getElementById(
-    'cancelBtn'
-  ).classList.add('hidden');
 
   document.getElementById(
-    'status'
-  ).value =
-    'draft';
+    'fileUrl'
+  ).value = '';
+
+
+  document.getElementById(
+    'imageUrl'
+  ).value = '';
 
 }
 
 
 /* =========================================
-   CANCEL
+   TABS
 ========================================= */
 
-document.getElementById(
-  'cancelBtn'
-).addEventListener(
-  'click',
-  resetForm
-);
+document
+  .querySelectorAll('.tab')
+  .forEach(button => {
+
+    button.addEventListener(
+      'click',
+      function(){
+
+        document
+          .querySelectorAll('.tab')
+          .forEach(b =>
+            b.classList.remove(
+              'active'
+            )
+          );
+
+
+        this.classList.add(
+          'active'
+        );
+
+
+        currentType =
+          this.dataset.type;
+
+
+        resetForm();
+
+        loadContent();
+
+      }
+    );
+
+  });
 
 
 /* =========================================
    SEARCH
 ========================================= */
 
-document.getElementById(
-  'search'
-).addEventListener(
-  'input',
-  renderData
-);
+document
+  .getElementById('search')
+  .addEventListener(
+    'input',
+    loadContent
+  );
 
 
 /* =========================================
-   FILTER
+   STATS
 ========================================= */
 
-document.getElementById(
-  'listFilter'
-).addEventListener(
-  'change',
-  e => {
+async function loadStats(){
 
-    currentType =
-      e.target.value;
+  for(
+    const type of Object.keys(
+      tableNames
+    )
+  ){
 
-    document.querySelectorAll(
-      '.tab'
-    ).forEach(tab => {
-
-      tab.classList.toggle(
-        'active',
-        tab.dataset.type === currentType
-      );
-
-    });
-
-    resetForm();
-
-    loadData();
-
-  }
-);
-
-
-/* =========================================
-   COUNTS
-========================================= */
-
-async function updateCounts(){
-
-  const configs = [
-
-    ['writings','writingCount'],
-
-    ['ebooks','ebookCount'],
-
-    ['achievements','achievementCount'],
-
-    ['journal_posts','journalCount']
-
-  ];
-
-
-  for(const [table,id] of configs){
-
-    const { count } =
-      await db
-        .from(table)
-        .select('*',{
+    const {
+      count
+    } = await db
+      .from(
+        tableNames[type]
+      )
+      .select(
+        '*',
+        {
           count:'exact',
           head:true
-        });
+        }
+      );
+
+
+    const id =
+      type === 'writings'
+        ? 'writingCount'
+        : type === 'ebooks'
+        ? 'ebookCount'
+        : type === 'achievements'
+        ? 'achievementCount'
+        : 'journalCount';
+
 
     document.getElementById(id)
       .textContent =
-        count ?? 0;
+        count || 0;
 
   }
 
 }
-
-
-/* =========================================
-   MESSAGE
-========================================= */
-
-function showMessage(
-  text,
-  error=false
-){
-
-  const el =
-    document.getElementById(
-      'message'
-    );
-
-  el.textContent = text;
-
-  el.style.color =
-    error
-      ? 'var(--danger)'
-      : 'var(--accent)';
-
-  setTimeout(() => {
-
-    el.textContent = '';
-
-  },4000);
-
-}
-
-
-/* =========================================
-   ESCAPE
-========================================= */
-
-function escapeHtml(value){
-
-  return String(value)
-    .replaceAll('&','&amp;')
-    .replaceAll('<','&lt;')
-    .replaceAll('>','&gt;')
-    .replaceAll('"','&quot;')
-    .replaceAll(
-      "'",
-      '&#039;'
-    );
-
-}
-
-
-/* =========================================
-   LOGOUT
-========================================= */
-
-document.getElementById(
-  'logoutBtn'
-).addEventListener(
-  'click',
-  async () => {
-
-    await db.auth.signOut();
-
-    window.location.href =
-      'admin-login.html';
-
-  }
-);
 
 
 /* =========================================
    DARK MODE
 ========================================= */
 
-document.getElementById(
-  'themeBtn'
-).addEventListener(
-  'click',
-  () => {
+function toggleTheme(){
 
-    document.body.classList.toggle(
+  document.body
+    .classList
+    .toggle('dark');
+
+
+  localStorage.setItem(
+    'anamigam-theme',
+    document.body.classList.contains(
       'dark'
-    );
-
-    localStorage.setItem(
-      'anamigam-theme',
-      document.body.classList.contains(
-        'dark'
-      )
+    )
       ? 'dark'
       : 'light'
-    );
+  );
 
-  }
-);
+}
 
 
 if(
@@ -1332,9 +1647,23 @@ if(
   ) === 'dark'
 ){
 
-  document.body.classList.add(
-    'dark'
-  );
+  document.body
+    .classList
+    .add('dark');
+
+}
+
+
+/* =========================================
+   LOGOUT
+========================================= */
+
+async function logout(){
+
+  await db.auth.signOut();
+
+  window.location.href =
+    'admin-login.html';
 
 }
 
@@ -1345,17 +1674,20 @@ if(
 
 (async function(){
 
-  const authenticated =
-    await checkAuth();
+  const loggedIn =
+    await checkLogin();
 
-  if(!authenticated)
-    return;
 
-  await loadData();
+  if(!loggedIn) return;
+
+
+  await loadContent();
+
+  await loadStats();
 
 })();
 
 </script>
 
 </body>
-                   </html>
+  </html>
