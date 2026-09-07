@@ -1,749 +1,1361 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="ta">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Admin Dashboard | Anamigam Journal</title>
-<meta name="description" content="Anamigam Journal - Owner Dashboard">
-<meta name="robots" content="noindex, nofollow">
-<link rel="icon" type="image/png" href="logo.png">
 
-<!-- Supabase JS Client -->
-<script async src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<title>Admin Dashboard — Anamigam Journal</title>
+<meta name="robots" content="noindex,nofollow">
+
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 
 <style>
-
-:root {
-  --bg: #f7f3eb;
-  --card: #fffdf8;
-  --text: #24211d;
-  --muted: #756f66;
-  --line: #ddd5c8;
-  --accent: #8b5e3c;
-  --soft: #eee7dc;
-  --shadow: 0 18px 50px rgba(45, 35, 25, .08);
-  --danger: #c92a2a;
-  --success: #51a851;
+:root{
+  --bg:#f7f3eb;
+  --card:#fffdf8;
+  --text:#26261f;
+  --muted:#77746a;
+  --border:#ddd7ca;
+  --accent:#66734f;
+  --danger:#a94442;
+  --shadow:0 10px 30px rgba(40,35,25,.08);
 }
 
-body.dark {
-  --bg: #151412;
-  --card: #201e1b;
-  --text: #f4eee4;
-  --muted: #b8afa2;
-  --line: #3a352e;
-  --accent: #d19a6a;
-  --soft: #2b2722;
-  --shadow: 0 18px 50px rgba(0, 0, 0, .25);
+*{box-sizing:border-box}
+
+body{
+  margin:0;
+  background:var(--bg);
+  color:var(--text);
+  font-family:Georgia,"Noto Serif Tamil",serif;
 }
 
-* {
-  margin: 0;
-  padding: 0;
-  box-sizing: border-box;
+body.dark{
+  --bg:#151612;
+  --card:#20211d;
+  --text:#f2efe7;
+  --muted:#aaa79d;
+  --border:#393a34;
+  --accent:#aab98b;
+  --danger:#ef8b87;
+  --shadow:0 10px 30px rgba(0,0,0,.3);
 }
 
-html {
-  scroll-behavior: smooth;
+header{
+  position:sticky;
+  top:0;
+  z-index:100;
+  background:rgba(247,243,235,.94);
+  backdrop-filter:blur(12px);
+  border-bottom:1px solid var(--border);
 }
 
-body {
-  font-family: Georgia, "Noto Serif Tamil", serif;
-  background: var(--bg);
-  color: var(--text);
-  line-height: 1.7;
-  transition: .3s;
+.dark header{
+  background:rgba(21,22,18,.94);
 }
 
-.container {
-  max-width: 1150px;
-  margin: auto;
-  padding: 0 25px;
+.nav{
+  max-width:1250px;
+  margin:auto;
+  padding:13px 20px;
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  gap:15px;
 }
 
-a {
-  color: inherit;
-  text-decoration: none;
+.logo{
+  display:flex;
+  align-items:center;
+  gap:10px;
+  font-weight:bold;
+  letter-spacing:1px;
 }
 
-button {
-  font-family: inherit;
-  cursor: pointer;
+.logo img{
+  width:42px;
+  height:42px;
+  object-fit:contain;
 }
 
-/* HEADER */
-
-header {
-  border-bottom: 1px solid var(--line);
-  padding: 25px 0;
-  background: var(--card);
+.nav-actions{
+  display:flex;
+  align-items:center;
+  gap:8px;
 }
 
-.header-inner {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
+.btn{
+  border:1px solid var(--border);
+  background:var(--card);
+  color:var(--text);
+  padding:10px 14px;
+  border-radius:10px;
+  cursor:pointer;
+  text-decoration:none;
 }
 
-.logo-group {
-  display: flex;
-  align-items: center;
-  gap: 16px;
+.btn.primary{
+  background:var(--accent);
+  border-color:var(--accent);
+  color:white;
 }
 
-.logo-img {
-  height: 44px;
-  width: auto;
+.btn.danger{
+  color:var(--danger);
 }
 
-.logo-text {
-  font-size: 18px;
-  font-weight: bold;
-  letter-spacing: .5px;
+.container{
+  max-width:1250px;
+  margin:auto;
+  padding:35px 20px 70px;
 }
 
-.logo-text span {
-  color: var(--accent);
+.hero{
+  margin-bottom:25px;
 }
 
-.logo-subtext {
-  font-size: 11px;
-  color: var(--muted);
-  letter-spacing: 2px;
-  text-transform: uppercase;
-  margin-top: 2px;
+.hero h1{
+  margin:0 0 8px;
+  font-size:clamp(30px,5vw,48px);
 }
 
-.header-actions {
-  display: flex;
-  align-items: center;
-  gap: 20px;
+.hero p{
+  margin:0;
+  color:var(--muted);
 }
 
-.user-info {
-  text-align: right;
+.stats{
+  display:grid;
+  grid-template-columns:repeat(4,1fr);
+  gap:15px;
+  margin-bottom:25px;
 }
 
-.user-email {
-  font-size: 13px;
-  color: var(--muted);
+.stat{
+  background:var(--card);
+  border:1px solid var(--border);
+  border-radius:16px;
+  padding:20px;
+  box-shadow:var(--shadow);
 }
 
-.user-role {
-  font-size: 11px;
-  color: var(--accent);
-  letter-spacing: 1px;
-  text-transform: uppercase;
-  margin-top: 2px;
+.stat span{
+  display:block;
+  color:var(--muted);
+  font-size:14px;
 }
 
-.btn-icon {
-  width: 38px;
-  height: 38px;
-  border: 1px solid var(--line);
-  border-radius: 50%;
-  background: var(--bg);
-  color: var(--text);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  font-size: 16px;
-  transition: .2s;
+.stat strong{
+  display:block;
+  font-size:32px;
+  margin-top:7px;
 }
 
-.btn-icon:hover {
-  border-color: var(--accent);
-  color: var(--accent);
+.panel{
+  background:var(--card);
+  border:1px solid var(--border);
+  border-radius:18px;
+  padding:22px;
+  box-shadow:var(--shadow);
+  margin-bottom:22px;
 }
 
-/* MAIN CONTENT */
-
-main {
-  padding: 60px 0;
+.panel h2{
+  margin-top:0;
 }
 
-/* PAGE TITLE */
-
-.page-head {
-  margin-bottom: 50px;
+.tabs{
+  display:flex;
+  gap:8px;
+  overflow-x:auto;
+  padding-bottom:5px;
+  margin-bottom:20px;
 }
 
-.page-title {
-  font-size: 42px;
-  margin-bottom: 12px;
+.tab{
+  white-space:nowrap;
+  border:1px solid var(--border);
+  background:var(--bg);
+  color:var(--text);
+  padding:10px 15px;
+  border-radius:10px;
+  cursor:pointer;
 }
 
-.page-desc {
-  font-size: 16px;
-  color: var(--muted);
+.tab.active{
+  background:var(--accent);
+  color:white;
+  border-color:var(--accent);
 }
 
-/* STATS GRID */
-
-.stats-grid {
-  display: grid;
-  grid-template-columns: repeat(4, 1fr);
-  gap: 22px;
-  margin-bottom: 60px;
+.form-grid{
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  gap:15px;
 }
 
-.stat-card {
-  background: var(--card);
-  border: 1px solid var(--line);
-  padding: 32px;
-  text-align: center;
-  box-shadow: var(--shadow);
-  transition: .3s;
+.full{
+  grid-column:1/-1;
 }
 
-.stat-card:hover {
-  transform: translateY(-4px);
-  box-shadow: 0 28px 60px rgba(45, 35, 25, .12);
+label{
+  display:block;
+  font-weight:bold;
+  margin-bottom:6px;
 }
 
-.stat-icon {
-  font-size: 36px;
-  margin-bottom: 16px;
+input,
+textarea,
+select{
+  width:100%;
+  padding:12px;
+  border:1px solid var(--border);
+  border-radius:10px;
+  background:var(--bg);
+  color:var(--text);
+  font:inherit;
 }
 
-.stat-number {
-  font-size: 42px;
-  font-weight: bold;
-  color: var(--accent);
-  margin-bottom: 8px;
+textarea{
+  min-height:150px;
+  resize:vertical;
 }
 
-.stat-label {
-  font-size: 13px;
-  color: var(--muted);
-  letter-spacing: .5px;
+.check-row{
+  display:flex;
+  gap:20px;
+  align-items:center;
+  margin-top:15px;
 }
 
-/* SECTION */
-
-section {
-  margin-bottom: 50px;
+.check{
+  display:flex;
+  gap:7px;
+  align-items:center;
 }
 
-.section-title {
-  font-size: 28px;
-  margin-bottom: 25px;
-  display: flex;
-  align-items: center;
-  gap: 12px;
+.check input{
+  width:auto;
 }
 
-.section-title::before {
-  content: "";
-  width: 4px;
-  height: 28px;
-  background: var(--accent);
+.form-actions{
+  display:flex;
+  gap:8px;
+  margin-top:18px;
 }
 
-/* QUICK ACTIONS */
-
-.quick-actions {
-  display: grid;
-  grid-template-columns: repeat(2, 1fr);
-  gap: 22px;
+.toolbar{
+  display:flex;
+  gap:10px;
+  margin-bottom:15px;
 }
 
-.action-card {
-  background: var(--card);
-  border: 1px solid var(--line);
-  padding: 32px;
-  display: flex;
-  align-items: center;
-  gap: 24px;
-  box-shadow: var(--shadow);
-  transition: .3s;
-  text-decoration: none;
+.toolbar input{
+  flex:1;
 }
 
-.action-card:hover {
-  transform: translateY(-4px);
-  box-shadow: 0 28px 60px rgba(45, 35, 25, .12);
-  border-color: var(--accent);
+.items{
+  display:grid;
+  gap:12px;
 }
 
-.action-icon {
-  font-size: 42px;
-  flex-shrink: 0;
+.item{
+  background:var(--bg);
+  border:1px solid var(--border);
+  border-radius:14px;
+  padding:17px;
 }
 
-.action-content h3 {
-  font-size: 18px;
-  margin-bottom: 6px;
+.item-title{
+  font-size:19px;
+  font-weight:bold;
+  margin-bottom:6px;
 }
 
-.action-content p {
-  font-size: 13px;
-  color: var(--muted);
+.meta{
+  color:var(--muted);
+  font-size:14px;
 }
 
-.action-arrow {
-  margin-left: auto;
-  font-size: 18px;
-  color: var(--accent);
+.badge{
+  display:inline-block;
+  padding:5px 9px;
+  border:1px solid var(--border);
+  border-radius:20px;
+  font-size:12px;
+  margin:8px 5px 0 0;
 }
 
-/* LOGOUT BUTTON */
-
-.btn-logout {
-  background: var(--danger);
-  color: #fff;
-  border: 1px solid var(--danger);
-  padding: 13px 22px;
-  font-size: 14px;
-  border-radius: 4px;
-  transition: .25s;
+.item-actions{
+  display:flex;
+  flex-wrap:wrap;
+  gap:7px;
+  margin-top:13px;
 }
 
-.btn-logout:hover {
-  opacity: .9;
-  transform: translateY(-2px);
+.empty{
+  text-align:center;
+  color:var(--muted);
+  padding:30px;
 }
 
-.btn-logout:active {
-  transform: translateY(0);
+.message{
+  margin-top:12px;
+  color:var(--accent);
 }
 
-/* INFO BOX */
-
-.info-box {
-  background: rgba(139, 94, 60, .08);
-  border: 1px solid var(--line);
-  border-left: 3px solid var(--accent);
-  padding: 20px;
-  margin-bottom: 40px;
-  border-radius: 4px;
+.hidden{
+  display:none!important;
 }
 
-.info-box p {
-  font-size: 13px;
-  color: var(--muted);
-  margin: 0;
+.loading{
+  text-align:center;
+  padding:25px;
+  color:var(--muted);
 }
 
-/* LOADING STATE */
-
-.loading-spinner {
-  display: inline-block;
-  width: 20px;
-  height: 20px;
-  border: 3px solid rgba(139, 94, 60, .2);
-  border-radius: 50%;
-  border-top-color: var(--accent);
-  animation: spin .8s linear infinite;
-}
-
-@keyframes spin {
-  to {
-    transform: rotate(360deg);
+@media(max-width:900px){
+  .stats{
+    grid-template-columns:1fr 1fr;
   }
 }
 
-.loading-container {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  min-height: 400px;
-  flex-direction: column;
-  gap: 16px;
-}
-
-.loading-text {
-  color: var(--muted);
-  font-size: 14px;
-}
-
-/* FOOTER */
-
-footer {
-  border-top: 1px solid var(--line);
-  padding: 40px 0 30px;
-  text-align: center;
-  font-size: 12px;
-  color: var(--muted);
-}
-
-/* RESPONSIVE */
-
-@media (max-width: 1024px) {
-  .stats-grid {
-    grid-template-columns: repeat(2, 1fr);
+@media(max-width:700px){
+  .form-grid{
+    grid-template-columns:1fr;
   }
 
-  .quick-actions {
-    grid-template-columns: 1fr;
+  .full{
+    grid-column:auto;
+  }
+
+  .stats{
+    grid-template-columns:1fr;
+  }
+
+  .toolbar{
+    flex-direction:column;
+  }
+
+  .logo span{
+    display:none;
+  }
+
+  .nav{
+    padding:12px 15px;
+  }
+
+  .nav-actions .website{
+    display:none;
   }
 }
-
-@media (max-width: 768px) {
-  .header-inner {
-    flex-direction: column;
-    gap: 16px;
-  }
-
-  .header-actions {
-    width: 100%;
-    justify-content: space-between;
-  }
-
-  .user-info {
-    text-align: left;
-  }
-
-  .page-title {
-    font-size: 32px;
-  }
-
-  .stats-grid {
-    grid-template-columns: 1fr;
-  }
-
-  .section-title {
-    font-size: 24px;
-  }
-
-  main {
-    padding: 40px 0;
-  }
-}
-
-@media (max-width: 480px) {
-  .container {
-    padding: 0 15px;
-  }
-
-  .logo-text {
-    font-size: 16px;
-  }
-
-  .page-title {
-    font-size: 26px;
-  }
-
-  .stat-number {
-    font-size: 32px;
-  }
-
-  .action-card {
-    padding: 20px;
-    flex-direction: column;
-    text-align: center;
-  }
-
-  .action-arrow {
-    margin-left: 0;
-  }
-}
-
 </style>
-
 </head>
 
 <body>
 
-<!-- HEADER -->
 <header>
-  <div class="container">
-    <div class="header-inner">
-      <div class="logo-group">
-        <img src="logo.png" alt="Anamigam Journal" class="logo-img">
-        <div>
-          <div class="logo-text">Anamigam <span>Journal</span></div>
-          <div class="logo-subtext">Admin Dashboard</div>
-        </div>
-      </div>
+  <div class="nav">
 
-      <div class="header-actions">
-        <div class="user-info">
-          <div class="user-email" id="userEmail">—</div>
-          <div class="user-role">Owner</div>
-        </div>
-
-        <button class="btn-icon" onclick="toggleTheme()" title="Dark / Light Mode">☾</button>
-      </div>
+    <div class="logo">
+      <img src="logo.png" alt="Anamigam Journal">
+      <span>ANAMIGAM JOURNAL</span>
     </div>
+
+    <div class="nav-actions">
+      <a class="btn website" href="index.html">Website</a>
+      <button class="btn" id="themeBtn">☾</button>
+      <button class="btn danger" id="logoutBtn">Logout</button>
+    </div>
+
   </div>
 </header>
 
-<!-- MAIN CONTENT -->
-<main>
-  <div class="container">
 
-    <!-- LOADING STATE -->
-    <div id="loadingState" class="loading-container" style="display: none;">
-      <div class="loading-spinner"></div>
-      <p class="loading-text">Loading dashboard...</p>
-    </div>
+<main class="container">
 
-    <!-- DASHBOARD CONTENT -->
-    <div id="dashboardContent" style="display: none;">
+<section class="hero">
+  <h1>Admin Dashboard</h1>
+  <p>அனாமிகம் ஜர்னலின் முழு உள்ளடக்க நிர்வாகம்.</p>
+</section>
 
-      <!-- PAGE HEAD -->
-      <div class="page-head">
-        <h1 class="page-title">Welcome Back</h1>
-        <p class="page-desc">Manage your Anamigam Journal content and view publication statistics.</p>
-      </div>
 
-      <!-- INFO BOX -->
-      <div class="info-box">
-        <p>
-          💡 <strong>Tip:</strong> Use the Quick Links below to manage your writings, e-books, achievements, and journal posts. All changes are saved to Supabase.
-        </p>
-      </div>
+<!-- STATS -->
 
-      <!-- STATISTICS -->
-      <section>
-        <div class="section-title">Overview</div>
+<section class="stats">
 
-        <div class="stats-grid">
-          <div class="stat-card">
-            <div class="stat-icon">✍️</div>
-            <div class="stat-number" id="writingsCount">0</div>
-            <div class="stat-label">Writings</div>
-          </div>
-
-          <div class="stat-card">
-            <div class="stat-icon">📖</div>
-            <div class="stat-number" id="ebooksCount">0</div>
-            <div class="stat-label">E-Books</div>
-          </div>
-
-          <div class="stat-card">
-            <div class="stat-icon">🏆</div>
-            <div class="stat-number" id="achievementsCount">0</div>
-            <div class="stat-label">Achievements</div>
-          </div>
-
-          <div class="stat-card">
-            <div class="stat-icon">📝</div>
-            <div class="stat-number" id="postsCount">0</div>
-            <div class="stat-label">Journal Posts</div>
-          </div>
-        </div>
-      </section>
-
-      <!-- QUICK ACTIONS -->
-      <section>
-        <div class="section-title">Quick Actions</div>
-
-        <div class="quick-actions">
-          <a href="admin-content.html" class="action-card">
-            <div class="action-icon">✏️</div>
-            <div class="action-content">
-              <h3>Manage Content</h3>
-              <p>Add, edit, or delete your writings, e-books, and achievements</p>
-            </div>
-            <div class="action-arrow">→</div>
-          </a>
-
-          <button onclick="handleLogout()" class="action-card" style="border: 1px solid var(--danger); background: rgba(201, 42, 42, .05);">
-            <div class="action-icon">🚪</div>
-            <div class="action-content">
-              <h3 style="color: var(--danger);">Sign Out</h3>
-              <p>End your session and return to the login page</p>
-            </div>
-            <div class="action-arrow" style="color: var(--danger);">→</div>
-          </button>
-        </div>
-      </section>
-
-      <!-- ADDITIONAL ACTIONS -->
-      <section style="margin-top: 60px; padding-top: 40px; border-top: 1px solid var(--line);">
-        <div class="section-title">Dashboard Actions</div>
-
-        <div class="quick-actions">
-          <a href="index.html" class="action-card">
-            <div class="action-icon">🏠</div>
-            <div class="action-content">
-              <h3>View Website</h3>
-              <p>Visit the public Anamigam Journal homepage</p>
-            </div>
-            <div class="action-arrow">→</div>
-          </a>
-
-          <a href="admin-content.html" class="action-card">
-            <div class="action-icon">⚙️</div>
-            <div class="action-content">
-              <h3>Settings</h3>
-              <p>Manage your account preferences and security settings</p>
-            </div>
-            <div class="action-arrow">→</div>
-          </a>
-        </div>
-      </section>
-
-    </div>
-
+  <div class="stat">
+    <span>Writings</span>
+    <strong id="writingCount">—</strong>
   </div>
+
+  <div class="stat">
+    <span>E-Books</span>
+    <strong id="ebookCount">—</strong>
+  </div>
+
+  <div class="stat">
+    <span>Achievements</span>
+    <strong id="achievementCount">—</strong>
+  </div>
+
+  <div class="stat">
+    <span>Journal</span>
+    <strong id="journalCount">—</strong>
+  </div>
+
+</section>
+
+
+<!-- ADD / EDIT -->
+
+<section class="panel">
+
+<h2 id="formTitle">Add New Content</h2>
+
+<div class="tabs">
+
+  <button class="tab active" data-type="Writing">
+    ✍️ Writing
+  </button>
+
+  <button class="tab" data-type="E-book">
+    📚 E-Book
+  </button>
+
+  <button class="tab" data-type="Achievement">
+    🏆 Achievement
+  </button>
+
+  <button class="tab" data-type="Journal">
+    📰 Journal
+  </button>
+
+</div>
+
+
+<form id="contentForm">
+
+<div class="form-grid">
+
+  <div>
+    <label>Title</label>
+    <input id="title" required>
+  </div>
+
+  <div>
+    <label>Author</label>
+    <input id="author">
+  </div>
+
+  <div>
+    <label>Category</label>
+    <input id="category" placeholder="கவிதை / சிறுகதை / கட்டுரை">
+  </div>
+
+  <div>
+    <label>Status</label>
+    <select id="status">
+      <option value="draft">Draft</option>
+      <option value="published">Published</option>
+    </select>
+  </div>
+
+  <div class="full">
+    <label>Description / Content</label>
+    <textarea id="content"></textarea>
+  </div>
+
+  <div>
+    <label>File URL / PDF URL</label>
+    <input id="fileUrl">
+  </div>
+
+  <div>
+    <label>Cover / Image URL</label>
+    <input id="imageUrl">
+  </div>
+
+</div>
+
+
+<div class="check-row">
+
+  <label class="check">
+    <input type="checkbox" id="featured">
+    Featured
+  </label>
+
+</div>
+
+
+<div class="form-actions">
+
+  <button class="btn primary" type="submit" id="saveBtn">
+    Save
+  </button>
+
+  <button class="btn hidden" type="button" id="cancelBtn">
+    Cancel
+  </button>
+
+</div>
+
+<div class="message" id="message"></div>
+
+</form>
+
+</section>
+
+
+<!-- CONTENT -->
+
+<section class="panel">
+
+<h2>Manage Content</h2>
+
+<div class="toolbar">
+
+  <input
+    id="search"
+    placeholder="Search..."
+  >
+
+  <select id="listFilter">
+
+    <option value="Writing">
+      Writings
+    </option>
+
+    <option value="E-book">
+      E-Books
+    </option>
+
+    <option value="Achievement">
+      Achievements
+    </option>
+
+    <option value="Journal">
+      Journal
+    </option>
+
+  </select>
+
+</div>
+
+<div id="items" class="items">
+  <div class="loading">Loading...</div>
+</div>
+
+</section>
+
 </main>
 
-<!-- FOOTER -->
-<footer>
-  <div class="container">
-    <p>Anamigam Journal Admin Dashboard — Secure Owner Access</p>
-    <p style="margin-top: 8px;">© 2024 V. Matheswaran. All Rights Reserved.</p>
-  </div>
-</footer>
 
-<!-- SUPABASE CONFIGURATION & AUTH LOGIC -->
 <script>
 
-// Supabase Configuration
-// Replace with your actual Supabase credentials
-const SUPABASE_URL = 'YOUR_SUPABASE_URL';
-const SUPABASE_ANON_KEY = 'YOUR_SUPABASE_ANON_KEY';
+/* =========================================
+   SUPABASE CONFIG
+========================================= */
 
-let supabase = null;
-let currentUser = null;
+const SUPABASE_URL =
+  'YOUR_SUPABASE_URL';
 
-// Initialize Supabase client after library loads
-window.addEventListener('load', () => {
-  if (typeof window.supabase !== 'undefined') {
-    supabase = window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
-    checkAuthentication();
-  } else {
-    console.error('Supabase library failed to load');
-    redirectToLogin('Failed to load authentication service.');
+const SUPABASE_ANON_KEY =
+  'YOUR_SUPABASE_ANON_KEY';
+
+const { createClient } = supabase;
+
+const db = createClient(
+  SUPABASE_URL,
+  SUPABASE_ANON_KEY
+);
+
+
+/* =========================================
+   STATE
+========================================= */
+
+let currentType = 'Writing';
+let editingId = null;
+let allData = [];
+
+
+/* =========================================
+   TABLE MAP
+========================================= */
+
+const tables = {
+  'Writing':'writings',
+  'E-book':'ebooks',
+  'Achievement':'achievements',
+  'Journal':'journal_posts'
+};
+
+
+/* =========================================
+   AUTH
+========================================= */
+
+async function checkAuth(){
+
+  const { data, error } =
+    await db.auth.getSession();
+
+  if(error || !data.session){
+
+    window.location.href =
+      'admin-login.html';
+
+    return false;
   }
+
+  return true;
+}
+
+
+/* =========================================
+   TABS
+========================================= */
+
+document.querySelectorAll('.tab')
+.forEach(tab => {
+
+  tab.addEventListener('click', () => {
+
+    document.querySelectorAll('.tab')
+    .forEach(x =>
+      x.classList.remove('active')
+    );
+
+    tab.classList.add('active');
+
+    currentType =
+      tab.dataset.type;
+
+    document.getElementById(
+      'listFilter'
+    ).value = currentType;
+
+    resetForm();
+
+    loadData();
+
+  });
+
 });
 
-// Check if user is authenticated
-async function checkAuthentication() {
-  if (!supabase) {
-    redirectToLogin('Authentication service unavailable.');
+
+/* =========================================
+   LOAD DATA
+========================================= */
+
+async function loadData(){
+
+  const table =
+    tables[currentType];
+
+  const items =
+    document.getElementById('items');
+
+  items.innerHTML =
+    '<div class="loading">Loading...</div>';
+
+  const { data, error } =
+    await db
+      .from(table)
+      .select('*')
+      .order(
+        'created_at',
+        { ascending:false }
+      );
+
+  if(error){
+
+    console.error(error);
+
+    items.innerHTML =
+      '<div class="empty">Unable to load content.</div>';
+
     return;
   }
 
-  try {
-    const { data: { session } } = await supabase.auth.getSession();
+  allData = data || [];
 
-    if (!session) {
-      redirectToLogin('Please log in to access the dashboard.');
-      return;
+  renderData();
+
+  updateCounts();
+
+}
+
+
+/* =========================================
+   RENDER
+========================================= */
+
+function renderData(){
+
+  const search =
+    document.getElementById(
+      'search'
+    ).value
+    .toLowerCase()
+    .trim();
+
+  let data =
+    allData.filter(item => {
+
+      return !search ||
+        (item.title || '')
+          .toLowerCase()
+          .includes(search) ||
+
+        (item.category || '')
+          .toLowerCase()
+          .includes(search) ||
+
+        (item.author || '')
+          .toLowerCase()
+          .includes(search);
+
+    });
+
+
+  const items =
+    document.getElementById(
+      'items'
+    );
+
+
+  if(!data.length){
+
+    items.innerHTML =
+      '<div class="empty">No content found.</div>';
+
+    return;
+  }
+
+
+  items.innerHTML =
+    data.map(item => {
+
+      return `
+        <article class="item">
+
+          <div class="item-title">
+            ${escapeHtml(item.title || 'Untitled')}
+          </div>
+
+          <div class="meta">
+            ${escapeHtml(item.author || '')}
+            ${item.category
+              ? ' • ' + escapeHtml(item.category)
+              : ''}
+          </div>
+
+          <span class="badge">
+            ${escapeHtml(item.status || 'draft')}
+          </span>
+
+          ${
+            item.featured
+            ? '<span class="badge">⭐ Featured</span>'
+            : ''
+          }
+
+          <div class="item-actions">
+
+            <button
+              class="btn"
+              onclick="editItem('${item.id}')">
+              Edit
+            </button>
+
+            <button
+              class="btn danger"
+              onclick="deleteItem('${item.id}')">
+              Delete
+            </button>
+
+          </div>
+
+        </article>
+      `;
+
+    }).join('');
+
+}
+
+
+/* =========================================
+   EDIT
+========================================= */
+
+window.editItem = function(id){
+
+  const item =
+    allData.find(
+      x => x.id === id
+    );
+
+  if(!item) return;
+
+  editingId = id;
+
+  document.getElementById(
+    'formTitle'
+  ).textContent =
+    'Edit Content';
+
+  document.getElementById(
+    'title'
+  ).value =
+    item.title || '';
+
+  document.getElementById(
+    'author'
+  ).value =
+    item.author || '';
+
+  document.getElementById(
+    'category'
+  ).value =
+    item.category || '';
+
+  document.getElementById(
+    'content'
+  ).value =
+    item.content ||
+    item.description ||
+    '';
+
+  document.getElementById(
+    'status'
+  ).value =
+    item.status ||
+    'draft';
+
+  document.getElementById(
+    'featured'
+  ).checked =
+    !!item.featured;
+
+  document.getElementById(
+    'fileUrl'
+  ).value =
+    item.file_url || '';
+
+  document.getElementById(
+    'imageUrl'
+  ).value =
+    item.cover_url ||
+    item.image_url ||
+    '';
+
+  document.getElementById(
+    'cancelBtn'
+  ).classList.remove('hidden');
+
+  window.scrollTo({
+    top:0,
+    behavior:'smooth'
+  });
+
+};
+
+
+/* =========================================
+   SAVE
+========================================= */
+
+document.getElementById(
+  'contentForm'
+).addEventListener(
+  'submit',
+  async e => {
+
+    e.preventDefault();
+
+    const saveBtn =
+      document.getElementById(
+        'saveBtn'
+      );
+
+    saveBtn.disabled = true;
+
+    saveBtn.textContent =
+      'Saving...';
+
+
+    const base = {
+
+      title:
+        document.getElementById(
+          'title'
+        ).value.trim(),
+
+      author:
+        document.getElementById(
+          'author'
+        ).value.trim(),
+
+      category:
+        document.getElementById(
+          'category'
+        ).value.trim(),
+
+      status:
+        document.getElementById(
+          'status'
+        ).value,
+
+      featured:
+        document.getElementById(
+          'featured'
+        ).checked,
+
+      created_at:
+        new Date().toISOString(),
+
+      updated_at:
+        new Date().toISOString()
+
+    };
+
+
+    let payload;
+
+
+    if(currentType === 'E-book'){
+
+      payload = {
+
+        ...base,
+
+        description:
+          document.getElementById(
+            'content'
+          ).value.trim(),
+
+        file_url:
+          document.getElementById(
+            'fileUrl'
+          ).value.trim(),
+
+        cover_url:
+          document.getElementById(
+            'imageUrl'
+          ).value.trim()
+
+      };
+
     }
 
-    currentUser = session.user;
-    displayUserInfo();
-    showDashboardContent();
-    loadDashboardStats();
+    else if(currentType === 'Achievement'){
 
-  } catch (error) {
-    console.error('Auth check error:', error);
-    redirectToLogin('Authentication error. Please log in again.');
+      payload = {
+
+        ...base,
+
+        description:
+          document.getElementById(
+            'content'
+          ).value.trim(),
+
+        file_url:
+          document.getElementById(
+            'fileUrl'
+          ).value.trim(),
+
+        image_url:
+          document.getElementById(
+            'imageUrl'
+          ).value.trim()
+
+      };
+
+    }
+
+    else{
+
+      payload = {
+
+        ...base,
+
+        content:
+          document.getElementById(
+            'content'
+          ).value.trim(),
+
+        cover_url:
+          document.getElementById(
+            'imageUrl'
+          ).value.trim()
+
+      };
+
+    }
+
+
+    const table =
+      tables[currentType];
+
+    let result;
+
+
+    if(editingId){
+
+      delete payload.created_at;
+
+      result =
+        await db
+          .from(table)
+          .update(payload)
+          .eq('id', editingId);
+
+    }
+
+    else{
+
+      result =
+        await db
+          .from(table)
+          .insert(payload);
+
+    }
+
+
+    if(result.error){
+
+      showMessage(
+        result.error.message,
+        true
+      );
+
+    }
+
+    else{
+
+      showMessage(
+        editingId
+          ? 'Updated successfully.'
+          : 'Added successfully.'
+      );
+
+      resetForm();
+
+      await loadData();
+
+    }
+
+
+    saveBtn.disabled = false;
+
+    saveBtn.textContent =
+      'Save';
+
   }
-}
+);
 
-// Redirect to login page
-function redirectToLogin(message) {
-  if (message) {
-    localStorage.setItem('loginMessage', message);
-  }
-  window.location.href = 'admin-login.html';
-}
 
-// Display user information
-function displayUserInfo() {
-  if (currentUser) {
-    document.getElementById('userEmail').textContent = currentUser.email || 'User';
-  }
-}
+/* =========================================
+   DELETE
+========================================= */
 
-// Show dashboard content
-function showDashboardContent() {
-  document.getElementById('loadingState').style.display = 'none';
-  document.getElementById('dashboardContent').style.display = 'block';
-}
+window.deleteItem =
+async function(id){
 
-// Load dashboard statistics
-async function loadDashboardStats() {
-  if (!supabase) return;
+  const table =
+    tables[currentType];
 
-  try {
-    // Fetch writings count
-    const { count: writingsCount } = await supabase
-      .from('writings')
-      .select('*', { count: 'exact', head: true });
+  const item =
+    allData.find(
+      x => x.id === id
+    );
 
-    // Fetch e-books count
-    const { count: ebooksCount } = await supabase
-      .from('ebooks')
-      .select('*', { count: 'exact', head: true });
+  if(!item) return;
 
-    // Fetch achievements count
-    const { count: achievementsCount } = await supabase
-      .from('achievements')
-      .select('*', { count: 'exact', head: true });
 
-    // Fetch journal posts count
-    const { count: postsCount } = await supabase
-      .from('journal_posts')
-      .select('*', { count: 'exact', head: true });
+  if(!confirm(
+    `Delete "${item.title}"?`
+  )) return;
 
-    // Update UI with counts
-    document.getElementById('writingsCount').textContent = writingsCount || 0;
-    document.getElementById('ebooksCount').textContent = ebooksCount || 0;
-    document.getElementById('achievementsCount').textContent = achievementsCount || 0;
-    document.getElementById('postsCount').textContent = postsCount || 0;
 
-  } catch (error) {
-    console.error('Error loading statistics:', error);
-    // Show default values on error
-    document.getElementById('writingsCount').textContent = '—';
-    document.getElementById('ebooksCount').textContent = '—';
-    document.getElementById('achievementsCount').textContent = '—';
-    document.getElementById('postsCount').textContent = '—';
-  }
-}
+  const { error } =
+    await db
+      .from(table)
+      .delete()
+      .eq('id', id);
 
-// Handle logout
-async function handleLogout() {
-  if (!supabase) {
-    redirectToLogin('Logout failed. Please try again.');
+
+  if(error){
+
+    showMessage(
+      error.message,
+      true
+    );
+
     return;
   }
 
-  try {
-    await supabase.auth.signOut();
-    localStorage.setItem('loginMessage', 'You have been logged out successfully.');
-    window.location.href = 'admin-login.html';
-  } catch (error) {
-    console.error('Logout error:', error);
-    redirectToLogin('Logout error. Please refresh and try again.');
-  }
+
+  showMessage(
+    'Deleted successfully.'
+  );
+
+  await loadData();
+
+};
+
+
+/* =========================================
+   RESET
+========================================= */
+
+function resetForm(){
+
+  editingId = null;
+
+  document.getElementById(
+    'contentForm'
+  ).reset();
+
+  document.getElementById(
+    'formTitle'
+  ).textContent =
+    'Add New Content';
+
+  document.getElementById(
+    'cancelBtn'
+  ).classList.add('hidden');
+
+  document.getElementById(
+    'status'
+  ).value =
+    'draft';
+
 }
 
-// Theme toggle
-function toggleTheme() {
-  const body = document.body;
-  body.classList.toggle('dark');
-  localStorage.setItem('theme', body.classList.contains('dark') ? 'dark' : 'light');
-}
 
-// Apply saved theme on load
-window.addEventListener('DOMContentLoaded', () => {
-  const savedTheme = localStorage.getItem('theme') || 'light';
-  if (savedTheme === 'dark') {
-    document.body.classList.add('dark');
-  }
-});
+/* =========================================
+   CANCEL
+========================================= */
 
-// Set up auth state listener
-window.addEventListener('load', () => {
-  if (supabase) {
-    supabase.auth.onAuthStateChange((event, session) => {
-      if (!session && event !== 'SIGNED_OUT') {
-        redirectToLogin('Session expired. Please log in again.');
-      }
+document.getElementById(
+  'cancelBtn'
+).addEventListener(
+  'click',
+  resetForm
+);
+
+
+/* =========================================
+   SEARCH
+========================================= */
+
+document.getElementById(
+  'search'
+).addEventListener(
+  'input',
+  renderData
+);
+
+
+/* =========================================
+   FILTER
+========================================= */
+
+document.getElementById(
+  'listFilter'
+).addEventListener(
+  'change',
+  e => {
+
+    currentType =
+      e.target.value;
+
+    document.querySelectorAll(
+      '.tab'
+    ).forEach(tab => {
+
+      tab.classList.toggle(
+        'active',
+        tab.dataset.type === currentType
+      );
+
     });
+
+    resetForm();
+
+    loadData();
+
   }
-});
+);
+
+
+/* =========================================
+   COUNTS
+========================================= */
+
+async function updateCounts(){
+
+  const configs = [
+
+    ['writings','writingCount'],
+
+    ['ebooks','ebookCount'],
+
+    ['achievements','achievementCount'],
+
+    ['journal_posts','journalCount']
+
+  ];
+
+
+  for(const [table,id] of configs){
+
+    const { count } =
+      await db
+        .from(table)
+        .select('*',{
+          count:'exact',
+          head:true
+        });
+
+    document.getElementById(id)
+      .textContent =
+        count ?? 0;
+
+  }
+
+}
+
+
+/* =========================================
+   MESSAGE
+========================================= */
+
+function showMessage(
+  text,
+  error=false
+){
+
+  const el =
+    document.getElementById(
+      'message'
+    );
+
+  el.textContent = text;
+
+  el.style.color =
+    error
+      ? 'var(--danger)'
+      : 'var(--accent)';
+
+  setTimeout(() => {
+
+    el.textContent = '';
+
+  },4000);
+
+}
+
+
+/* =========================================
+   ESCAPE
+========================================= */
+
+function escapeHtml(value){
+
+  return String(value)
+    .replaceAll('&','&amp;')
+    .replaceAll('<','&lt;')
+    .replaceAll('>','&gt;')
+    .replaceAll('"','&quot;')
+    .replaceAll(
+      "'",
+      '&#039;'
+    );
+
+}
+
+
+/* =========================================
+   LOGOUT
+========================================= */
+
+document.getElementById(
+  'logoutBtn'
+).addEventListener(
+  'click',
+  async () => {
+
+    await db.auth.signOut();
+
+    window.location.href =
+      'admin-login.html';
+
+  }
+);
+
+
+/* =========================================
+   DARK MODE
+========================================= */
+
+document.getElementById(
+  'themeBtn'
+).addEventListener(
+  'click',
+  () => {
+
+    document.body.classList.toggle(
+      'dark'
+    );
+
+    localStorage.setItem(
+      'anamigam-theme',
+      document.body.classList.contains(
+        'dark'
+      )
+      ? 'dark'
+      : 'light'
+    );
+
+  }
+);
+
+
+if(
+  localStorage.getItem(
+    'anamigam-theme'
+  ) === 'dark'
+){
+
+  document.body.classList.add(
+    'dark'
+  );
+
+}
+
+
+/* =========================================
+   START
+========================================= */
+
+(async function(){
+
+  const authenticated =
+    await checkAuth();
+
+  if(!authenticated)
+    return;
+
+  await loadData();
+
+})();
 
 </script>
 
 </body>
-
-</html>
+                   </html>
