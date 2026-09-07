@@ -11,9 +11,7 @@
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 
 <style>
-*{
-  box-sizing:border-box;
-}
+*{box-sizing:border-box}
 
 body{
   margin:0;
@@ -387,296 +385,269 @@ input[type="file"]{
 
 <header>
 
-  <div class="logo">
-    <img src="logo.png" alt="Anamigam Journal">
-    <span>ANAMIGAM JOURNAL — ADMIN</span>
-  </div>
+<div class="logo">
+<img src="logo.png" alt="Anamigam Journal">
+<span>ANAMIGAM JOURNAL — ADMIN</span>
+</div>
 
-  <div class="header-buttons">
-    <button class="theme-btn" onclick="toggleTheme()">☾</button>
-    <button class="logout" onclick="logout()">Logout</button>
-  </div>
+<div class="header-buttons">
+<button class="theme-btn" onclick="toggleTheme()">☾</button>
+<button class="logout" onclick="logout()">Logout</button>
+</div>
 
 </header>
 
-
 <main class="container">
 
-  <h1>Admin Dashboard</h1>
+<h1>Admin Dashboard</h1>
 
-  <p class="subtitle">
-    Manage your writings, e-books, achievements and journal.
-  </p>
+<p class="subtitle">
+Manage your writings, e-books, achievements and journal.
+</p>
 
-  <div id="message" class="message"></div>
+<div id="message" class="message"></div>
 
+<div class="stats">
 
-  <div class="stats">
+<div class="stat">
+Writings
+<strong id="writingCount">0</strong>
+</div>
 
-    <div class="stat">
-      Writings
-      <strong id="writingCount">0</strong>
-    </div>
+<div class="stat">
+E-books
+<strong id="ebookCount">0</strong>
+</div>
 
-    <div class="stat">
-      E-books
-      <strong id="ebookCount">0</strong>
-    </div>
+<div class="stat">
+Achievements
+<strong id="achievementCount">0</strong>
+</div>
 
-    <div class="stat">
-      Achievements
-      <strong id="achievementCount">0</strong>
-    </div>
+<div class="stat">
+Journal
+<strong id="journalCount">0</strong>
+</div>
 
-    <div class="stat">
-      Journal
-      <strong id="journalCount">0</strong>
-    </div>
+</div>
 
-  </div>
+<div class="tabs">
 
+<button class="tab active" data-type="writings">
+✍️ Writings
+</button>
 
-  <div class="tabs">
+<button class="tab" data-type="ebooks">
+📚 E-books
+</button>
 
-    <button class="tab active" data-type="writings">
-      ✍️ Writings
-    </button>
+<button class="tab" data-type="achievements">
+🏆 Achievements
+</button>
 
-    <button class="tab" data-type="ebooks">
-      📚 E-books
-    </button>
+<button class="tab" data-type="journal_posts">
+📰 Journal
+</button>
 
-    <button class="tab" data-type="achievements">
-      🏆 Achievements
-    </button>
+</div>
 
-    <button class="tab" data-type="journal_posts">
-      📰 Journal
-    </button>
+<section class="card">
 
-  </div>
+<h2 id="formTitle">Add New Content</h2>
 
+<form id="contentForm">
 
-  <!-- ADD / EDIT -->
+<input type="hidden" id="editId">
 
-  <section class="card">
+<div class="form-grid">
 
-    <h2 id="formTitle">Add New Content</h2>
+<div class="field">
 
-    <form id="contentForm">
+<label>Title</label>
 
-      <input type="hidden" id="editId">
+<input
+type="text"
+id="title"
+required
+placeholder="Enter title">
 
-      <div class="form-grid">
+</div>
 
-        <div class="field">
+<div class="field">
 
-          <label>Title</label>
+<label>Author</label>
 
-          <input
-            type="text"
-            id="title"
-            required
-            placeholder="Enter title"
-          >
+<input
+type="text"
+id="author"
+value="வி.மாதேஸ்வரன்"
+placeholder="Author">
 
-        </div>
+</div>
 
+<div class="field">
 
-        <div class="field">
+<label>Category</label>
 
-          <label>Author</label>
+<select id="category">
 
-          <input
-            type="text"
-            id="author"
-            value="வி.மாதேஸ்வரன்"
-            placeholder="Author"
-          >
+<option value="கவிதை">கவிதை</option>
+<option value="சிறுகதை">சிறுகதை</option>
+<option value="சிந்தனை">சிந்தனை</option>
+<option value="கட்டுரை">கட்டுரை</option>
+<option value="Psychology">Psychology</option>
+<option value="Self-Discovery">Self-Discovery</option>
+<option value="Other">Other</option>
 
-        </div>
+</select>
 
+</div>
 
-        <div class="field">
+<div class="field">
 
-          <label>Category</label>
+<label>Status</label>
 
-          <select id="category">
+<select id="status">
 
-            <option value="கவிதை">கவிதை</option>
-            <option value="சிறுகதை">சிறுகதை</option>
-            <option value="சிந்தனை">சிந்தனை</option>
-            <option value="கட்டுரை">கட்டுரை</option>
-            <option value="Psychology">Psychology</option>
-            <option value="Self-Discovery">Self-Discovery</option>
-            <option value="Other">Other</option>
+<option value="published">Published</option>
+<option value="draft">Draft</option>
 
-          </select>
+</select>
 
-        </div>
+</div>
 
+<div class="field full">
 
-        <div class="field">
+<label>Description / Content</label>
 
-          <label>Status</label>
+<textarea
+id="content"
+placeholder="Write your content here..."></textarea>
 
-          <select id="status">
+</div>
 
-            <option value="published">Published</option>
-            <option value="draft">Draft</option>
+<div class="field full">
 
-          </select>
+<label>📄 PDF / File Upload</label>
 
-        </div>
+<div class="upload-box">
 
+<input
+type="file"
+id="fileUpload"
+accept=".pdf,.doc,.docx,.txt">
 
-        <div class="field full">
+<button
+type="button"
+class="upload-btn"
+onclick="uploadFile()">
 
-          <label>Description / Content</label>
+⬆️ Upload File
 
-          <textarea
-            id="content"
-            placeholder="Write your content here..."
-          ></textarea>
+</button>
 
-        </div>
+<input
+type="text"
+id="fileUrl"
+class="url-field readonly"
+readonly
+placeholder="Uploaded file URL will appear here">
 
+</div>
 
-        <!-- FILE UPLOAD -->
+</div>
 
-        <div class="field full">
+<div class="field full">
 
-          <label>📄 PDF / File Upload</label>
+<label>🖼️ Cover / Image Upload</label>
 
-          <div class="upload-box">
+<div class="upload-box">
 
-            <input
-              type="file"
-              id="fileUpload"
-              accept=".pdf,.doc,.docx,.txt"
-            >
+<input
+type="file"
+id="imageUpload"
+accept="image/*">
 
-            <button
-              type="button"
-              class="upload-btn"
-              onclick="uploadFile()"
-            >
-              ⬆️ Upload File
-            </button>
+<button
+type="button"
+class="upload-btn"
+onclick="uploadImage()">
 
-            <input
-              type="text"
-              id="fileUrl"
-              class="url-field readonly"
-              readonly
-              placeholder="Uploaded file URL will appear here"
-            >
+⬆️ Upload Image
 
-          </div>
+</button>
 
-        </div>
+<input
+type="text"
+id="imageUrl"
+class="url-field readonly"
+readonly
+placeholder="Uploaded image URL will appear here">
 
+</div>
 
-        <!-- IMAGE UPLOAD -->
+</div>
 
-        <div class="field full">
+<div class="field full">
 
-          <label>🖼️ Cover / Image Upload</label>
+<label>
 
-          <div class="upload-box">
+<input
+type="checkbox"
+id="featured"
+style="width:auto;margin-right:8px;">
 
-            <input
-              type="file"
-              id="imageUpload"
-              accept="image/*"
-            >
+Featured
 
-            <button
-              type="button"
-              class="upload-btn"
-              onclick="uploadImage()"
-            >
-              ⬆️ Upload Image
-            </button>
+</label>
 
-            <input
-              type="text"
-              id="imageUrl"
-              class="url-field readonly"
-              readonly
-              placeholder="Uploaded image URL will appear here"
-            >
+</div>
 
-          </div>
+</div>
 
-        </div>
+<div class="actions">
 
+<button
+type="submit"
+class="save-btn">
 
-        <div class="field full">
+💾 Save
 
-          <label>
+</button>
 
-            <input
-              type="checkbox"
-              id="featured"
-              style="width:auto;margin-right:8px;"
-            >
+<button
+type="button"
+class="cancel-btn"
+onclick="resetForm()">
 
-            Featured
+Cancel
 
-          </label>
+</button>
 
-        </div>
+</div>
 
-      </div>
+</form>
 
+</section>
 
-      <div class="actions">
+<section class="card">
 
-        <button
-          type="submit"
-          class="save-btn"
-        >
-          💾 Save
-        </button>
+<h2>Manage Content</h2>
 
-        <button
-          type="button"
-          class="cancel-btn"
-          onclick="resetForm()"
-        >
-          Cancel
-        </button>
+<input
+type="search"
+id="search"
+placeholder="Search content..."
+style="margin-bottom:20px;">
 
-      </div>
+<div
+id="contentList"
+class="content-list">
+</div>
 
-    </form>
-
-  </section>
-
-
-  <!-- CONTENT LIST -->
-
-  <section class="card">
-
-    <h2>Manage Content</h2>
-
-    <input
-      type="search"
-      id="search"
-      placeholder="Search content..."
-      style="margin-bottom:20px;"
-    >
-
-    <div
-      id="contentList"
-      class="content-list"
-    ></div>
-
-  </section>
+</section>
 
 </main>
-
 
 <script>
 
@@ -685,29 +656,45 @@ input[type="file"]{
 ========================================= */
 
 const SUPABASE_URL =
-  'https://msgwhxeqnljmbzalnawe.supabase.co';
+'https://msgwhxeqnljmbzalnawe.supabase.co';
 
 const SUPABASE_ANON_KEY =
-  'sb_publishable_862-UtuOzY14PCtKYVvjEA_sPTK1FPd';
-
-const db =
-  window.supabase.createClient(
-    SUPABASE_URL,
-    SUPABASE_ANON_KEY
-  );
+'sb_publishable_862-UtuOzY14PCtKYVvjEA_sPTK1FPd';
 
 
 /* =========================================
-   VARIABLES
+   SUPABASE CLIENT
+   PUBLIC SCHEMA EXPLICITLY SET
 ========================================= */
 
-let currentType = 'writings';
+const db =
+window.supabase.createClient(
+SUPABASE_URL,
+SUPABASE_ANON_KEY,
+{
+db:{
+schema:'public'
+}
+}
+);
 
-const tableNames = {
-  writings: 'writings',
-  ebooks: 'ebooks',
-  achievements: 'achievements',
-  journal_posts: 'journal_posts'
+
+/* =========================================
+   TABLES
+========================================= */
+
+let currentType='writings';
+
+const tableNames={
+
+writings:'writings',
+
+ebooks:'ebooks',
+
+achievements:'achievements',
+
+journal_posts:'journal_posts'
+
 };
 
 
@@ -717,21 +704,19 @@ const tableNames = {
 
 async function checkLogin(){
 
-  const {
-    data:{
-      user
-    }
-  } = await db.auth.getUser();
+const {
+data:{user}
+}=await db.auth.getUser();
 
-  if(!user){
+if(!user){
 
-    window.location.href =
-      'admin-login.html';
+window.location.href='admin-login.html';
 
-    return false;
-  }
+return false;
+}
 
-  return true;
+return true;
+
 }
 
 
@@ -741,234 +726,212 @@ async function checkLogin(){
 
 function showMessage(text,type){
 
-  const box =
-    document.getElementById('message');
+const box=
+document.getElementById('message');
 
-  box.textContent = text;
+box.textContent=text;
 
-  box.className =
-    'message ' + type;
+box.className='message '+type;
 
-  box.style.display = 'block';
+box.style.display='block';
 
-  setTimeout(()=>{
+setTimeout(()=>{
 
-    box.style.display = 'none';
+box.style.display='none';
 
-  },4000);
+},4000);
+
 }
 
 
 /* =========================================
-   UPLOAD FILE
+   STORAGE UPLOAD
 ========================================= */
 
 async function uploadToStorage(file,type){
 
-  if(!file){
+if(!file){
 
-    throw new Error(
-      'Please choose a file first.'
-    );
+throw new Error(
+'Please choose a file first.'
+);
 
-  }
+}
 
-  const {
-    data:{
-      user
-    }
-  } = await db.auth.getUser();
+const {
+data:{user}
+}=await db.auth.getUser();
 
-  if(!user){
+if(!user){
 
-    throw new Error(
-      'Please login again.'
-    );
+throw new Error(
+'Please login again.'
+);
 
-  }
+}
 
+const safeName=
+file.name.replace(
+/[^a-zA-Z0-9._-]/g,
+'_'
+);
 
-  const safeName =
-    file.name.replace(
-      /[^a-zA-Z0-9._-]/g,
-      '_'
-    );
+const folder=
+type==='image'
+?'images'
+:'files';
 
+const filePath=
+folder+
+'/'+
+Date.now()+
+'_'+
+safeName;
 
-  const folder =
-    type === 'image'
-      ? 'images'
-      : 'files';
+const {error}=await db.storage
+.from('anamigam-files')
+.upload(
+filePath,
+file,
+{
+upsert:false
+}
+);
 
+if(error){
 
-  const filePath =
-    folder +
-    '/' +
-    Date.now() +
-    '_' +
-    safeName;
+throw error;
 
+}
 
-  const {
-    error
-  } = await db.storage
-    .from('anamigam-files')
-    .upload(
-      filePath,
-      file,
-      {
-        upsert:false
-      }
-    );
+const {data}=
+db.storage
+.from('anamigam-files')
+.getPublicUrl(filePath);
 
-
-  if(error){
-
-    throw error;
-
-  }
-
-
-  const {
-    data
-  } = db.storage
-    .from('anamigam-files')
-    .getPublicUrl(filePath);
-
-
-  return data.publicUrl;
+return data.publicUrl;
 
 }
 
 
 /* =========================================
-   PDF / FILE UPLOAD BUTTON
+   FILE UPLOAD
 ========================================= */
 
 async function uploadFile(){
 
-  const input =
-    document.getElementById(
-      'fileUpload'
-    );
+const input=
+document.getElementById(
+'fileUpload'
+);
 
-  const file =
-    input.files[0];
+const file=input.files[0];
 
-  if(!file){
+if(!file){
 
-    showMessage(
-      'Please choose a PDF / file first.',
-      'error'
-    );
+showMessage(
+'Please choose a PDF / file first.',
+'error'
+);
 
-    return;
-  }
+return;
 
+}
 
-  try{
+try{
 
-    showMessage(
-      'Uploading file...',
-      'success'
-    );
+showMessage(
+'Uploading file...',
+'success'
+);
 
+const url=
+await uploadToStorage(
+file,
+'file'
+);
 
-    const url =
-      await uploadToStorage(
-        file,
-        'file'
-      );
+document.getElementById(
+'fileUrl'
+).value=url;
 
+showMessage(
+'✅ File uploaded successfully!',
+'success'
+);
 
-    document.getElementById(
-      'fileUrl'
-    ).value = url;
+}catch(error){
 
+console.error(error);
 
-    showMessage(
-      '✅ File uploaded successfully!',
-      'success'
-    );
+showMessage(
+'❌ Upload failed: '+
+error.message,
+'error'
+);
 
-
-  }catch(error){
-
-    console.error(error);
-
-    showMessage(
-      '❌ Upload failed: ' +
-      error.message,
-      'error'
-    );
-
-  }
+}
 
 }
 
 
 /* =========================================
-   IMAGE UPLOAD BUTTON
+   IMAGE UPLOAD
 ========================================= */
 
 async function uploadImage(){
 
-  const input =
-    document.getElementById(
-      'imageUpload'
-    );
+const input=
+document.getElementById(
+'imageUpload'
+);
 
-  const file =
-    input.files[0];
+const file=input.files[0];
 
-  if(!file){
+if(!file){
 
-    showMessage(
-      'Please choose an image first.',
-      'error'
-    );
+showMessage(
+'Please choose an image first.',
+'error'
+);
 
-    return;
-  }
+return;
 
+}
 
-  try{
+try{
 
-    showMessage(
-      'Uploading image...',
-      'success'
-    );
+showMessage(
+'Uploading image...',
+'success'
+);
 
+const url=
+await uploadToStorage(
+file,
+'image'
+);
 
-    const url =
-      await uploadToStorage(
-        file,
-        'image'
-      );
+document.getElementById(
+'imageUrl'
+).value=url;
 
+showMessage(
+'✅ Image uploaded successfully!',
+'success'
+);
 
-    document.getElementById(
-      'imageUrl'
-    ).value = url;
+}catch(error){
 
+console.error(error);
 
-    showMessage(
-      '✅ Image uploaded successfully!',
-      'success'
-    );
+showMessage(
+'❌ Image upload failed: '+
+error.message,
+'error'
+);
 
-
-  }catch(error){
-
-    console.error(error);
-
-    showMessage(
-      '❌ Image upload failed: ' +
-      error.message,
-      'error'
-    );
-
-  }
+}
 
 }
 
@@ -979,129 +942,123 @@ async function uploadImage(){
 
 async function loadContent(){
 
-  const table =
-    tableNames[currentType];
+const table=
+tableNames[currentType];
 
+const {
+data,
+error
+}=await db
+.from(table)
+.select('*')
+.order(
+'created_at',
+{
+ascending:false
+}
+);
 
-  const {
-    data,
-    error
-  } = await db
-    .from(table)
-    .select('*')
-    .order(
-      'created_at',
-      {
-        ascending:false
-      }
-    );
+if(error){
 
+console.error(error);
 
-  if(error){
+showMessage(
+error.message,
+'error'
+);
 
-    console.error(error);
+return;
 
-    showMessage(
-      error.message,
-      'error'
-    );
+}
 
-    return;
-  }
-
-
-  renderContent(data || []);
+renderContent(data||[]);
 
 }
 
 
 /* =========================================
-   RENDER CONTENT
+   RENDER
 ========================================= */
 
 function renderContent(items){
 
-  const list =
-    document.getElementById(
-      'contentList'
-    );
+const list=
+document.getElementById(
+'contentList'
+);
 
+const search=
+document.getElementById(
+'search'
+).value.toLowerCase();
 
-  const search =
-    document.getElementById(
-      'search'
-    ).value
-    .toLowerCase();
+const filtered=
+items.filter(item=>{
 
+const title=
+(item.title||'').toLowerCase();
 
-  const filtered =
-    items.filter(item => {
+const category=
+(item.category||'').toLowerCase();
 
-      const title =
-        (item.title || '')
-        .toLowerCase();
+return(
+title.includes(search)||
+category.includes(search)
+);
 
-      const category =
-        (item.category || '')
-        .toLowerCase();
+});
 
-      return (
-        title.includes(search) ||
-        category.includes(search)
-      );
+if(!filtered.length){
 
-    });
+list.innerHTML=
+'<p>No content found.</p>';
 
+return;
 
-  if(!filtered.length){
+}
 
-    list.innerHTML =
-      '<p>No content found.</p>';
+list.innerHTML=
+filtered.map(item=>`
 
-    return;
-  }
+<div class="item">
 
+<div class="item-info">
 
-  list.innerHTML =
-    filtered.map(item => `
+<h3>
+${escapeHtml(item.title||'Untitled')}
+</h3>
 
-      <div class="item">
+<small>
+${escapeHtml(item.category||'')}
+•
+${escapeHtml(item.status||'')}
+</small>
 
-        <div class="item-info">
+</div>
 
-          <h3>
-            ${escapeHtml(item.title || 'Untitled')}
-          </h3>
+<div class="item-actions">
 
-          <small>
-            ${escapeHtml(item.category || '')}
-            •
-            ${escapeHtml(item.status || '')}
-          </small>
+<button
+class="edit-btn"
+onclick="editContent('${item.id}')">
 
-        </div>
+Edit
 
-        <div class="item-actions">
+</button>
 
-          <button
-            class="edit-btn"
-            onclick="editContent('${item.id}')"
-          >
-            Edit
-          </button>
+<button
+class="delete-btn"
+onclick="deleteContent('${item.id}')">
 
-          <button
-            class="delete-btn"
-            onclick="deleteContent('${item.id}')"
-          >
-            Delete
-          </button>
+Delete
 
-        </div>
+</button>
 
-      </div>
+</div>
 
-    `).join('');
+</div>
+
+`).join('');
 
 }
 
@@ -1112,214 +1069,190 @@ function renderContent(items){
 
 function escapeHtml(value){
 
-  return String(value)
-    .replace(/&/g,'&amp;')
-    .replace(/</g,'&lt;')
-    .replace(/>/g,'&gt;')
-    .replace(/"/g,'&quot;')
-    .replace(/'/g,'&#039;');
+return String(value)
+.replace(/&/g,'&amp;')
+.replace(/</g,'&lt;')
+.replace(/>/g,'&gt;')
+.replace(/"/g,'&quot;')
+.replace(/'/g,'&#039;');
 
 }
 
 
 /* =========================================
-   SAVE CONTENT
+   SAVE
 ========================================= */
 
 document
-  .getElementById('contentForm')
-  .addEventListener(
-    'submit',
-    async function(e){
+.getElementById('contentForm')
+.addEventListener(
+'submit',
+async function(e){
 
-      e.preventDefault();
+e.preventDefault();
 
+const table=
+tableNames[currentType];
 
-      const table =
-        tableNames[currentType];
+const id=
+document.getElementById(
+'editId'
+).value;
 
+const baseData={
 
-      const id =
-        document.getElementById(
-          'editId'
-        ).value;
+title:
+document.getElementById(
+'title'
+).value.trim(),
 
+author:
+document.getElementById(
+'author'
+).value.trim(),
 
-      const baseData = {
+category:
+document.getElementById(
+'category'
+).value,
 
-        title:
-          document.getElementById(
-            'title'
-          ).value.trim(),
+status:
+document.getElementById(
+'status'
+).value,
 
-        author:
-          document.getElementById(
-            'author'
-          ).value.trim(),
+featured:
+document.getElementById(
+'featured'
+).checked
 
-        category:
-          document.getElementById(
-            'category'
-          ).value,
+};
 
-        status:
-          document.getElementById(
-            'status'
-          ).value,
 
-        featured:
-          document.getElementById(
-            'featured'
-          ).checked
+if(
+currentType==='writings'||
+currentType==='journal_posts'
+){
 
-      };
+baseData.content=
+document.getElementById(
+'content'
+).value;
 
+}
 
-      /* CONTENT FIELD */
 
-      if(
-        currentType === 'writings' ||
-        currentType === 'journal_posts'
-      ){
+if(
+currentType==='ebooks'||
+currentType==='achievements'
+){
 
-        baseData.content =
-          document.getElementById(
-            'content'
-          ).value;
+baseData.description=
+document.getElementById(
+'content'
+).value;
 
-      }
+}
 
 
-      /* EBOOK DESCRIPTION */
+if(currentType==='ebooks'){
 
-      if(
-        currentType === 'ebooks' ||
-        currentType === 'achievements'
-      ){
+baseData.file_url=
+document.getElementById(
+'fileUrl'
+).value.trim();
 
-        baseData.description =
-          document.getElementById(
-            'content'
-          ).value;
+baseData.cover_url=
+document.getElementById(
+'imageUrl'
+).value.trim();
 
-      }
+}
 
 
-      /* FILE URL */
+if(currentType==='achievements'){
 
-      if(
-        currentType === 'ebooks'
-      ){
+baseData.file_url=
+document.getElementById(
+'fileUrl'
+).value.trim();
 
-        baseData.file_url =
-          document.getElementById(
-            'fileUrl'
-          ).value.trim();
+baseData.image_url=
+document.getElementById(
+'imageUrl'
+).value.trim();
 
-        baseData.cover_url =
-          document.getElementById(
-            'imageUrl'
-          ).value.trim();
+}
 
-      }
 
+if(currentType==='writings'){
 
-      /* ACHIEVEMENT */
+baseData.cover_url=
+document.getElementById(
+'imageUrl'
+).value.trim();
 
-      if(
-        currentType === 'achievements'
-      ){
+}
 
-        baseData.file_url =
-          document.getElementById(
-            'fileUrl'
-          ).value.trim();
 
-        baseData.image_url =
-          document.getElementById(
-            'imageUrl'
-          ).value.trim();
+if(currentType==='journal_posts'){
 
-      }
+baseData.cover_url=
+document.getElementById(
+'imageUrl'
+).value.trim();
 
+}
 
-      /* WRITINGS */
 
-      if(
-        currentType === 'writings'
-      ){
+let result;
 
-        baseData.cover_url =
-          document.getElementById(
-            'imageUrl'
-          ).value.trim();
+if(id){
 
-      }
+result=
+await db
+.from(table)
+.update(baseData)
+.eq('id',id);
 
+}else{
 
-      /* JOURNAL */
+result=
+await db
+.from(table)
+.insert(baseData);
 
-      if(
-        currentType === 'journal_posts'
-      ){
+}
 
-        baseData.cover_url =
-          document.getElementById(
-            'imageUrl'
-          ).value.trim();
 
-      }
+if(result.error){
 
+console.error(result.error);
 
-      let result;
+showMessage(
+'❌ Save failed: '+
+result.error.message,
+'error'
+);
 
+return;
 
-      if(id){
+}
 
-        result =
-          await db
-            .from(table)
-            .update(baseData)
-            .eq('id',id);
 
-      }else{
+showMessage(
+'✅ Saved successfully!',
+'success'
+);
 
-        result =
-          await db
-            .from(table)
-            .insert(baseData);
+resetForm();
 
-      }
+await loadContent();
 
+await loadStats();
 
-      if(result.error){
-
-        console.error(result.error);
-
-        showMessage(
-          '❌ Save failed: ' +
-          result.error.message,
-          'error'
-        );
-
-        return;
-      }
-
-
-      showMessage(
-        '✅ Saved successfully!',
-        'success'
-      );
-
-
-      resetForm();
-
-      loadContent();
-
-      loadStats();
-
-    }
-  );
+}
+);
 
 
 /* =========================================
@@ -1328,98 +1261,82 @@ document
 
 async function editContent(id){
 
-  const table =
-    tableNames[currentType];
+const table=
+tableNames[currentType];
 
+const {
+data,
+error
+}=await db
+.from(table)
+.select('*')
+.eq('id',id)
+.single();
 
-  const {
-    data,
-    error
-  } = await db
-    .from(table)
-    .select('*')
-    .eq('id',id)
-    .single();
+if(error){
 
+showMessage(
+error.message,
+'error'
+);
 
-  if(error){
+return;
 
-    showMessage(
-      error.message,
-      'error'
-    );
+}
 
-    return;
-  }
+document.getElementById(
+'editId'
+).value=data.id;
 
+document.getElementById(
+'title'
+).value=data.title||'';
 
-  document.getElementById(
-    'editId'
-  ).value = data.id;
+document.getElementById(
+'author'
+).value=data.author||'';
 
+document.getElementById(
+'category'
+).value=data.category||'Other';
 
-  document.getElementById(
-    'title'
-  ).value =
-    data.title || '';
+document.getElementById(
+'status'
+).value=data.status||'published';
 
+document.getElementById(
+'content'
+).value=
+data.content||
+data.description||
+'';
 
-  document.getElementById(
-    'author'
-  ).value =
-    data.author || '';
+document.getElementById(
+'featured'
+).checked=
+!!data.featured;
 
+document.getElementById(
+'fileUrl'
+).value=
+data.file_url||'';
 
-  document.getElementById(
-    'category'
-  ).value =
-    data.category || 'Other';
+document.getElementById(
+'imageUrl'
+).value=
+data.cover_url||
+data.image_url||
+'';
 
+document.getElementById(
+'formTitle'
+).textContent=
+'Edit Content';
 
-  document.getElementById(
-    'status'
-  ).value =
-    data.status || 'published';
-
-
-  document.getElementById(
-    'content'
-  ).value =
-    data.content ||
-    data.description ||
-    '';
-
-
-  document.getElementById(
-    'featured'
-  ).checked =
-    !!data.featured;
-
-
-  document.getElementById(
-    'fileUrl'
-  ).value =
-    data.file_url || '';
-
-
-  document.getElementById(
-    'imageUrl'
-  ).value =
-    data.cover_url ||
-    data.image_url ||
-    '';
-
-
-  document.getElementById(
-    'formTitle'
-  ).textContent =
-    'Edit Content';
-
-
-  window.scrollTo({
-    top:0,
-    behavior:'smooth'
-  });
+window.scrollTo({
+top:0,
+behavior:'smooth'
+});
 
 }
 
@@ -1430,92 +1347,77 @@ async function editContent(id){
 
 async function deleteContent(id){
 
-  if(
-    !confirm(
-      'இந்த content-ஐ delete செய்யவா?'
-    )
-  ){
+if(!confirm(
+'இந்த content-ஐ delete செய்யவா?'
+)){
 
-    return;
+return;
 
-  }
+}
 
+const table=
+tableNames[currentType];
 
-  const table =
-    tableNames[currentType];
+const {error}=
+await db
+.from(table)
+.delete()
+.eq('id',id);
 
+if(error){
 
-  const {
-    error
-  } = await db
-    .from(table)
-    .delete()
-    .eq('id',id);
+showMessage(
+'❌ Delete failed: '+
+error.message,
+'error'
+);
 
+return;
 
-  if(error){
+}
 
-    showMessage(
-      '❌ Delete failed: ' +
-      error.message,
-      'error'
-    );
+showMessage(
+'✅ Deleted successfully!',
+'success'
+);
 
-    return;
-  }
+await loadContent();
 
-
-  showMessage(
-    '✅ Deleted successfully!',
-    'success'
-  );
-
-
-  loadContent();
-
-  loadStats();
+await loadStats();
 
 }
 
 
 /* =========================================
-   RESET FORM
+   RESET
 ========================================= */
 
 function resetForm(){
 
-  document
-    .getElementById(
-      'contentForm'
-    )
-    .reset();
+document
+.getElementById('contentForm')
+.reset();
 
+document.getElementById(
+'editId'
+).value='';
 
-  document.getElementById(
-    'editId'
-  ).value = '';
+document.getElementById(
+'author'
+).value='வி.மாதேஸ்வரன்';
 
+document.getElementById(
+'formTitle'
+).textContent=
+'Add New Content';
 
-  document.getElementById(
-    'author'
-  ).value =
-    'வி.மாதேஸ்வரன்';
+document.getElementById(
+'fileUrl'
+).value='';
 
-
-  document.getElementById(
-    'formTitle'
-  ).textContent =
-    'Add New Content';
-
-
-  document.getElementById(
-    'fileUrl'
-  ).value = '';
-
-
-  document.getElementById(
-    'imageUrl'
-  ).value = '';
+document.getElementById(
+'imageUrl'
+).value='';
 
 }
 
@@ -1525,39 +1427,32 @@ function resetForm(){
 ========================================= */
 
 document
-  .querySelectorAll('.tab')
-  .forEach(button => {
+.querySelectorAll('.tab')
+.forEach(button=>{
 
-    button.addEventListener(
-      'click',
-      function(){
+button.addEventListener(
+'click',
+function(){
 
-        document
-          .querySelectorAll('.tab')
-          .forEach(b =>
-            b.classList.remove(
-              'active'
-            )
-          );
+document
+.querySelectorAll('.tab')
+.forEach(b=>
+b.classList.remove('active')
+);
 
+this.classList.add('active');
 
-        this.classList.add(
-          'active'
-        );
+currentType=
+this.dataset.type;
 
+resetForm();
 
-        currentType =
-          this.dataset.type;
+loadContent();
 
+}
+);
 
-        resetForm();
-
-        loadContent();
-
-      }
-    );
-
-  });
+});
 
 
 /* =========================================
@@ -1565,11 +1460,11 @@ document
 ========================================= */
 
 document
-  .getElementById('search')
-  .addEventListener(
-    'input',
-    loadContent
-  );
+.getElementById('search')
+.addEventListener(
+'input',
+loadContent
+);
 
 
 /* =========================================
@@ -1578,42 +1473,34 @@ document
 
 async function loadStats(){
 
-  for(
-    const type of Object.keys(
-      tableNames
-    )
-  ){
+for(
+const type of Object.keys(tableNames)
+){
 
-    const {
-      count
-    } = await db
-      .from(
-        tableNames[type]
-      )
-      .select(
-        '*',
-        {
-          count:'exact',
-          head:true
-        }
-      );
+const {count}=
+await db
+.from(tableNames[type])
+.select(
+'*',
+{
+count:'exact',
+head:true
+}
+);
 
+const id=
+type==='writings'
+?'writingCount'
+:type==='ebooks'
+?'ebookCount'
+:type==='achievements'
+?'achievementCount'
+:'journalCount';
 
-    const id =
-      type === 'writings'
-        ? 'writingCount'
-        : type === 'ebooks'
-        ? 'ebookCount'
-        : type === 'achievements'
-        ? 'achievementCount'
-        : 'journalCount';
+document.getElementById(id)
+.textContent=count||0;
 
-
-    document.getElementById(id)
-      .textContent =
-        count || 0;
-
-  }
+}
 
 }
 
@@ -1624,32 +1511,28 @@ async function loadStats(){
 
 function toggleTheme(){
 
-  document.body
-    .classList
-    .toggle('dark');
+document.body
+.classList
+.toggle('dark');
 
-
-  localStorage.setItem(
-    'anamigam-theme',
-    document.body.classList.contains(
-      'dark'
-    )
-      ? 'dark'
-      : 'light'
-  );
+localStorage.setItem(
+'anamigam-theme',
+document.body.classList.contains('dark')
+?'dark'
+:'light'
+);
 
 }
 
-
 if(
-  localStorage.getItem(
-    'anamigam-theme'
-  ) === 'dark'
+localStorage.getItem(
+'anamigam-theme'
+)==='dark'
 ){
 
-  document.body
-    .classList
-    .add('dark');
+document.body
+.classList
+.add('dark');
 
 }
 
@@ -1660,10 +1543,10 @@ if(
 
 async function logout(){
 
-  await db.auth.signOut();
+await db.auth.signOut();
 
-  window.location.href =
-    'admin-login.html';
+window.location.href=
+'admin-login.html';
 
 }
 
@@ -1674,16 +1557,14 @@ async function logout(){
 
 (async function(){
 
-  const loggedIn =
-    await checkLogin();
+const loggedIn=
+await checkLogin();
 
+if(!loggedIn)return;
 
-  if(!loggedIn) return;
+await loadContent();
 
-
-  await loadContent();
-
-  await loadStats();
+await loadStats();
 
 })();
 
