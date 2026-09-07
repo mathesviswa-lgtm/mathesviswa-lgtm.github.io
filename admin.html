@@ -581,8 +581,8 @@ onclick="uploadImage()">
 type="text"
 id="imageUrl"
 class="url-field readonly"
-readonly
-placeholder="Uploaded image URL will appear here">
+placeholder="Uploaded image URL will appear here"
+readonly>
 
 </div>
 
@@ -658,24 +658,45 @@ class="content-list">
 const SUPABASE_URL =
   'https://tscmbnaystpjioflkeey.supabase.co';
 
+
+/*
+  IMPORTANT:
+  Paste the Publishable Key from the SAME
+  tscmbnaystpjioflkeey Supabase project here.
+*/
+
 const SUPABASE_ANON_KEY =
   'msgwhxeqnljmbzalnawe';
 
 
 /* =========================================
    SUPABASE CLIENT
-   PUBLIC SCHEMA EXPLICITLY SET
 ========================================= */
+
+if(
+  !window.supabase ||
+  typeof window.supabase.createClient !== 'function'
+){
+
+  alert(
+    'Supabase library failed to load. Please refresh.'
+  );
+
+  throw new Error(
+    'Supabase library unavailable'
+  );
+
+}
 
 const db =
 window.supabase.createClient(
-SUPABASE_URL,
-SUPABASE_ANON_KEY,
-{
-db:{
-schema:'public'
-}
-}
+  SUPABASE_URL,
+  SUPABASE_ANON_KEY,
+  {
+    db:{
+      schema:'public'
+    }
+  }
 );
 
 
@@ -687,13 +708,13 @@ let currentType='writings';
 
 const tableNames={
 
-writings:'writings',
+  writings:'writings',
 
-ebooks:'ebooks',
+  ebooks:'ebooks',
 
-achievements:'achievements',
+  achievements:'achievements',
 
-journal_posts:'journal_posts'
+  journal_posts:'journal_posts'
 
 };
 
@@ -704,18 +725,35 @@ journal_posts:'journal_posts'
 
 async function checkLogin(){
 
-const {
-data:{user}
-}=await db.auth.getUser();
+  const {
+    data:{user},
+    error
+  } = await db.auth.getUser();
 
-if(!user){
+  if(error){
 
-window.location.href='admin-login.html';
+    console.error(
+      'Auth error:',
+      error
+    );
 
-return false;
-}
+    window.location.href =
+      'admin-login.html';
 
-return true;
+    return false;
+
+  }
+
+  if(!user){
+
+    window.location.href =
+      'admin-login.html';
+
+    return false;
+
+  }
+
+  return true;
 
 }
 
@@ -726,20 +764,23 @@ return true;
 
 function showMessage(text,type){
 
-const box=
-document.getElementById('message');
+  const box =
+    document.getElementById('message');
 
-box.textContent=text;
+  box.textContent = text;
 
-box.className='message '+type;
+  box.className =
+    'message '+type;
 
-box.style.display='block';
+  box.style.display =
+    'block';
 
-setTimeout(()=>{
+  setTimeout(()=>{
 
-box.style.display='none';
+    box.style.display =
+      'none';
 
-},4000);
+  },4000);
 
 }
 
@@ -750,66 +791,79 @@ box.style.display='none';
 
 async function uploadToStorage(file,type){
 
-if(!file){
+  if(!file){
 
-throw new Error(
-'Please choose a file first.'
-);
+    throw new Error(
+      'Please choose a file first.'
+    );
 
-}
+  }
 
-const {
-data:{user}
-}=await db.auth.getUser();
+  const {
+    data:{user},
+    error:authError
+  } =
+    await db.auth.getUser();
 
-if(!user){
+  if(authError){
 
-throw new Error(
-'Please login again.'
-);
+    throw authError;
 
-}
+  }
 
-const safeName=
-file.name.replace(
-/[^a-zA-Z0-9._-]/g,
-'_'
-);
+  if(!user){
 
-const folder=
-type==='image'
-?'images'
-:'files';
+    throw new Error(
+      'Please login again.'
+    );
 
-const filePath=
-folder+
-'/'+
-Date.now()+
-'_'+
-safeName;
+  }
 
-const {error}=await db.storage
-.from('anamigam-files')
-.upload(
-filePath,
-file,
-{
-upsert:false
-}
-);
+  const safeName =
+    file.name.replace(
+      /[^a-zA-Z0-9._-]/g,
+      '_'
+    );
 
-if(error){
+  const folder =
+    type === 'image'
+      ? 'images'
+      : 'files';
 
-throw error;
+  const filePath =
+    folder +
+    '/' +
+    Date.now() +
+    '_' +
+    safeName;
 
-}
+  const {
+    error
+  } =
+    await db.storage
+      .from('anamigam-files')
+      .upload(
+        filePath,
+        file,
+        {
+          upsert:false
+        }
+      );
 
-const {data}=
-db.storage
-.from('anamigam-files')
-.getPublicUrl(filePath);
+  if(error){
 
-return data.publicUrl;
+    throw error;
+
+  }
+
+  const {
+    data
+  } =
+    db.storage
+      .from('anamigam-files')
+      .getPublicUrl(filePath);
+
+  return data.publicUrl;
 
 }
 
@@ -820,57 +874,58 @@ return data.publicUrl;
 
 async function uploadFile(){
 
-const input=
-document.getElementById(
-'fileUpload'
-);
+  const input =
+    document.getElementById(
+      'fileUpload'
+    );
 
-const file=input.files[0];
+  const file =
+    input.files[0];
 
-if(!file){
+  if(!file){
 
-showMessage(
-'Please choose a PDF / file first.',
-'error'
-);
+    showMessage(
+      'Please choose a PDF / file first.',
+      'error'
+    );
 
-return;
+    return;
 
-}
+  }
 
-try{
+  try{
 
-showMessage(
-'Uploading file...',
-'success'
-);
+    showMessage(
+      'Uploading file...',
+      'success'
+    );
 
-const url=
-await uploadToStorage(
-file,
-'file'
-);
+    const url =
+      await uploadToStorage(
+        file,
+        'file'
+      );
 
-document.getElementById(
-'fileUrl'
-).value=url;
+    document.getElementById(
+      'fileUrl'
+    ).value = url;
 
-showMessage(
-'✅ File uploaded successfully!',
-'success'
-);
+    showMessage(
+      '✅ File uploaded successfully!',
+      'success'
+    );
 
-}catch(error){
+  }catch(error){
 
-console.error(error);
+    console.error(error);
 
-showMessage(
-'❌ Upload failed: '+
-error.message,
-'error'
-);
+    showMessage(
+      '❌ Upload failed: ' +
+      error.message,
+      'error'
+    );
 
-}
+  }
 
 }
 
@@ -881,57 +936,58 @@ error.message,
 
 async function uploadImage(){
 
-const input=
-document.getElementById(
-'imageUpload'
-);
+  const input =
+    document.getElementById(
+      'imageUpload'
+    );
 
-const file=input.files[0];
+  const file =
+    input.files[0];
 
-if(!file){
+  if(!file){
 
-showMessage(
-'Please choose an image first.',
-'error'
-);
+    showMessage(
+      'Please choose an image first.',
+      'error'
+    );
 
-return;
+    return;
 
-}
+  }
 
-try{
+  try{
 
-showMessage(
-'Uploading image...',
-'success'
-);
+    showMessage(
+      'Uploading image...',
+      'success'
+    );
 
-const url=
-await uploadToStorage(
-file,
-'image'
-);
+    const url =
+      await uploadToStorage(
+        file,
+        'image'
+      );
 
-document.getElementById(
-'imageUrl'
-).value=url;
+    document.getElementById(
+      'imageUrl'
+    ).value = url;
 
-showMessage(
-'✅ Image uploaded successfully!',
-'success'
-);
+    showMessage(
+      '✅ Image uploaded successfully!',
+      'success'
+    );
 
-}catch(error){
+  }catch(error){
 
-console.error(error);
+    console.error(error);
 
-showMessage(
-'❌ Image upload failed: '+
-error.message,
-'error'
-);
+    showMessage(
+      '❌ Image upload failed: ' +
+      error.message,
+      'error'
+    );
 
-}
+  }
 
 }
 
@@ -942,36 +998,40 @@ error.message,
 
 async function loadContent(){
 
-const table=
-tableNames[currentType];
+  const table =
+    tableNames[currentType];
 
-const {
-data,
-error
-}=await db
-.from(table)
-.select('*')
-.order(
-'created_at',
-{
-ascending:false
-}
-);
+  const {
+    data,
+    error
+  } =
+    await db
+      .from(table)
+      .select('*')
+      .order(
+        'created_at',
+        {
+          ascending:false
+        }
+      );
 
-if(error){
+  if(error){
 
-console.error(error);
+    console.error(error);
 
-showMessage(
-error.message,
-'error'
-);
+    showMessage(
+      '❌ Load failed: ' +
+      error.message,
+      'error'
+    );
 
-return;
+    return;
 
-}
+  }
 
-renderContent(data||[]);
+  renderContent(
+    data || []
+  );
 
 }
 
@@ -982,83 +1042,91 @@ renderContent(data||[]);
 
 function renderContent(items){
 
-const list=
-document.getElementById(
-'contentList'
-);
+  const list =
+    document.getElementById(
+      'contentList'
+    );
 
-const search=
-document.getElementById(
-'search'
-).value.toLowerCase();
+  const search =
+    document.getElementById(
+      'search'
+    ).value.toLowerCase();
 
-const filtered=
-items.filter(item=>{
+  const filtered =
+    items.filter(item=>{
 
-const title=
-(item.title||'').toLowerCase();
+      const title =
+        (item.title || '')
+          .toLowerCase();
 
-const category=
-(item.category||'').toLowerCase();
+      const category =
+        (item.category || '')
+          .toLowerCase();
 
-return(
-title.includes(search)||
-category.includes(search)
-);
+      return(
+        title.includes(search) ||
+        category.includes(search)
+      );
 
-});
+    });
 
-if(!filtered.length){
+  if(!filtered.length){
 
-list.innerHTML=
-'<p>No content found.</p>';
+    list.innerHTML =
+      '<p>No content found.</p>';
 
-return;
+    return;
 
-}
+  }
 
-list.innerHTML=
-filtered.map(item=>`
+  list.innerHTML =
+    filtered.map(item=>`
 
-<div class="item">
+      <div class="item">
 
-<div class="item-info">
+        <div class="item-info">
 
-<h3>
-${escapeHtml(item.title||'Untitled')}
-</h3>
+          <h3>
+            ${escapeHtml(
+              item.title || 'Untitled'
+            )}
+          </h3>
 
-<small>
-${escapeHtml(item.category||'')}
-•
-${escapeHtml(item.status||'')}
-</small>
+          <small>
+            ${escapeHtml(
+              item.category || ''
+            )}
+            •
+            ${escapeHtml(
+              item.status || ''
+            )}
+          </small>
 
-</div>
+        </div>
 
-<div class="item-actions">
+        <div class="item-actions">
 
-<button
-class="edit-btn"
-onclick="editContent('${item.id}')">
+          <button
+            class="edit-btn"
+            onclick="editContent('${item.id}')">
 
-Edit
+            Edit
 
-</button>
+          </button>
 
-<button
-class="delete-btn"
-onclick="deleteContent('${item.id}')">
+          <button
+            class="delete-btn"
+            onclick="deleteContent('${item.id}')">
 
-Delete
+            Delete
 
-</button>
+          </button>
 
-</div>
+        </div>
 
-</div>
+      </div>
 
-`).join('');
+    `).join('');
 
 }
 
@@ -1069,12 +1137,17 @@ Delete
 
 function escapeHtml(value){
 
-return String(value)
-.replace(/&/g,'&amp;')
-.replace(/</g,'&lt;')
-.replace(/>/g,'&gt;')
-.replace(/"/g,'&quot;')
-.replace(/'/g,'&#039;');
+  return String(value)
+
+    .replace(/&/g,'&amp;')
+
+    .replace(/</g,'&lt;')
+
+    .replace(/>/g,'&gt;')
+
+    .replace(/"/g,'&quot;')
+
+    .replace(/'/g,'&#039;');
 
 }
 
@@ -1086,172 +1159,175 @@ return String(value)
 document
 .getElementById('contentForm')
 .addEventListener(
-'submit',
-async function(e){
+  'submit',
+  async function(e){
 
-e.preventDefault();
+    e.preventDefault();
 
-const table=
-tableNames[currentType];
+    const table =
+      tableNames[currentType];
 
-const id=
-document.getElementById(
-'editId'
-).value;
+    const id =
+      document.getElementById(
+        'editId'
+      ).value;
 
-const baseData={
+    const baseData={
 
-title:
-document.getElementById(
-'title'
-).value.trim(),
+      title:
+        document.getElementById(
+          'title'
+        ).value.trim(),
 
-author:
-document.getElementById(
-'author'
-).value.trim(),
+      author:
+        document.getElementById(
+          'author'
+        ).value.trim(),
 
-category:
-document.getElementById(
-'category'
-).value,
+      category:
+        document.getElementById(
+          'category'
+        ).value,
 
-status:
-document.getElementById(
-'status'
-).value,
+      status:
+        document.getElementById(
+          'status'
+        ).value,
 
-featured:
-document.getElementById(
-'featured'
-).checked
+      featured:
+        document.getElementById(
+          'featured'
+        ).checked
 
-};
-
-
-if(
-currentType==='writings'||
-currentType==='journal_posts'
-){
-
-baseData.content=
-document.getElementById(
-'content'
-).value;
-
-}
+    };
 
 
-if(
-currentType==='ebooks'||
-currentType==='achievements'
-){
+    if(
+      currentType === 'writings' ||
+      currentType === 'journal_posts'
+    ){
 
-baseData.description=
-document.getElementById(
-'content'
-).value;
+      baseData.content =
+        document.getElementById(
+          'content'
+        ).value;
 
-}
-
-
-if(currentType==='ebooks'){
-
-baseData.file_url=
-document.getElementById(
-'fileUrl'
-).value.trim();
-
-baseData.cover_url=
-document.getElementById(
-'imageUrl'
-).value.trim();
-
-}
+    }
 
 
-if(currentType==='achievements'){
+    if(
+      currentType === 'ebooks' ||
+      currentType === 'achievements'
+    ){
 
-baseData.file_url=
-document.getElementById(
-'fileUrl'
-).value.trim();
+      baseData.description =
+        document.getElementById(
+          'content'
+        ).value;
 
-baseData.image_url=
-document.getElementById(
-'imageUrl'
-).value.trim();
-
-}
+    }
 
 
-if(currentType==='writings'){
+    if(currentType === 'ebooks'){
 
-baseData.cover_url=
-document.getElementById(
-'imageUrl'
-).value.trim();
+      baseData.file_url =
+        document.getElementById(
+          'fileUrl'
+        ).value.trim();
 
-}
+      baseData.cover_url =
+        document.getElementById(
+          'imageUrl'
+        ).value.trim();
 
-
-if(currentType==='journal_posts'){
-
-baseData.cover_url=
-document.getElementById(
-'imageUrl'
-).value.trim();
-
-}
+    }
 
 
-let result;
+    if(currentType === 'achievements'){
 
-if(id){
+      baseData.file_url =
+        document.getElementById(
+          'fileUrl'
+        ).value.trim();
 
-result=
-await db
-.from(table)
-.update(baseData)
-.eq('id',id);
+      baseData.image_url =
+        document.getElementById(
+          'imageUrl'
+        ).value.trim();
 
-}else{
-
-result=
-await db
-.from(table)
-.insert(baseData);
-
-}
+    }
 
 
-if(result.error){
+    if(currentType === 'writings'){
 
-console.error(result.error);
+      baseData.cover_url =
+        document.getElementById(
+          'imageUrl'
+        ).value.trim();
 
-showMessage(
-'❌ Save failed: '+
-result.error.message,
-'error'
-);
-
-return;
-
-}
+    }
 
 
-showMessage(
-'✅ Saved successfully!',
-'success'
-);
+    if(currentType === 'journal_posts'){
 
-resetForm();
+      baseData.cover_url =
+        document.getElementById(
+          'imageUrl'
+        ).value.trim();
 
-await loadContent();
+    }
 
-await loadStats();
 
-}
+    let result;
+
+
+    if(id){
+
+      result =
+        await db
+          .from(table)
+          .update(baseData)
+          .eq('id',id);
+
+    }else{
+
+      result =
+        await db
+          .from(table)
+          .insert(baseData);
+
+    }
+
+
+    if(result.error){
+
+      console.error(
+        result.error
+      );
+
+      showMessage(
+        '❌ Save failed: ' +
+        result.error.message,
+        'error'
+      );
+
+      return;
+
+    }
+
+
+    showMessage(
+      '✅ Saved successfully!',
+      'success'
+    );
+
+    resetForm();
+
+    await loadContent();
+
+    await loadStats();
+
+  }
 );
 
 
@@ -1261,82 +1337,89 @@ await loadStats();
 
 async function editContent(id){
 
-const table=
-tableNames[currentType];
+  const table =
+    tableNames[currentType];
 
-const {
-data,
-error
-}=await db
-.from(table)
-.select('*')
-.eq('id',id)
-.single();
+  const {
+    data,
+    error
+  } =
+    await db
+      .from(table)
+      .select('*')
+      .eq('id',id)
+      .single();
 
-if(error){
+  if(error){
 
-showMessage(
-error.message,
-'error'
-);
+    showMessage(
+      error.message,
+      'error'
+    );
 
-return;
+    return;
 
-}
+  }
 
-document.getElementById(
-'editId'
-).value=data.id;
 
-document.getElementById(
-'title'
-).value=data.title||'';
+  document.getElementById(
+    'editId'
+  ).value =
+    data.id;
 
-document.getElementById(
-'author'
-).value=data.author||'';
+  document.getElementById(
+    'title'
+  ).value =
+    data.title || '';
 
-document.getElementById(
-'category'
-).value=data.category||'Other';
+  document.getElementById(
+    'author'
+  ).value =
+    data.author || '';
 
-document.getElementById(
-'status'
-).value=data.status||'published';
+  document.getElementById(
+    'category'
+  ).value =
+    data.category || 'Other';
 
-document.getElementById(
-'content'
-).value=
-data.content||
-data.description||
-'';
+  document.getElementById(
+    'status'
+  ).value =
+    data.status || 'published';
 
-document.getElementById(
-'featured'
-).checked=
-!!data.featured;
+  document.getElementById(
+    'content'
+  ).value =
+    data.content ||
+    data.description ||
+    '';
 
-document.getElementById(
-'fileUrl'
-).value=
-data.file_url||'';
+  document.getElementById(
+    'featured'
+  ).checked =
+    !!data.featured;
 
-document.getElementById(
-'imageUrl'
-).value=
-data.cover_url||
-data.image_url||
-'';
+  document.getElementById(
+    'fileUrl'
+  ).value =
+    data.file_url || '';
 
-document.getElementById(
-'formTitle'
-).textContent=
-'Edit Content';
+  document.getElementById(
+    'imageUrl'
+  ).value =
+    data.cover_url ||
+    data.image_url ||
+    '';
 
-window.scrollTo({
-top:0,
-behavior:'smooth'
-});
+  document.getElementById(
+    'formTitle'
+  ).textContent =
+    'Edit Content';
+
+  window.scrollTo({
+    top:0,
+    behavior:'smooth'
+  });
 
 }
 
@@ -1347,43 +1430,45 @@ behavior:'smooth'
 
 async function deleteContent(id){
 
-if(!confirm(
-'இந்த content-ஐ delete செய்யவா?'
-)){
+  if(!confirm(
+    'இந்த content-ஐ delete செய்யவா?'
+  )){
 
-return;
+    return;
 
-}
+  }
 
-const table=
-tableNames[currentType];
+  const table =
+    tableNames[currentType];
 
-const {error}=
-await db
-.from(table)
-.delete()
-.eq('id',id);
+  const {
+    error
+  } =
+    await db
+      .from(table)
+      .delete()
+      .eq('id',id);
 
-if(error){
+  if(error){
 
-showMessage(
-'❌ Delete failed: '+
-error.message,
-'error'
-);
+    showMessage(
+      '❌ Delete failed: ' +
+      error.message,
+      'error'
+    );
 
-return;
+    return;
 
-}
+  }
 
-showMessage(
-'✅ Deleted successfully!',
-'success'
-);
+  showMessage(
+    '✅ Deleted successfully!',
+    'success'
+  );
 
-await loadContent();
+  await loadContent();
 
-await loadStats();
+  await loadStats();
 
 }
 
@@ -1394,30 +1479,32 @@ await loadStats();
 
 function resetForm(){
 
-document
-.getElementById('contentForm')
-.reset();
+  document
+    .getElementById(
+      'contentForm'
+    )
+    .reset();
 
-document.getElementById(
-'editId'
-).value='';
+  document.getElementById(
+    'editId'
+  ).value='';
 
-document.getElementById(
-'author'
-).value='வி.மாதேஸ்வரன்';
+  document.getElementById(
+    'author'
+  ).value='வி.மாதேஸ்வரன்';
 
-document.getElementById(
-'formTitle'
-).textContent=
-'Add New Content';
+  document.getElementById(
+    'formTitle'
+  ).textContent =
+    'Add New Content';
 
-document.getElementById(
-'fileUrl'
-).value='';
+  document.getElementById(
+    'fileUrl'
+  ).value='';
 
-document.getElementById(
-'imageUrl'
-).value='';
+  document.getElementById(
+    'imageUrl'
+  ).value='';
 
 }
 
@@ -1430,27 +1517,31 @@ document
 .querySelectorAll('.tab')
 .forEach(button=>{
 
-button.addEventListener(
-'click',
-function(){
+  button.addEventListener(
+    'click',
+    function(){
 
-document
-.querySelectorAll('.tab')
-.forEach(b=>
-b.classList.remove('active')
-);
+      document
+        .querySelectorAll('.tab')
+        .forEach(b=>
+          b.classList.remove(
+            'active'
+          )
+        );
 
-this.classList.add('active');
+      this.classList.add(
+        'active'
+      );
 
-currentType=
-this.dataset.type;
+      currentType =
+        this.dataset.type;
 
-resetForm();
+      resetForm();
 
-loadContent();
+      loadContent();
 
-}
-);
+    }
+  );
 
 });
 
@@ -1462,8 +1553,8 @@ loadContent();
 document
 .getElementById('search')
 .addEventListener(
-'input',
-loadContent
+  'input',
+  loadContent
 );
 
 
@@ -1473,34 +1564,52 @@ loadContent
 
 async function loadStats(){
 
-for(
-const type of Object.keys(tableNames)
-){
+  for(
+    const type of Object.keys(
+      tableNames
+    )
+  ){
 
-const {count}=
-await db
-.from(tableNames[type])
-.select(
-'*',
-{
-count:'exact',
-head:true
-}
-);
+    const {
+      count,
+      error
+    } =
+      await db
+        .from(
+          tableNames[type]
+        )
+        .select(
+          '*',
+          {
+            count:'exact',
+            head:true
+          }
+        );
 
-const id=
-type==='writings'
-?'writingCount'
-:type==='ebooks'
-?'ebookCount'
-:type==='achievements'
-?'achievementCount'
-:'journalCount';
+    if(error){
 
-document.getElementById(id)
-.textContent=count||0;
+      console.error(
+        'Stats error:',
+        error
+      );
 
-}
+    }
+
+    const id =
+      type === 'writings'
+        ? 'writingCount'
+        : type === 'ebooks'
+        ? 'ebookCount'
+        : type === 'achievements'
+        ? 'achievementCount'
+        : 'journalCount';
+
+    document.getElementById(
+      id
+    ).textContent =
+      count || 0;
+
+  }
 
 }
 
@@ -1511,28 +1620,31 @@ document.getElementById(id)
 
 function toggleTheme(){
 
-document.body
-.classList
-.toggle('dark');
+  document.body
+    .classList
+    .toggle('dark');
 
-localStorage.setItem(
-'anamigam-theme',
-document.body.classList.contains('dark')
-?'dark'
-:'light'
-);
+  localStorage.setItem(
+    'anamigam-theme',
+    document.body.classList.contains(
+      'dark'
+    )
+      ? 'dark'
+      : 'light'
+  );
 
 }
 
+
 if(
-localStorage.getItem(
-'anamigam-theme'
-)==='dark'
+  localStorage.getItem(
+    'anamigam-theme'
+  ) === 'dark'
 ){
 
-document.body
-.classList
-.add('dark');
+  document.body
+    .classList
+    .add('dark');
 
 }
 
@@ -1543,10 +1655,10 @@ document.body
 
 async function logout(){
 
-await db.auth.signOut();
+  await db.auth.signOut();
 
-window.location.href=
-'admin-login.html';
+  window.location.href =
+    'admin-login.html';
 
 }
 
@@ -1557,14 +1669,18 @@ window.location.href=
 
 (async function(){
 
-const loggedIn=
-await checkLogin();
+  const loggedIn =
+    await checkLogin();
 
-if(!loggedIn)return;
+  if(!loggedIn){
 
-await loadContent();
+    return;
 
-await loadStats();
+  }
+
+  await loadContent();
+
+  await loadStats();
 
 })();
 
